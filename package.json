@@ -1,7 +1,7 @@
 {
-  "name": "@revolutionarygamesco/fvttmod-starter",
-  "description": "A starting point for Foundry VTT modules.",
-  "version": "0.0.0",
+  "name": "@revolutionarygamesco/darkcaribbeanwavecrawl",
+  "description": "A wave crawl adventure for Pirate Borg and Foundry VTT set in the Dark Caribbean. ",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "build": "tsc -p tsconfig.build.json && vite build",

@@ -1,7 +1,7 @@
 {
-  "id": "revolutionary-starter",
-  "title": "Foundry VTT Module Starter",
-  "description": "",
+  "id": "revolutionary-darkcaribbean",
+  "title": "Dark Caribbean Wave Crawl",
+  "description": "A wave crawl adventure for Pirate Borg and Foundry VTT set in the Dark Caribbean. ",
   "version": "#{VERSION}#",
   "compatibility": {
     "minimum": "13",
@@ -17,10 +17,20 @@
   "esmodules": [
     "scripts/module.js"
   ],
-  "styles": [
-    "styles/module.css"
+  "packs": [
+    {
+      "name": "dark-caribbean-wave-crawl",
+      "label": "Dark Caribbean Wave Crawl",
+      "path": "packs/dark-caribbean-wave-crawl",
+      "type": "Adventure",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "system": "pirateborg",
+      "flags": {}
+    }
   ],
-  "packs": [],
   "languages": [
     {
       "lang": "en",
@@ -28,16 +38,36 @@
       "path": "lang/en.json"
     }
   ],
-  "relationships": {},
+  "relationships": {
+    "systems": [
+      {
+        "id": "pirateborg",
+        "type": "system",
+        "compatibility": {}
+      }
+    ],
+    "requires": [
+      {
+        "id": "limithron-landingpagekit",
+        "type": "module",
+        "compatibility": {}
+      },
+      {
+        "id": "seasons-and-stars",
+        "type": "module",
+        "compatibility": {}
+      }
+    ]
+  },
   "includes": [],
   "socket": false,
   "url": "#{URL}#",
   "manifest": "#{MANIFEST}#",
   "download": "#{DOWNLOAD}#",
-  "bugs": "https://github.com/revolutionarygamesco/fvtt-starter/issues",
-  "changelog": "https://github.com/revolutionarygamesco/fvtt-starter/blob/main/CHANGELOG.md",
-  "license": "https://github.com/revolutionarygamesco/fvtt-starter/blob/main/LICENSE",
-  "readme": "https://github.com/revolutionarygamesco/fvtt-starter/blob/main/README.md",
+  "bugs": "https://github.com/revolutionarygamesco/darkcaribbeanwavecrawl/issues",
+  "changelog": "https://github.com/revolutionarygamesco/darkcaribbeanwavecrawl/blob/main/CHANGELOG.md",
+  "license": "https://github.com/revolutionarygamesco/darkcaribbeanwavecrawl/blob/main/LICENSE",
+  "readme": "https://github.com/revolutionarygamesco/darkcaribbeanwavecrawl/blob/main/README.md",
   "funding": [
     {
       "type": "patreon",
