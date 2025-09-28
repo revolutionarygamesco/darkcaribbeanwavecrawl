@@ -1,9 +1,17 @@
-const moduleName = 'Module'
+const mod: { id: string; name: string } = {
+  id: 'revolutionary-darkcaribbean',
+  name: 'Dark Caribbean Wave Crawl'
+}
 
-Hooks.on('init', () => {
-  console.log(`Initializing ${moduleName}...`)
-})
+Hooks.once('init', () => {
+  if (!(game instanceof Game) || !game.i18n) return
 
-Hooks.on('ready', () => {
-  console.log(`${moduleName} is ready`)
+  game.settings.register(mod.id as any, 'historical' as any, {
+    name: game.i18n.localize('revolutionary-darkcaribbean.settings.historical.name'),
+    hint: game.i18n.localize('revolutionary-darkcaribbean.settings.historical.hint'),
+    scope: 'world',
+    config: true,
+    type: Boolean,
+    default: false
+  })
 })

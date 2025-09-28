@@ -37,10 +37,8 @@ export default defineConfig({
     },
     viteStaticCopy({
       targets: [
-        {
-          src: 'src/packs',
-          dest: ''
-        }
+        { src: 'src/packs', dest: '' },
+        { src: 'src/lang', dest: '' }
       ]
     })
   ]
