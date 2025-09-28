@@ -34,7 +34,7 @@ set in [the Dark Caribbean](https://www.limithron.com/darkcaribbean).
 
 ### Requirements
 
-* _[Pirate Borg](https://www.limithron.com/pirateborg)_
+* _[Pirate Borg](https://foundryvtt.com/packages/pirateborg)_
 * [Foundry VTT](https://foundryvtt.com/)
 * [Limithron’s Dark Caribbean Map & Cartography Kit](https://www.limithron.com/dark-caribbean-map)
 * [Limithron’s Landing Page Kit](https://www.limithron.com/landing-page-kit)
