@@ -19,7 +19,7 @@ interface Scene {
   tokens: {
     find: (callback: (t: Token) => boolean) => Token | undefined
   },
-  updateEmbeddedDocuments: (type: string, docs: Array<Record<string, string>>) => Promise<void>
+  updateEmbeddedDocuments: (type: string, docs: Array<Record<string, any>>) => Promise<void>
 }
 
 interface Token {
