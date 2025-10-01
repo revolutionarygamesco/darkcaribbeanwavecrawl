@@ -14,6 +14,11 @@ import setHaunt from './haunt/set.ts'
 import increaseHaunt from './haunt/incr.ts'
 import decreaseHaunt from './haunt/decr.ts'
 
+import getWind from './winds/get.ts'
+import setWind from './winds/set.ts'
+import increaseWind from './winds/incr.ts'
+import decreaseWind from './winds/decr.ts'
+
 const initSetting = (setting: string, type: any, defaultValue: any, config: boolean = true) => {
   game.settings.register(MODULE_ID, setting, {
     name: game.i18n.localize(`${MODULE_ID}.settings.${setting}.name`),
@@ -42,13 +47,20 @@ Hooks.once('init', () => {
     setShip,
     getShip,
     getShipToken,
+
     getChapter,
     setChapter,
     advanceChapter,
     revertChapter,
+
     setHaunt,
     getHaunt,
     increaseHaunt,
-    decreaseHaunt
+    decreaseHaunt,
+
+    setWind,
+    getWind,
+    increaseWind,
+    decreaseWind
   }
 })
