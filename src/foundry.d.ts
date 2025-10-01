@@ -48,6 +48,9 @@ declare const game: {
     register: (namespace: string, name: string, settings: GameSettings) => void,
     set: <T>(namespace: string, name: string, value: T) => Promise<T>,
     get: <T>(namespace: string, name: string) => T
+  },
+  time: {
+    worldTime: number
   }
 }
 
