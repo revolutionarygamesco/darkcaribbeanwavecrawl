@@ -18,7 +18,8 @@ interface Module {
 interface Scene {
   tokens: {
     find: (callback: (t: Token) => boolean) => Token | undefined
-  }
+  },
+  updateEmbeddedDocuments: (type: string, docs: Array<Record<string, string>>) => Promise<void>
 }
 
 interface Token {
@@ -48,4 +49,8 @@ declare const game: {
     set: <T>(namespace: string, name: string, value: T) => Promise<T>,
     get: <T>(namespace: string, name: string) => T
   }
+}
+
+declare const canvas: {
+  scene: Scene
 }
