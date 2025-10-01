@@ -4,6 +4,14 @@
       "historical": {
         "name": "Include historical content",
         "hint": "Do not activate without a frank and open discussion with everyone at the table about including these elements. See the journal entry for Dark Caribbean Wave Crawl: Historical Content for more information."
+      },
+      "startdate": {
+        "name": "Start date",
+        "hint": "The date on which your adventure begins (e.g., 24 July 1715)."
+      },
+      "rotation": {
+        "name": "Ship token rotation",
+        "hint": "If straight up is 0 degrees, where does the bow of your ship token point? For example, ship tokens from the Pirate Borg Premium Module point down, so that’s 180."
       }
     }
   }

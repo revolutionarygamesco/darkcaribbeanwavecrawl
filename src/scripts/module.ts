@@ -1,14 +1,33 @@
-import mod from './id.ts'
+import { MODULE_ID, MODULE_SETTINGS } from './settings'
+import { setShip, getShip, getShipToken } from './ship'
+
+const initSetting = (setting: string, type: any, defaultValue: any, config: boolean = true) => {
+  game.settings.register(MODULE_ID, setting, {
+    name: game.i18n.localize(`${MODULE_ID}.settings.${setting}.name`),
+    hint: game.i18n.localize(`${MODULE_ID}.settings.${setting}.hint`),
+    scope: 'world',
+    config,
+    type,
+    default: defaultValue
+  })
+}
 
 Hooks.once('init', () => {
-  if (!(game instanceof Game) || !game.i18n) return
+  initSetting(MODULE_SETTINGS.ROTATION, Number, 180)
+  initSetting(MODULE_SETTINGS.STARTDATE, String, '24 July 1715')
+  initSetting(MODULE_SETTINGS.HISTORICAL, Boolean, false)
+  initSetting(MODULE_SETTINGS.SHIP, String, '', false)
+  initSetting(MODULE_SETTINGS.CHAPTER, Number, 1, false)
+  initSetting(MODULE_SETTINGS.HAUNT, Number, 1, false)
+  initSetting(MODULE_SETTINGS.WIND, Number, 2, false)
+  initSetting(MODULE_SETTINGS.SILVER, Number, 0, false)
+  initSetting(MODULE_SETTINGS.FOOD, Number, 0, false)
+  initSetting(MODULE_SETTINGS.WATER, Number, 0, false)
+  initSetting(MODULE_SETTINGS.RUM, Number, 0, false)
 
-  game.settings.register(mod.id, 'historical', {
-    name: game.i18n.localize('revolutionary-darkcaribbean.settings.historical.name'),
-    hint: game.i18n.localize('revolutionary-darkcaribbean.settings.historical.hint'),
-    scope: 'world',
-    config: true,
-    type: Boolean,
-    default: false
-  })
+  game.modules.get(MODULE_ID).api = {
+    setShip,
+    getShip,
+    getShipToken
+  }
 })
