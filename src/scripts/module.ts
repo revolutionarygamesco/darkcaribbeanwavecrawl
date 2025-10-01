@@ -1,11 +1,18 @@
 import { MODULE_ID, MODULE_SETTINGS } from './settings'
+
 import setShip from './ship/set.ts'
 import getShip from './ship/get.ts'
 import getShipToken from './ship/get-token.ts'
+
 import getChapter from './chapter/get.ts'
 import setChapter from './chapter/set.ts'
 import advanceChapter from './chapter/advance.ts'
 import revertChapter from './chapter/revert.ts'
+
+import getHaunt from './haunt/get.ts'
+import setHaunt from './haunt/set.ts'
+import increaseHaunt from './haunt/incr.ts'
+import decreaseHaunt from './haunt/decr.ts'
 
 const initSetting = (setting: string, type: any, defaultValue: any, config: boolean = true) => {
   game.settings.register(MODULE_ID, setting, {
@@ -38,6 +45,10 @@ Hooks.once('init', () => {
     getChapter,
     setChapter,
     advanceChapter,
-    revertChapter
+    revertChapter,
+    setHaunt,
+    getHaunt,
+    increaseHaunt,
+    decreaseHaunt
   }
 })
