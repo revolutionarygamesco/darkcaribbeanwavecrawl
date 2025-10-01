@@ -9,7 +9,6 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
 
@@ -21,8 +20,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    "esModuleInterop": true,
-    "types": ["fvtt-types"]
+    "esModuleInterop": true
   },
   "include": ["src/**/*", "vite.config.ts"]
 }
