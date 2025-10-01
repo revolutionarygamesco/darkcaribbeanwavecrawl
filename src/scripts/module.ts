@@ -1,5 +1,7 @@
 import { MODULE_ID, MODULE_SETTINGS } from './settings'
-import { setShip, getShip, getShipToken } from './ship'
+import setShip from './ship/set.ts'
+import getShip from './ship/get.ts'
+import getShipToken from './ship/get-token.ts'
 
 const initSetting = (setting: string, type: any, defaultValue: any, config: boolean = true) => {
   game.settings.register(MODULE_ID, setting, {
