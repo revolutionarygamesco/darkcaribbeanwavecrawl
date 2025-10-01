@@ -38,7 +38,6 @@ set in [the Dark Caribbean](https://www.limithron.com/darkcaribbean).
 * [Foundry VTT](https://foundryvtt.com/)
 * [Limithron’s Dark Caribbean Map & Cartography Kit](https://www.limithron.com/dark-caribbean-map)
 * [Limithron’s Landing Page Kit](https://www.limithron.com/landing-page-kit)
-* [Seasons & Stars](https://foundryvtt.com/packages/seasons-and-stars)
 
 #### Not stricly required but strongly recommended
 

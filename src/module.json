@@ -51,11 +51,6 @@
         "id": "limithron-landingpagekit",
         "type": "module",
         "compatibility": {}
-      },
-      {
-        "id": "seasons-and-stars",
-        "type": "module",
-        "compatibility": {}
       }
     ]
   },
