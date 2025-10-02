@@ -50,6 +50,7 @@ declare const game: {
     get: <T>(namespace: string, name: string) => T
   },
   time: {
+    advance: (seconds: number) => Promise<number>,
     worldTime: number
   }
 }
