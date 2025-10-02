@@ -1,3 +1,13 @@
+declare class ApplicationV2 {
+  render: (options: boolean) => Promise<ApplicationV2>
+}
+
+declare class HandlebarsApplication {
+  render: (options: boolean) => Promise<HandlebarsApplication>
+}
+
+type HandlebarsApplicationMixin = (app: typeof ApplicationV2) => typeof HandlebarsApplication
+
 interface GameSettings {
   name: string
   hint: string
@@ -57,4 +67,13 @@ declare const game: {
 
 declare const canvas: {
   scene: Scene
+}
+
+declare const foundry: {
+  applications: {
+    api: {
+      ApplicationV2: typeof ApplicationV2,
+      HandlebarsApplicationMixin: HandlebarsApplicationMixin
+    }
+  }
 }

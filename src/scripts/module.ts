@@ -19,6 +19,8 @@ import setWind from './winds/set.ts'
 import increaseWind from './winds/incr.ts'
 import decreaseWind from './winds/decr.ts'
 
+import DatePanel from './date/DatePanel.ts'
+
 const initSetting = (setting: string, type: any, defaultValue: any, config: boolean = true) => {
   game.settings.register(MODULE_ID, setting, {
     name: game.i18n.localize(`${MODULE_ID}.settings.${setting}.name`),
@@ -63,4 +65,9 @@ Hooks.once('init', () => {
     increaseWind,
     decreaseWind
   }
+})
+
+Hooks.once('ready', async () => {
+  const datePanel = new DatePanel()
+  await datePanel.render(true)
 })
