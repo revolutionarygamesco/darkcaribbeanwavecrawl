@@ -51,6 +51,7 @@ declare const game: {
   modules: {
     get: (id: string) => Module
   },
+  paused: boolean,
   scenes: {
     active?: Scene
   },
