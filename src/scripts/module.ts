@@ -21,6 +21,12 @@ import setWind from './winds/set.ts'
 import increaseWind from './winds/incr.ts'
 import decreaseWind from './winds/decr.ts'
 
+import adjustTime from './date/adjust.ts'
+import calculateDayNight from './date/day-night.ts'
+import calculateLunarPhase from './date/phase.ts'
+import getDate from './date/get.ts'
+import getTime from './date/time.ts'
+
 import DatePanel from './date/DatePanel.ts'
 
 const initSetting = (setting: string, type: any, defaultValue: any, config: boolean = true) => {
@@ -68,7 +74,13 @@ Hooks.once('init', async () => {
     setWind,
     getWind,
     increaseWind,
-    decreaseWind
+    decreaseWind,
+
+    adjustTime,
+    calculateDayNight,
+    calculateLunarPhase,
+    getDate,
+    getTime
   }
 })
 
