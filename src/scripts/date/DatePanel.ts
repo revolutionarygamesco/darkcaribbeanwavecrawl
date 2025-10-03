@@ -2,6 +2,7 @@ const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 import { MODULE_ID, MODULE_SETTINGS } from '../settings.ts'
 import getDate from './get.ts'
 import getTime from './time.ts'
+import calculateLunarPhase, { lunarIcons } from './phase.ts'
 import calculateDayNight from './day-night.ts'
 
 export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2) {
@@ -27,12 +28,33 @@ export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2)
     }
   }
 
-  _prepareContext () {
+  async _fetchSVG (url: string, alt: string): Promise<string> {
+    const res = await fetch(url)
+    const text = await res.text()
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(text, 'image/svg+xml')
+    const svg = doc.querySelector('svg')
+    if (!svg) return ''
+
+    svg.classList.add('lunar')
+    svg.setAttribute('aria-label', alt)
+    return svg.outerHTML
+  }
+
+  async _prepareLunarPhase (date: Date): Promise<string> {
+    const phase = calculateLunarPhase(date)
+    const icon = lunarIcons[phase] ?? 'new'
+    const url = `modules/${MODULE_ID}/artwork/icons/lunar/${icon}.svg`
+    return await this._fetchSVG(url, phase)
+  }
+
+  async _prepareContext () {
     const date = getDate()
     const day = date.toLocaleDateString(undefined, { weekday: 'long' })
     const time = `${day} (${calculateDayNight(date)})`
     const watch = getTime(date)
     const exact = date.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit'})
+    const lunar = await this._prepareLunarPhase(date)
 
     return {
       date: date.toLocaleDateString(undefined, {
@@ -42,6 +64,7 @@ export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2)
       }),
       exact,
       time,
+      lunar,
       watch: watch.text,
       isGM: game.user.isGM
     }

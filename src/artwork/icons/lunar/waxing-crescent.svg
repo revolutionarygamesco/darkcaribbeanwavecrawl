@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-<svg id="svg1" width="10" height="10" version="1.1" viewBox="0 0 2.6458 2.6458" xmlns="http://www.w3.org/2000/svg">
- <g id="layer1">
-  <path id="path1" d="m1.3227 0.065112c-0.69355 0-1.2578 0.56424-1.2578 1.2578 0 0.69355 0.56426 1.2578 1.2578 1.2578s1.2583-0.56425 1.2583-1.2578c0-0.69356-0.56477-1.2578-1.2583-1.2578zm0 0.20309c0.58358 0 1.0547 0.47113 1.0547 1.0547 0 0.58356-0.47114 1.0547-1.0547 1.0547h-0.026355c0.34417-0.22471 0.57206-0.61346 0.57206-1.0542 0-0.44074-0.22789-0.82895-0.57206-1.0537 0.00884-2.6459e-4 0.017449 0 0.026355 0z" color="#000000" color-rendering="auto" image-rendering="auto" shape-rendering="auto" solid-color="#000000" style="isolation:auto;mix-blend-mode:normal;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-transform:none;white-space:normal"/>
- </g>
+<svg width="10" height="10" version="1.1" viewBox="0 0 2.6458 2.6458" xmlns="http://www.w3.org/2000/svg">
+  <path d="m1.3227 0.065112c-0.69355 0-1.2578 0.56424-1.2578 1.2578 0 0.69355 0.56426 1.2578 1.2578 1.2578s1.2583-0.56425 1.2583-1.2578c0-0.69356-0.56477-1.2578-1.2583-1.2578zm0 0.20309c0.58358 0 1.0547 0.47113 1.0547 1.0547 0 0.58356-0.47114 1.0547-1.0547 1.0547h-0.026355c0.34417-0.22471 0.57206-0.61346 0.57206-1.0542 0-0.44074-0.22789-0.82895-0.57206-1.0537 0.00884-2.6459e-4 0.017449 0 0.026355 0z" />
 </svg>
