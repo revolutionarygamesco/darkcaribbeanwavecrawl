@@ -1,3 +1,3 @@
-type ProvisionsType = 'silver' | 'food' | 'water' | 'rum'
+type ProvisionsType = 'food' | 'water' | 'rum'
 
 export default ProvisionsType
