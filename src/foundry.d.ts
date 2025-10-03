@@ -7,6 +7,14 @@ declare class HandlebarsApplication {
   _onRender(context: any, options: any): Promise<void>
 }
 
+declare class AudioHelper {
+  play(data: { autoplay?: boolean, channel?: string, loop?: boolean, src: string, volume?: number }, options?: any): Promise<any>
+}
+
+declare class ChatMessage {
+  create(data?: any, operation?: any): Promise<any>
+}
+
 type HandlebarsApplicationMixin = (app: typeof ApplicationV2) => typeof HandlebarsApplication
 
 interface GameSettings {
@@ -77,5 +85,11 @@ declare const foundry: {
       ApplicationV2: typeof ApplicationV2,
       HandlebarsApplicationMixin: HandlebarsApplicationMixin
     }
+  },
+  audio: {
+    AudioHelper: AudioHelper
+  },
+  documents: {
+    ChatMessage: ChatMessage
   }
 }

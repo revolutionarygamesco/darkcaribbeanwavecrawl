@@ -1,4 +1,8 @@
-import { MODULE_ID, MODULE_SETTINGS } from '../settings.ts'
+import { MODULE_ID } from '../settings.ts'
+import getMinutes from './get-minutes.ts'
+import advanceTime from './advance.ts'
+import getDate from './get.ts'
+import getTime from './time.ts'
 
 export default class Chronometer {
   private interval: number | null = null
@@ -30,11 +34,26 @@ export default class Chronometer {
   }
 
   private async increment () {
-    await this.addMinutes(1)
+    await advanceTime(1)
+    await this.checkBell()
   }
 
-  async addMinutes (m: number) {
-    const before = game.settings.get<number>(MODULE_ID, MODULE_SETTINGS.MINUTES)
-    await game.settings.set<number>(MODULE_ID, MODULE_SETTINGS.MINUTES, before + m)
+  private async checkBell () {
+    const minutes = getMinutes()
+    const m = minutes % 60
+    if (m === 0 || m === 30) await this.ringBell()
+  }
+
+  private async ringBell () {
+    const { text } = getTime(getDate())
+    await foundry.audio.AudioHelper.play({
+      autoplay: true,
+      channel: 'environment',
+      src: `modules/${MODULE_ID}/sfx/bell.mp3`
+    })
+    await foundry.documents.ChatMessage.create({
+      speaker: { alias: game.i18n.localize(`${MODULE_ID}.ships-bell`) },
+      content: text
+    })
   }
 }
