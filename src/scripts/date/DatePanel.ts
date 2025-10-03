@@ -7,6 +7,9 @@ import calculateLunarPhase, { lunarIcons } from './phase.ts'
 import calculateDayNight from './day-night.ts'
 
 export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2) {
+  private lunarSVGIcons: Map<string, string> = new Map()
+  private _adjustHandler: ((event: Event) => Promise<void>) | null = null
+
   static DEFAULT_OPTIONS = {
     id: `${MODULE_ID}-date`,
     tag: 'aside',
@@ -30,6 +33,8 @@ export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2)
   }
 
   async _fetchSVG (url: string, alt: string): Promise<string> {
+    if (this.lunarSVGIcons.has(url)) return this.lunarSVGIcons.get(url)!
+
     const res = await fetch(url)
     const text = await res.text()
     const parser = new DOMParser()
@@ -39,6 +44,7 @@ export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2)
 
     svg.classList.add('lunar')
     svg.setAttribute('aria-label', alt)
+    this.lunarSVGIcons.set(url, svg.outerHTML)
     return svg.outerHTML
   }
 
@@ -47,6 +53,16 @@ export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2)
     const icon = lunarIcons[phase] ?? 'new'
     const url = `modules/${MODULE_ID}/artwork/icons/lunar/${icon}.svg`
     return await this._fetchSVG(url, phase)
+  }
+
+  async _adjustTime (event: Event) {
+    const target = event.target as HTMLElement
+    const button = target.closest('button[data-action="adjust-time"]') as HTMLElement
+    if (!button) return
+
+    const request = parseInt(button.dataset.minutes ?? '0')
+    await adjustTime(request)
+    await this.render()
   }
 
   async _prepareContext () {
@@ -74,17 +90,12 @@ export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2)
   async _onRender(context: any, options: any): Promise<void> {
     await super._onRender(context, options)
 
-    const buttons = this.element.querySelectorAll('button[data-action="adjust-time"]')
-    for (const button of buttons) {
-      button.addEventListener('click', async (event: Event) => {
-        const target = event.target as HTMLElement
-        const requested = parseInt(target.dataset.minutes ?? '0')
-        await adjustTime(requested)
-        await this.render()
-      })
+    if (!this._adjustHandler) {
+      this._adjustHandler = this._adjustTime.bind(this)
+      this.element.addEventListener('click', this._adjustHandler)
     }
 
-    Hooks.on('updateSetting', (setting: any) => {
+    Hooks.once('updateSetting', (setting: any) => {
       if (setting.key === `${MODULE_ID}.${MODULE_SETTINGS.MINUTES}`) this.render()
     })
   }
