@@ -3,4 +3,21 @@
   <p>{{time}}</p>
   <p>{{watch}}</p>
   {{#if isGM}}<p>{{exact}}</p>{{/if}}
+
+  {{#if isGM}}
+  <nav>
+    <button type="button" data-action="adjust-time" data-minutes="-60" title="Set time back 1 hour">
+      <i class="fa-solid fa-backward-fast"></i>
+    </button>
+    <button type="button" data-action="adjust-time" data-minutes="-10" title="Set time back 10 minutes">
+      <i class="fa-solid fa-backward-step"></i>
+    </button>
+    <button type="button" data-action="adjust-time" data-minutes="10" title="Advance time 10 minutes">
+      <i class="fa-solid fa-forward-step"></i>
+    </button>
+    <button type="button" data-action="adjust-time" data-minutes="60" title="Advance time 1 hour">
+      <i class="fa-solid fa-forward-fast"></i>
+    </button>
+  </nav>
+  {{/if}}
 </div>

@@ -3,6 +3,7 @@ declare class ApplicationV2 {
 }
 
 declare class HandlebarsApplication {
+  element: HTMLElement
   render: (options?: boolean) => Promise<HandlebarsApplication>
   _onRender(context: any, options: any): Promise<void>
 }

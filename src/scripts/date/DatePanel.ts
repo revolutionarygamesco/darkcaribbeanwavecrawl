@@ -2,6 +2,7 @@ const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 import { MODULE_ID, MODULE_SETTINGS } from '../settings.ts'
 import getDate from './get.ts'
 import getTime from './time.ts'
+import adjustTime from './adjust.ts'
 import calculateLunarPhase, { lunarIcons } from './phase.ts'
 import calculateDayNight from './day-night.ts'
 
@@ -72,6 +73,16 @@ export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2)
 
   async _onRender(context: any, options: any): Promise<void> {
     await super._onRender(context, options)
+
+    const buttons = this.element.querySelectorAll('button[data-action="adjust-time"]')
+    for (const button of buttons) {
+      button.addEventListener('click', async (event: Event) => {
+        const target = event.target as HTMLElement
+        const requested = parseInt(target.dataset.minutes ?? '0')
+        await adjustTime(requested)
+        await this.render()
+      })
+    }
 
     Hooks.on('updateSetting', (setting: any) => {
       if (setting.key === `${MODULE_ID}.${MODULE_SETTINGS.MINUTES}`) this.render()

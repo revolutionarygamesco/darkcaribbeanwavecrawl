@@ -1,6 +1,6 @@
 import { MODULE_ID } from '../settings.ts'
 import getMinutes from './get-minutes.ts'
-import advanceTime from './advance.ts'
+import adjustTime from './adjust.ts'
 import getDate from './get.ts'
 import getTime from './time.ts'
 
@@ -34,7 +34,7 @@ export default class Chronometer {
   }
 
   private async increment () {
-    await advanceTime(1)
+    await adjustTime(1)
     await this.checkBell()
   }
 
