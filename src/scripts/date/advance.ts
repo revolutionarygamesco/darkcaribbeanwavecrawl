@@ -1,5 +1,9 @@
+import getMinutes from './get-minutes.ts'
+import setMinutes from './set-minutes.ts'
+
 const advanceTime = async (minutes: number): Promise<void> => {
-  await game.time.advance(minutes * 60)
+  const before = getMinutes()
+  await setMinutes(before + minutes)
 }
 
 export default advanceTime
