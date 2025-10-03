@@ -12,8 +12,8 @@ export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2)
     tag: 'aside',
     classes: ['date-panel'],
     position: {
-      left: 50,
-      top: window.innerHeight - 400
+      left: 16,
+      top: Math.floor(window.innerHeight / 2)
     },
     window: {
       frame: false,

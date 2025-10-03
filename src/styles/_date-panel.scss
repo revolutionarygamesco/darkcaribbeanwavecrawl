@@ -1,10 +1,11 @@
 #revolutionary-darkcaribbean-date {
   background: #000;
+  box-shadow: 0 0 10px #000;
   height: auto;
   opacity: 0.25;
   padding: 1em;
   position: absolute;
-  width: auto;
+  width: 15em;
 
   &:hover {
     opacity: 1;

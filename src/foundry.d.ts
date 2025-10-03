@@ -73,7 +73,8 @@ declare const game: {
   },
   user: {
     isGM: boolean
-  }
+  },
+  users: Map<string, any>
 }
 
 declare const canvas: {
