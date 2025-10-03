@@ -3,7 +3,8 @@ declare class ApplicationV2 {
 }
 
 declare class HandlebarsApplication {
-  render: (options: boolean) => Promise<HandlebarsApplication>
+  render: (options?: boolean) => Promise<HandlebarsApplication>
+  _onRender(context: any, options: any): Promise<void>
 }
 
 type HandlebarsApplicationMixin = (app: typeof ApplicationV2) => typeof HandlebarsApplication
@@ -38,7 +39,8 @@ interface Token {
 }
 
 declare const Hooks: {
-  once: (name: string, callback: () => void) => void
+  on: (name: string, callback: (...args: any[]) => void) => void
+  once: (name: string, callback: (...args: any[]) => void) => void
 }
 
 declare const game: {
@@ -60,9 +62,8 @@ declare const game: {
     set: <T>(namespace: string, name: string, value: T) => Promise<T>,
     get: <T>(namespace: string, name: string) => T
   },
-  time: {
-    advance: (seconds: number) => Promise<number>,
-    worldTime: number
+  user: {
+    isGM: boolean
   }
 }
 

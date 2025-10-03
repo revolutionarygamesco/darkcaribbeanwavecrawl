@@ -1,5 +1,7 @@
 import { MODULE_ID, MODULE_SETTINGS } from './settings'
 
+import Chronometer from './date/Chronometer.ts'
+
 import setShip from './ship/set.ts'
 import getShip from './ship/get.ts'
 import getShipToken from './ship/get-token.ts'
@@ -32,9 +34,12 @@ const initSetting = (setting: string, type: any, defaultValue: any, config: bool
   })
 }
 
-Hooks.once('init', () => {
+const time = new Chronometer()
+
+Hooks.once('init', async () => {
   initSetting(MODULE_SETTINGS.ROTATION, Number, 180)
   initSetting(MODULE_SETTINGS.STARTDATE, String, '24 July 1715')
+  initSetting(MODULE_SETTINGS.MINUTES, Number, 0)
   initSetting(MODULE_SETTINGS.HISTORICAL, Boolean, false)
   initSetting(MODULE_SETTINGS.SHIP, String, '', false)
   initSetting(MODULE_SETTINGS.CHAPTER, Number, 1, false)
@@ -70,4 +75,11 @@ Hooks.once('init', () => {
 Hooks.once('ready', async () => {
   const datePanel = new DatePanel()
   await datePanel.render(true)
+
+  await time.start()
+  time.handlePause(game.paused)
+})
+
+Hooks.on('pauseGame', (paused: boolean) => {
+  time.handlePause(paused)
 })
