@@ -11,5 +11,6 @@ export const MODULE_SETTINGS = {
   WATER: 'water',
   RUM: 'rum',
   ROTATION: 'rotation',
-  STARTDATE: 'startdate'
+  STARTDATE: 'startdate',
+  MINUTES: 'minutes'
 } as const
