@@ -133,3 +133,7 @@ set in [the Dark Caribbean](https://www.limithron.com/darkcaribbean).
 * Beyond this, future releases will probably be tweaking
   random tables, fixing bugs, and adding new sea monsters or
   pirate crews.
+
+### Credits
+
+* [Lunar phase icons](https://thenounproject.com/icon/moon-phases-1129569/) by [Andrew Doane](https://thenounproject.com/creator/andydoane/) from the [Noun Project](https://thenounproject.com/).

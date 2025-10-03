@@ -43,7 +43,8 @@ export default defineConfig({
         { src: 'src/packs', dest: '' },
         { src: 'src/lang', dest: '' },
         { src: 'src/templates', dest: '' },
-        { src: 'src/sfx', dest: '' }
+        { src: 'src/sfx', dest: '' },
+        { src: 'src/artwork', dest: '' }
       ]
     })
   ]
