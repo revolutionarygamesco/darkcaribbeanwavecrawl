@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
-import { resolve, join } from 'path'
-import { copyFileSync, readdirSync, statSync, mkdirSync, existsSync } from 'fs'
+import { resolve } from 'path'
+import { copyFileSync } from 'fs'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig({
@@ -42,7 +42,8 @@ export default defineConfig({
       targets: [
         { src: 'src/packs', dest: '' },
         { src: 'src/lang', dest: '' },
-        { src: 'src/templates', dest: '' }
+        { src: 'src/templates', dest: '' },
+        { src: 'src/sfx', dest: '' }
       ]
     })
   ]
