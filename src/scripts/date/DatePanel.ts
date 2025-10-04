@@ -9,6 +9,7 @@ import calculateDayNight from './day-night.ts'
 export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2) {
   private lunarSVGIcons: Map<string, string> = new Map()
   private _adjustHandler: ((event: Event) => Promise<void>) | null = null
+  private updateHookId: number | null = null
 
   static DEFAULT_OPTIONS = {
     id: `${MODULE_ID}-date`,
@@ -95,8 +96,17 @@ export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2)
       this.element.addEventListener('click', this._adjustHandler)
     }
 
-    Hooks.once('updateSetting', (setting: any) => {
+    if (this.updateHookId) return
+
+    this.updateHookId = Hooks.on('updateSetting', (setting: any) => {
       if (setting.key === `${MODULE_ID}.${MODULE_SETTINGS.MINUTES}`) this.render()
     })
+  }
+
+  async close (options?: any): Promise<this> {
+    if (!this.updateHookId) return super.close(options)
+    Hooks.off('updateSetting', this.updateHookId)
+    this.updateHookId = null
+    return super.close(options)
   }
 }

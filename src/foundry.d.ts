@@ -5,6 +5,7 @@ declare class ApplicationV2 {
 declare class HandlebarsApplication {
   element: HTMLElement
   render: (options?: boolean) => Promise<HandlebarsApplication>
+  close(options?: any): Promise<this>
   _onRender(context: any, options: any): Promise<void>
 }
 
@@ -48,8 +49,9 @@ interface Token {
 }
 
 declare const Hooks: {
-  on: (name: string, callback: (...args: any[]) => void) => void
-  once: (name: string, callback: (...args: any[]) => void) => void
+  on: (name: string, callback: (...args: any[]) => void) => number
+  once: (name: string, callback: (...args: any[]) => void) => number
+  off: (name: string, fn: number | Function) => void
 }
 
 declare const game: {
