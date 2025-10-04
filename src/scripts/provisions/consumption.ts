@@ -5,9 +5,9 @@ const calculateConsumption = (crewSize: number): Record<ProvisionsType, number> 
   const rumInGrog = 1/5
 
   return {
-    food: crewSize,
-    water: crewSize + Math.floor(crewSize * waterInGrog),
-    rum: Math.floor(crewSize * rumInGrog)
+    food: crewSize * -1,
+    water: (crewSize + Math.floor(crewSize * waterInGrog)) * -1,
+    rum: Math.floor(crewSize * rumInGrog) * -1
   }
 }
 
