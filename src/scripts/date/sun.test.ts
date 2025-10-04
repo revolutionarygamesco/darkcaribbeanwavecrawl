@@ -2,8 +2,8 @@ import calculateSunAngle from './sun'
 
 describe('calculateSunAngle', () => {
   it.each([
-    [-15.79, '4 October 2025, 12:00 AM'],
-    [-58.11, '4 October 2025, 3:00 AM'],
+    [-15.91, '4 October 2025, 12:00 AM'],
+    [-58.27, '4 October 2025, 3:00 AM'],
     [-70.98, '4 October 2025, 6:00 AM'],
     [-30.20, '4 October 2025, 9:00 AM'],
     [12.56, '4 October 2025, 12:00 PM'],

@@ -5,8 +5,8 @@ const calculateSunAngle = (date: Date): number => {
   const latitude = 17.5
   const longitude = -75
 
-  const newyear = new Date(date.getFullYear(), 0, 0)
-  const diff = date.getTime() - newyear.getTime()
+  const newYear = new Date(Date.UTC(date.getUTCFullYear(), 0, 0))
+  const diff = date.getTime() - newYear.getTime()
   const day = Math.floor(diff / (24 * 60 * 60 * 1000))
 
   const declination = 23.45 * Math.sin((360 / 365) * (day - 81) * Math.PI / 180)
