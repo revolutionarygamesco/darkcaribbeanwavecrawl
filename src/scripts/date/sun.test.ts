@@ -2,15 +2,15 @@ import calculateSunAngle from './sun'
 
 describe('calculateSunAngle', () => {
   it.each([
-    [ -52.68, '24 July 1715, 12:00 AM'],
-    [-32.17, '24 July 1715, 3:00 AM'],
-    [5.85, '24 July 1715, 6:00 AM'],
-    [47.42, '24 July 1715, 9:00 AM'],
-    [87.68, '24 July 1715, 12:00 PM'],
-    [47.42, '24 July 1715, 3:00 PM'],
-    [5.85, '24 July 1715, 6:00 PM'],
-    [-32.17, '24 July 1715, 9:00 PM']
+    [-15.79, '4 October 2025, 12:00 AM'],
+    [-58.11, '4 October 2025, 3:00 AM'],
+    [-70.98, '4 October 2025, 6:00 AM'],
+    [-30.20, '4 October 2025, 9:00 AM'],
+    [12.56, '4 October 2025, 12:00 PM'],
+    [52.56, '4 October 2025, 3:00 PM'],
+    [62.73, '4 October 2025, 6:00 PM'],
+    [26.52, '4 October 2025, 9:00 PM']
   ] as [number, string][])(`returns %d for %s`, (expected, str) => {
-    expect(calculateSunAngle(new Date(str + ' GMT-0500'))).toBeCloseTo(expected)
+    expect(calculateSunAngle(new Date(str + ' UTC'))).toBeCloseTo(expected)
   })
 })
