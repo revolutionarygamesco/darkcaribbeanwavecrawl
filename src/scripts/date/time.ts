@@ -1,4 +1,5 @@
 import { MODULE_ID } from '../settings.ts'
+import localize from '../utilities/localize.ts'
 
 const createTime = (hour: number, midnight: Date): Date => {
   const d = new Date(midnight)
@@ -9,8 +10,6 @@ const createTime = (hour: number, midnight: Date): Date => {
 const withinMinute = (t1: Date, t2: Date): boolean => {
   return Math.abs(t1.getTime() - t2.getTime()) <= (60 * 1000)
 }
-
-const localize = game?.i18n?.localize ? game.i18n.localize : (key: string) => key
 
 interface Watch {
   name: string
@@ -53,7 +52,9 @@ const getTime = (date: Date): { text: string, watch: string, bells: number } => 
 
   const watchText = localize(`${MODULE_ID}.watches.${watch.name}`)
   const bellText = localize(`${MODULE_ID}.bells.${bells}`)
-  const text = watchText + ', ' + bellText
+  const text = bells === 0
+    ? watchText
+    : watchText + ', ' + bellText
 
   return { text, watch: watch.name, bells }
 }

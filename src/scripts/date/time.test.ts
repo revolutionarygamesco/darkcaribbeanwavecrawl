@@ -100,7 +100,9 @@ describe('getTime', () => {
     ['25 July 1715, 7:45 PM', 'dog2', 3],
     ['25 July 1715, 8:00 PM', 'dog2', 8]
   ] as [string, string, number][])(`translates %s to %s watch and %d bells`, (date, expectedWatch, expectedBells) => {
-    const expectedText = `${MODULE_ID}.watches.${expectedWatch}, ${MODULE_ID}.bells.${expectedBells}`
+    const expectedText = expectedBells === 0
+      ? `${MODULE_ID}.watches.${expectedWatch}`
+      : `${MODULE_ID}.watches.${expectedWatch}, ${MODULE_ID}.bells.${expectedBells}`
     const { text, watch, bells } = getTime(new Date(date))
     expect(watch).toBe(expectedWatch)
     expect(bells).toBe(expectedBells)
