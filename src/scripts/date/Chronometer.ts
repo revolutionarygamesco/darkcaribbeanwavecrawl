@@ -46,11 +46,13 @@ export default class Chronometer {
 
   private async ringBell () {
     const { text } = getTime(getDate())
+
     await foundry.audio.AudioHelper.play({
       autoplay: true,
       channel: 'environment',
       src: `modules/${MODULE_ID}/sfx/bell.mp3`
     })
+
     await foundry.documents.ChatMessage.create({
       speaker: { alias: game.i18n.localize(`${MODULE_ID}.ships-bell`) },
       content: text

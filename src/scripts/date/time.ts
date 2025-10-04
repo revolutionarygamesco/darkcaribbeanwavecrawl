@@ -1,3 +1,5 @@
+import { MODULE_ID } from '../settings.ts'
+
 const createTime = (hour: number, midnight: Date): Date => {
   const d = new Date(midnight)
   d.setHours(hour, 0, 0, 0)
@@ -8,6 +10,8 @@ const withinMinute = (t1: Date, t2: Date): boolean => {
   return Math.abs(t1.getTime() - t2.getTime()) <= (60 * 1000)
 }
 
+const localize = game?.i18n?.localize ? game.i18n.localize : (key: string) => key
+
 interface Watch {
   name: string
   start: number
@@ -16,17 +20,21 @@ interface Watch {
 
 const getTime = (date: Date): { text: string, watch: string, bells: number } => {
   const watches: Watch[] = [
-    { name: 'First', start: 20, end: 24 },
-    { name: 'Middle', start: 0, end: 4 },
-    { name: 'Morning', start: 4, end: 8 },
-    { name: 'Forenoon', start: 8, end: 12 },
-    { name: 'Afternoon', start: 12, end: 16 },
-    { name: 'First Dog', start: 16, end: 18 },
-    { name: 'Second Dog', start: 18, end: 20 }
+    { name: 'first', start: 20, end: 24 },
+    { name: 'middle', start: 0, end: 4 },
+    { name: 'morning', start: 4, end: 8 },
+    { name: 'forenoon', start: 8, end: 12 },
+    { name: 'afternoon', start: 12, end: 16 },
+    { name: 'dog1', start: 16, end: 18 },
+    { name: 'dog2', start: 18, end: 20 }
   ]
 
   const lastMidnight = createTime(0, date)
-  if (withinMinute(date, lastMidnight)) return { text: 'First Watch, 8 bells', watch: 'First', bells: 8 }
+  if (withinMinute(date, lastMidnight)) return {
+    text: localize(`${MODULE_ID}.watches.first`) + ', ' + localize(`${MODULE_ID}.bells.8`),
+    watch: 'first',
+    bells: 8
+  }
 
   const watch = watches.find(({ start, end }) => {
     const startTime = createTime(start, lastMidnight)
@@ -43,10 +51,9 @@ const getTime = (date: Date): { text: string, watch: string, bells: number } => 
     ? 8
     : Math.floor(minutesSinceStart / 30)
 
-  const watchText = `${watch.name} Watch`
-  const pluralizedBells = bells === 1 ? 'bell' : 'bells'
-  const bellText = bells === 0 ? '' : `, ${bells} ${pluralizedBells}`
-  const text = watchText + bellText
+  const watchText = localize(`${MODULE_ID}.watches.${watch.name}`)
+  const bellText = localize(`${MODULE_ID}.bells.${bells}`)
+  const text = watchText + ', ' + bellText
 
   return { text, watch: watch.name, bells }
 }
