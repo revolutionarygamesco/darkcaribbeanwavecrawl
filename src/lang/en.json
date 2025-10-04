@@ -14,6 +14,7 @@
         "hint": "If straight up is 0 degrees, where does the bow of your ship token point? For example, ship tokens from the Pirate Borg Premium Module point down, so that’s 180."
       }
     },
+    "Chapter": "Chapter",
     "ships-bell": "Ship’s Bell",
     "quartermaster": "Quartermaster",
     "provisions-out": "We’ve run out of ",
