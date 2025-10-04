@@ -39,6 +39,12 @@
       "6": "6 bells",
       "7": "7 bells",
       "8": "8 bells"
+    },
+    "time": {
+      "dawn": "dawn",
+      "day": "day",
+      "dusk": "dusk",
+      "night": "night"
     }
   }
 }
