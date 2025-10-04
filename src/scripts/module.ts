@@ -29,6 +29,12 @@ import getTime from './date/time.ts'
 
 import DatePanel from './date/DatePanel.ts'
 
+import getStartDate from './date/get-start.ts'
+import countDinners, { dinnerTime } from './provisions/dinners.ts'
+import consumeProvisions from './provisions/consume.ts'
+import loadProvisions from './provisions/load.ts'
+import adjustDate from './utilities/adjust-date.ts'
+
 const initSetting = (setting: string, type: any, defaultValue: any, config: boolean = true) => {
   game.settings.register(MODULE_ID, setting, {
     name: game.i18n.localize(`${MODULE_ID}.settings.${setting}.name`),
@@ -46,6 +52,7 @@ Hooks.once('init', async () => {
   initSetting(MODULE_SETTINGS.ROTATION, Number, 180)
   initSetting(MODULE_SETTINGS.STARTDATE, String, '24 July 1715')
   initSetting(MODULE_SETTINGS.MINUTES, Number, 0)
+  initSetting(MODULE_SETTINGS.PREVMINUTES, Number, 0)
   initSetting(MODULE_SETTINGS.HISTORICAL, Boolean, false)
   initSetting(MODULE_SETTINGS.SHIP, String, '', false)
   initSetting(MODULE_SETTINGS.CHAPTER, Number, 1, false)
@@ -95,4 +102,32 @@ Hooks.once('ready', async () => {
 
 Hooks.on('pauseGame', (paused: boolean) => {
   time.handlePause(paused)
+})
+
+Hooks.on('updateSetting', async (setting: any, value: any, _: any) => {
+  if (setting.key !== `${MODULE_ID}.${MODULE_SETTINGS.MINUTES}`) return
+  const ship = await getShip()
+  if (!ship) return
+
+  const minutes = parseInt(value.value)
+  const crewSize = ship.attributes.crew.value
+  const start = getStartDate()
+  const before = getDate(start, game.settings.get<number>(MODULE_ID, MODULE_SETTINGS.PREVMINUTES))
+  const after = getDate(start, minutes)
+  const dinners = countDinners(before, after)
+
+  if (dinners >= 0) {
+    for (let i = 0; i < dinners; i++) await consumeProvisions(crewSize)
+  } else {
+    const last = new Date(before)
+    last.setHours(dinnerTime.hour, dinnerTime.minutes, 0, 0)
+
+    if (last.getTime() > before.getTime()) adjustDate(last, -1)
+    while (last.getTime() > after.getTime()) {
+      await loadProvisions(last)
+      adjustDate(last, -1)
+    }
+  }
+
+  await game.settings.set<number>(MODULE_ID, MODULE_SETTINGS.PREVMINUTES, minutes)
 })

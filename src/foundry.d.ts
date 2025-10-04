@@ -30,6 +30,19 @@ interface GameSettings {
 
 interface Actor {
   id: string
+  attributes: {
+    speed: {
+      value: number
+    },
+    crew: {
+      max: number,
+      value: number
+    },
+    cargo: {
+      max: number,
+      value: number
+    }
+  }
 }
 
 interface Module {

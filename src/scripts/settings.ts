@@ -13,5 +13,6 @@ export const MODULE_SETTINGS = {
   LEDGER: 'ledger',
   ROTATION: 'rotation',
   STARTDATE: 'startdate',
-  MINUTES: 'minutes'
+  MINUTES: 'minutes',
+  PREVMINUTES: 'minutes.previous'
 } as const
