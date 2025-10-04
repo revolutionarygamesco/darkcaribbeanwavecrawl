@@ -34,7 +34,7 @@ describe('calculateLunarPhase', () => {
     ['New Moon', '30 July 1715'],
     ['New Moon', '31 July 1715']
   ] as [string, string][])(`returns %s for %s`, (expected, str) => {
-    const date = new Date(str)
+    const date = new Date(str + ' GMT-0500')
     expect(calculateLunarPhase(date)).toBe(expected)
   })
 })

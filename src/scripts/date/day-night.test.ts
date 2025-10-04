@@ -8,6 +8,6 @@ describe('calculateDayNight', () => {
     [`${MODULE_ID}.time.dusk`, '24 July 1715, 6:30 PM'],
     [`${MODULE_ID}.time.night`, '24 July 1715, 11:00 PM']
   ])(`returns %s for %s`, (expected, dateStr) => {
-    expect(calculateDayNight(new Date(dateStr))).toBe(expected)
+    expect(calculateDayNight(new Date(dateStr + ' GMT-0500'))).toBe(expected)
   })
 })
