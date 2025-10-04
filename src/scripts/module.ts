@@ -55,6 +55,7 @@ Hooks.once('init', async () => {
   initSetting(MODULE_SETTINGS.FOOD, Number, 0, false)
   initSetting(MODULE_SETTINGS.WATER, Number, 0, false)
   initSetting(MODULE_SETTINGS.RUM, Number, 0, false)
+  initSetting(MODULE_SETTINGS.LEDGER, Object, {}, false)
 
   game.modules.get(MODULE_ID).api = {
     setShip,

@@ -10,6 +10,7 @@ export const MODULE_SETTINGS = {
   FOOD: 'food',
   WATER: 'water',
   RUM: 'rum',
+  LEDGER: 'ledger',
   ROTATION: 'rotation',
   STARTDATE: 'startdate',
   MINUTES: 'minutes'
