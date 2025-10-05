@@ -3,6 +3,7 @@ export const MODULE_ID = 'revolutionary-darkcaribbean'
 export const MODULE_SETTINGS = {
   HISTORICAL: 'historical',
   SHIP: 'ship',
+  CREW: 'crew',
   CHAPTER: 'chapter',
   WIND: 'wind',
   HAUNT: 'haunt',
