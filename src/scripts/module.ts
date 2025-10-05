@@ -36,6 +36,7 @@ import loadProvisions from './provisions/load.ts'
 import adjustDate from './utilities/adjust-date.ts'
 
 import displayCrewPanel from './crew/display.ts'
+import generateInsult from './insults/generate.ts'
 
 const initSetting = (setting: string, type: any, defaultValue: any, config: boolean = true) => {
   game.settings.register(MODULE_ID, setting, {
@@ -92,7 +93,8 @@ Hooks.once('init', async () => {
     getDate,
     getTime,
 
-    displayCrewPanel
+    displayCrewPanel,
+    generateInsult
   }
 })
 
