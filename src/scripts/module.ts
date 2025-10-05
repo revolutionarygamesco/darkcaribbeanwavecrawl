@@ -35,6 +35,8 @@ import consumeProvisions from './provisions/consume.ts'
 import loadProvisions from './provisions/load.ts'
 import adjustDate from './utilities/adjust-date.ts'
 
+import initialCrewAssignments from './crew/init.ts'
+
 import displayCrewPanel from './crew/display.ts'
 import generateInsult from './insults/generate.ts'
 
@@ -66,7 +68,7 @@ Hooks.once('init', async () => {
   initSetting(MODULE_SETTINGS.WATER, Number, 0, false)
   initSetting(MODULE_SETTINGS.RUM, Number, 0, false)
   initSetting(MODULE_SETTINGS.LEDGER, Object, {}, false)
-  initSetting(MODULE_SETTINGS.CREW, Object, {}, false)
+  initSetting(MODULE_SETTINGS.CREW, Object, initialCrewAssignments(), false)
 
   game.modules.get(MODULE_ID).api = {
     setShip,

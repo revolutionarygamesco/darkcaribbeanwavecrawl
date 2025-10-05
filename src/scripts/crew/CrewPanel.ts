@@ -1,5 +1,5 @@
 import { MODULE_ID } from '../settings.ts'
-import getPositions from './positions.ts'
+import glossAllAssignments from './gloss-all.ts'
 import getAssignments from './get.ts'
 import setAssignments from './set.ts'
 
@@ -45,21 +45,21 @@ export default class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2)
   }
 
   async _prepareContext () {
-    const positions = await getPositions()
+    const positions = await glossAllAssignments()
     return { positions }
   }
 
-  async _assign (position: string, actor: string): Promise<void> {
+  async _assign (id: string, actor: string): Promise<void> {
     const assignments = getAssignments()
-    if (!(position in assignments)) assignments[position] = []
-    if (actor) assignments[position].push(actor)
+    if (!(id in assignments)) assignments[id] = { id, shares: 1, assigned: [] }
+    if (actor) assignments[id].assigned.push(actor)
     await setAssignments(assignments)
   }
 
-  async _unassign (position: string, actor: string): Promise<void> {
+  async _unassign (id: string, actor: string): Promise<void> {
     const assignments = getAssignments()
-    if (!(position in assignments)) assignments[position] = []
-    if (actor) assignments[position] = assignments[position].filter(id => id !== actor)
+    if (!(id in assignments)) assignments[id] = { id, shares: 1, assigned: [] }
+    if (actor) assignments[id].assigned = assignments[id].assigned.filter(id => id !== actor)
     await setAssignments(assignments)
   }
 

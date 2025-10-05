@@ -5,10 +5,10 @@
       <summary>{{this.title}}</summary>
       <p>{{this.desc}}</p>
     </details>
-    {{#if this.assigned}}
+    {{#if this.actors}}
       <table class="crew-assignments">
         <tbody>
-          {{#each assigned}}
+          {{#each this.actors}}
           <tr>
             <td class="img">
               <img src="{{this.img}}" alt="{{this.name}}" />

@@ -1,8 +1,9 @@
+import type { Assignment } from './Assignment.ts'
 import { MODULE_ID, MODULE_SETTINGS } from '../settings.ts'
 
-const setAssignments = async (assignments: Record<string, string[]>): Promise<Record<string, string[]>> => {
-  await game.settings.set<Record<string, string[]>>(MODULE_ID, MODULE_SETTINGS.CREW, assignments)
+const setCrewAssignments = async (assignments: Record<string, Assignment>): Promise<Record<string, Assignment>> => {
+  await game.settings.set<Record<string, Assignment>>(MODULE_ID, MODULE_SETTINGS.CREW, assignments)
   return assignments
 }
 
-export default setAssignments
+export default setCrewAssignments
