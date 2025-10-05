@@ -138,5 +138,3 @@ declare const foundry: {
     ChatMessage: ChatMessage
   }
 }
-
-declare function fromUuid(uuid: string): Promise<any>

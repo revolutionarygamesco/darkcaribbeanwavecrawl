@@ -149,7 +149,7 @@ export default class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2)
     const data = foundry.applications.ux.TextEditor.getDragEventData(event)
     if (data.type !== 'Actor') return
 
-    const actor = await fromUuid(data.uuid) as Actor
+    const actor = game.actors.get(data.uuid)
     if (!actor) return
 
     await this._assign(id, actor.id)

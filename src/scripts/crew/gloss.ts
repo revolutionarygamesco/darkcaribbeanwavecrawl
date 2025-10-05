@@ -6,7 +6,7 @@ const glossAssignment = async (assignment: Assignment): Promise<GlossedAssignmen
   const { id } = assignment
   const actors: Actor[] = []
   for (const id of assignment.assigned) {
-    const actor = await fromUuid(`Actor.${id}`) as Actor
+    const actor = game.actors.get(id)
     if (actor?.type === 'character') actors.push(actor)
   }
 
