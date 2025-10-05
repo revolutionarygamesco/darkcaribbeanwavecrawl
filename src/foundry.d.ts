@@ -3,6 +3,9 @@ declare class ApplicationV2 {
 }
 
 declare class HandlebarsApplication {
+  constructor(options?: any)
+  dragDrop?: DragDrop[]
+  options: any
   element: HTMLElement
   render: (options?: boolean) => Promise<HandlebarsApplication>
   close(options?: any): Promise<this>
@@ -15,6 +18,24 @@ declare class AudioHelper {
 
 declare class ChatMessage {
   create(data?: any, operation?: any): Promise<any>
+}
+
+declare class DragDrop {
+  constructor(options?: any)
+  bind(options?: any): any
+  permissions: {
+    dragstart: any,
+    drop: any
+  }
+  callbacks: {
+    dragstart: any
+    dragover: any
+    drop: any
+  }
+}
+
+declare class TextEditor {
+  static getDragEventData(event: DragEvent): any
 }
 
 type HandlebarsApplicationMixin = (app: typeof ApplicationV2) => typeof HandlebarsApplication
@@ -31,6 +52,8 @@ interface GameSettings {
 interface Actor {
   id: string
   name: string
+  img: string
+  type: string
   attributes: {
     speed: {
       value: number
@@ -102,6 +125,10 @@ declare const foundry: {
     api: {
       ApplicationV2: typeof ApplicationV2,
       HandlebarsApplicationMixin: HandlebarsApplicationMixin
+    },
+    ux: {
+      DragDrop: typeof DragDrop,
+      TextEditor: typeof TextEditor
     }
   },
   audio: {
@@ -111,3 +138,5 @@ declare const foundry: {
     ChatMessage: ChatMessage
   }
 }
+
+declare function fromUuid(uuid: string): Promise<any>

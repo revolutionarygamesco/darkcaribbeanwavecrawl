@@ -25,5 +25,35 @@
     p.sans {
       color: var(--color-form-hint);
     }
+
+    table {
+      tr {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+      }
+
+      td.img {
+        text-align: center;
+        width: 4rem;
+      }
+
+      td.actions {
+        align-items: flex-end;
+        display: flex;
+        flex-direction: column;
+        width: 5rem;
+      }
+
+      img {
+        height: 2rem;
+        width: 2rem;
+      }
+
+      td.name {
+        flex-grow: 1;
+      }
+    }
   }
 }

@@ -1,11 +1,38 @@
 <div class="crew-positions-page">
   {{#each positions}}
-  <section class="position">
+  <section class="position" data-position-id="{{@key}}" data-drag="true">
     <details>
       <summary>{{this.title}}</summary>
       <p>{{this.desc}}</p>
     </details>
-    <p class="sans">{{this.sans}}</p>
+    {{#if this.assigned}}
+      <table class="crew-assignments">
+        <tbody>
+          {{#each assigned}}
+          <tr>
+            <td class="img">
+              <img src="{{this.img}}" alt="{{this.name}}" />
+            </td>
+            <td class="name">
+              {{this.name}}
+            </td>
+            <td class="actions">
+              <button
+                type="button"
+                class="remove-crew"
+                data-position-id="{{@../key}}"
+                data-actor-id="{{this.id}}"
+                title="Remove from position">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      <p class="sans">{{this.sans}}</p>
+    {{/if}}
   </section>
   {{/each}}
 </div>
