@@ -66,7 +66,11 @@ interface Actor {
       max: number,
       value: number
     }
+  },
+  system: {
+    silver: number
   }
+  update(data?: object, operation?: any): Promise<any>
 }
 
 interface Module {

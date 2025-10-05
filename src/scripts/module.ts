@@ -39,6 +39,7 @@ import initialCrewAssignments from './crew/init.ts'
 
 import displayCrewPanel from './crew/display.ts'
 import generateInsult from './insults/generate.ts'
+import payout from './silver/payout.ts'
 
 const initSetting = (setting: string, type: any, defaultValue: any, config: boolean = true) => {
   game.settings.register(MODULE_ID, setting, {
@@ -56,8 +57,8 @@ const time = new Chronometer()
 Hooks.once('init', async () => {
   initSetting(MODULE_SETTINGS.ROTATION, Number, 180)
   initSetting(MODULE_SETTINGS.STARTDATE, String, '24 July 1715')
-  initSetting(MODULE_SETTINGS.MINUTES, Number, 0)
-  initSetting(MODULE_SETTINGS.PREVMINUTES, Number, 0)
+  initSetting(MODULE_SETTINGS.MINUTES, Number, 0, false)
+  initSetting(MODULE_SETTINGS.PREVMINUTES, Number, 0, false)
   initSetting(MODULE_SETTINGS.HISTORICAL, Boolean, false)
   initSetting(MODULE_SETTINGS.SHIP, String, '', false)
   initSetting(MODULE_SETTINGS.CHAPTER, Number, 1, false)
@@ -97,7 +98,8 @@ Hooks.once('init', async () => {
     getTime,
 
     displayCrewPanel,
-    generateInsult
+    generateInsult,
+    payout
   }
 })
 
