@@ -67,6 +67,9 @@ interface Actor {
       value: number
     }
   },
+  collections: {
+    items: Map<string, { type: string, name: string, [key: string]: any }>
+  },
   system: {
     silver: number
   }
