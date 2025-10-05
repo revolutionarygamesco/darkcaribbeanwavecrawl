@@ -30,6 +30,7 @@ interface GameSettings {
 
 interface Actor {
   id: string
+  name: string
   attributes: {
     speed: {
       value: number
