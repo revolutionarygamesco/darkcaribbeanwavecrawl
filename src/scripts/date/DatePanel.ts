@@ -21,9 +21,7 @@ export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2)
     },
     window: {
       frame: false,
-      resizable: false,
-      height: 'auto',
-      width: 'auto'
+      resizable: false
     }
   }
 
