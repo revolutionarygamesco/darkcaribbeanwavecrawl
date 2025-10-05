@@ -2,6 +2,7 @@ import { MODULE_ID } from '../settings.ts'
 import glossAllAssignments from './gloss-all.ts'
 import getAssignments from './get.ts'
 import setAssignments from './set.ts'
+import setShares from './set-shares.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 
@@ -14,6 +15,7 @@ const dropSelector = '.position'
 
 export default class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   private _unassignHandler: ((event: Event) => Promise<void>) | null = null
+  private _changeShareHandler: ((event: Event) => Promise<void>) | null = null
 
   static DEFAULT_OPTIONS = {
     id: `${MODULE_ID}-crew`,
@@ -76,6 +78,19 @@ export default class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2)
     await this.render()
   }
 
+  async _changeShares (event: Event) {
+    const target = event.target as HTMLElement
+    const input = target.closest('input.shares') as HTMLInputElement
+    if (!input) return
+
+    const id = input.dataset.positionId
+    const shares = parseFloat(input.value)
+    if (!id || isNaN(shares)) return
+
+    await setShares(id, shares)
+    await this.render()
+  }
+
   #createDragDropHandlers () {
     return this.options.dragDrop.map((d: DragDrop) => {
       d.permissions = {
@@ -99,6 +114,11 @@ export default class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2)
     if (!this._unassignHandler) {
       this._unassignHandler = this._clickRemove.bind(this)
       this.element.addEventListener('click', this._unassignHandler)
+    }
+
+    if (!this._changeShareHandler) {
+      this._changeShareHandler = this._changeShares.bind(this)
+      this.element.addEventListener('change', this._changeShareHandler)
     }
   }
 

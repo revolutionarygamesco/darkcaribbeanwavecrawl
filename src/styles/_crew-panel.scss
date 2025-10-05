@@ -26,7 +26,22 @@
       color: var(--color-form-hint);
     }
 
+    fieldset.shares {
+      border: 0;
+      float: right;
+      font-size: 0.75em;
+      text-align: center;
+      width: 4rem;
+
+      input.shares {
+        height: 1.5rem;
+        text-align: center;
+      }
+    }
+
     table {
+      clear: both;
+
       tr {
         align-items: center;
         display: flex;

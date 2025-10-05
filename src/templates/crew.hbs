@@ -1,6 +1,16 @@
 <div class="crew-positions-page">
   {{#each positions}}
   <section class="position" data-position-id="{{@key}}" data-drag="true">
+    <fieldset class="shares">
+      <label for="{{@key}}-shares">Shares</label>
+      <input
+        id="{{@key}}-shares"
+        type="number"
+        min="0"
+        value="{{this.shares}}"
+        data-position-id="{{@key}}"
+        class="shares" />
+    </fieldset>
     <details>
       <summary>{{this.title}}</summary>
       <p>{{this.desc}}</p>
