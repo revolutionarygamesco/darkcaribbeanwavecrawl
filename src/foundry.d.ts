@@ -55,14 +55,14 @@ interface Actor {
   img: string
   type: string
   attributes: {
-    speed: {
+    speed?: {
       value: number
     },
-    crew: {
+    crew?: {
       max: number,
       value: number
     },
-    cargo: {
+    cargo?: {
       max: number,
       value: number
     }
@@ -71,7 +71,7 @@ interface Actor {
     items: Map<string, { type: string, name: string, [key: string]: any }>
   },
   system: {
-    silver: number
+    silver?: number
   }
   update(data?: object, operation?: any): Promise<any>
 }

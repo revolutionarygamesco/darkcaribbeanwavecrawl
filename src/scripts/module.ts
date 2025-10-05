@@ -121,7 +121,7 @@ Hooks.on('updateSetting', async (setting: any, value: any, _: any) => {
   if (!ship) return
 
   const minutes = parseInt(value.value)
-  const crewSize = ship.attributes.crew.value
+  const crewSize = ship.attributes?.crew?.value ?? 0
   const start = getStartDate()
   const before = getDate(start, game.settings.get<number>(MODULE_ID, MODULE_SETTINGS.PREVMINUTES))
   const after = getDate(start, minutes)

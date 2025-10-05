@@ -11,7 +11,7 @@ const payout = async (amount: number = getSilver()): Promise<number> => {
 
   for (const id in shares) {
     const actor = game.actors.get(id)
-    if (!actor) continue
+    if (!actor?.system?.silver) continue
 
     const payment = Math.floor(shares[id] * perShare)
     await actor.update({ 'system.silver': actor.system.silver + payment })
