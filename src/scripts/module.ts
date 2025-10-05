@@ -35,6 +35,8 @@ import consumeProvisions from './provisions/consume.ts'
 import loadProvisions from './provisions/load.ts'
 import adjustDate from './utilities/adjust-date.ts'
 
+import displayCrewPanel from './crew/display.ts'
+
 const initSetting = (setting: string, type: any, defaultValue: any, config: boolean = true) => {
   game.settings.register(MODULE_ID, setting, {
     name: game.i18n.localize(`${MODULE_ID}.settings.${setting}.name`),
@@ -88,7 +90,9 @@ Hooks.once('init', async () => {
     calculateDayNight,
     calculateLunarPhase,
     getDate,
-    getTime
+    getTime,
+
+    displayCrewPanel
   }
 })
 

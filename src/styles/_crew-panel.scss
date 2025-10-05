@@ -1,0 +1,29 @@
+#revolutionary-darkcaribbean-crew {
+  .window-content {
+    background: #000 url('/modules/revolutionary-darkcaribbean/artwork/crew.png') no-repeat top center;
+    background-size: contain;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  .crew-positions-page {
+    padding: 1em;
+  }
+
+  .position {
+    summary {
+      font-size: 1.5em;
+    }
+
+    & + .position {
+      border-top: 1px solid var(--color-border);
+      margin: 1em 0 0 0;
+      padding: 1em 0 0 0;
+    }
+
+    p.sans {
+      color: var(--color-form-hint);
+    }
+  }
+}

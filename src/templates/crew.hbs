@@ -1,0 +1,11 @@
+<div class="crew-positions-page">
+  {{#each positions}}
+  <section class="position">
+    <details>
+      <summary>{{this.title}}</summary>
+      <p>{{this.desc}}</p>
+    </details>
+    <p class="sans">{{this.sans}}</p>
+  </section>
+  {{/each}}
+</div>
