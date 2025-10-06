@@ -80,7 +80,7 @@ not to trick anybody.
 
 ### Roadmap
 
-#### v1.0.0
+#### v1.0: A Pyrate’s Life
 
 * The **Dark Caribbean** scene, showing a hex map of the
   region and other information about the status of the
@@ -103,7 +103,7 @@ not to trick anybody.
   increase or decrease them.
 * GM macros to control the chapter, winds, and haunts.
 
-#### v1.1.0
+#### v1.1: The Empires Strike Back
 
 * Add an enmity system for each of the imperial powers.
   The more money you cost any given power (the Spanish, the
@@ -113,7 +113,7 @@ not to trick anybody.
   to manage the tempers of the Old World’s empires, or
   embrace their ire and prepare for war.
 
-#### v1.2.0
+#### v1.2: Sails & Storms
 
 * You’re not the only thing out there roaming the
   Dark Caribbean. This update will be all about adding
