@@ -80,7 +80,13 @@ not to trick anybody.
 
 ### Roadmap
 
-#### v1.0: A Pyrate’s Life
+<br /><br />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/v0100.dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/v0100.light.png">
+  <img alt="v1.0: A Pyrate's Life" src="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/v0100.light.png">
+</picture>
+<br /><br />
 
 * The **Dark Caribbean** scene, showing a hex map of the
   region and other information about the status of the
@@ -103,7 +109,13 @@ not to trick anybody.
   increase or decrease them.
 * GM macros to control the chapter, winds, and haunts.
 
-#### v1.1: The Empires Strike Back
+<br /><br />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/v0101.dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/v0101.light.png">
+  <img alt="v1.1: The Empires Strike Back" src="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/v0101.light.png">
+</picture>
+<br /><br />
 
 * Add an enmity system for each of the imperial powers.
   The more money you cost any given power (the Spanish, the
@@ -113,7 +125,13 @@ not to trick anybody.
   to manage the tempers of the Old World’s empires, or
   embrace their ire and prepare for war.
 
-#### v1.2: Sails & Storms
+<br /><br />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/v0102.dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/v0102.light.png">
+  <img alt="v1.2: Sails &amp; Storms" src="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/v0102.light.png">
+</picture>
+<br /><br />
 
 * You’re not the only thing out there roaming the
   Dark Caribbean. This update will be all about adding
