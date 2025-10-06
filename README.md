@@ -1,15 +1,15 @@
 <br /><br /><br /><br />
 <div align="center">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/src/artwork/title.dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/src/artwork/title.light.png">
-  <img alt="The Dark Caribbean Wave Crawl" src="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/src/artwork/title.light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/title.dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/title.light.png">
+  <img alt="The Dark Caribbean Wave Crawl" src="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/title.light.png">
 </picture>
 <br /><br />
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/src/artwork/pirate-borg-compatible.dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/src/artwork/pirate-borg-compatible.light.png">
-  <img alt="Compatible with Pirate Borg" src="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/src/artwork/pirate-borg-compatible.light.png" width="20%">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/pirate-borg-compatible.dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/pirate-borg-compatible.light.png">
+  <img alt="Compatible with Pirate Borg" src="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/pirate-borg-compatible.light.png" width="20%">
 </picture>
 </div>
 <br /><br /><br /><br />
