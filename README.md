@@ -5,6 +5,12 @@
   <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/src/artwork/title.light.png">
   <img alt="The Dark Caribbean Wave Crawl" src="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/src/artwork/title.light.png">
 </picture>
+<br /><br />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/src/artwork/pirate-borg-compatible.dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/src/artwork/pirate-borg-compatible.light.png">
+  <img alt="Compatible with Pirate Borg" src="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/src/artwork/pirate-borg-compatible.light.png">
+</picture>
 </div>
 <br /><br /><br /><br />
 
@@ -12,6 +18,8 @@
 ![Foundry Version](https://img.shields.io/badge/Foundry-v13-informational?label=Foundry+version&style=for-the-badge)
 ![Test Status](https://img.shields.io/github/actions/workflow/status/revolutionarygamesco/darkcaribbeanwavecrawl/test.yml?label=Test+status&style=for-the-badge)
 ![License](https://img.shields.io/github/license/revolutionarygamesco/darkcaribbeanwavecrawl?style=for-the-badge)
+
+
 
 A wave crawl adventure for
 _[Pirate Borg](https://www.limithron.com/pirateborg)_
@@ -39,6 +47,13 @@ set in [the Dark Caribbean](https://www.limithron.com/darkcaribbean).
 * Tracking high tide and low tide. If you’re on coastal
   waters at low tide, your pilot may need to navigate
   the rocky shoals to avoid running aground!
+
+**Note:** This is in no way, shape, or form an
+official release. We at [Revolutionary Games](https://revolutionarygames.co/)
+are fans and supporters of [Limithron’s](https://www.limithron.com/),
+but this is [a third-party adventure](https://www.limithron.com/license).
+We try to make it look nice because that’s how we roll,
+not to trick anybody.
 
 ### Requirements
 
