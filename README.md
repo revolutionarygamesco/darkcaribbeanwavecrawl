@@ -1,5 +1,12 @@
-![The Dark Caribbean Wave Crawl](./src/artwork/title.dark.png#gh-dark-mode-only)
-![The Dark Caribbean Wave Crawl](./src/artwork/title.light.png#gh-light-mode-only)
+<br /><br /><br /><br />
+<div align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/src/artwork/title.dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/src/artwork/title.light.png">
+  <img alt="The Dark Caribbean Wave Crawl" src="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/src/artwork/title.light.png">
+</picture>
+</div>
+<br /><br /><br /><br />
 
 ![Latest Release](https://img.shields.io/github/v/release/revolutionarygamesco/darkcaribbeanwavecrawl?label=Latest+release&style=for-the-badge)
 ![Foundry Version](https://img.shields.io/badge/Foundry-v13-informational?label=Foundry+version&style=for-the-badge)
