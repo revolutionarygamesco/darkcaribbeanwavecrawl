@@ -36,17 +36,24 @@ set in [the Dark Caribbean](https://www.limithron.com/darkcaribbean).
   with a leveling and reputation system
   [inspired by Mindstorm](https://www.mindstormpress.com/ringing-the-bell)
   and [CGP Grey](https://youtu.be/3YFeE1eDlD0?si=8N4pv6rpoewCfAyt).
-* A provisioning system so your quartermaster can fret about
-  making sure the crew has enough food, fresh water, and
+* Set different members of your crew to different positions,
+  including captain, quartermaster, pilot, bosun, carpenter,
+  gunner, sail-master, and more. Manage a watch schedule to
+  keep your ship running and gain experience in your position
+  with each watch you complete.
+* A provisioning system so your quartermaster can fret over
+  keeping the crew supplied with food, fresh water, and
   grog. Face hard trade-offs about when and where to
   resupply and what costs you might face to do so.
 * Use as a campaign framework for your piratical career
   and set any other adventures you care to include on
   the map.
-* Rules and random tables for handling storms.
-* Tracking high tide and low tide. If you’re on coastal
-  waters at low tide, your pilot may need to navigate
-  the rocky shoals to avoid running aground!
+* Will you prowl the established trade routes, where
+  merchant ships are more common, but risk running
+  across naval patrols or rival pirates? Most merchants
+  are laden with sugar, tobacco, and ash, but some
+  may carry other prizes, from ancient artifacts to
+  sensitive intelligence reports.
 
 **Note:** This is in no way, shape, or form an
 official release. We at [Revolutionary Games](https://revolutionarygames.co/)
