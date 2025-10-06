@@ -82,9 +82,9 @@ not to trick anybody.
 
 <br />
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/v0100.dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/v0100.light.png">
-  <img alt="v1.0: A Pyrate's Life" src="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/v0100.light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/v0100.dark.png" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/v0100.light.png" />
+  <img alt="v1.0: A Pyrate's Life" src="https://raw.githubusercontent.com/revolutionarygamesco/darkcaribbeanwavecrawl/refs/heads/main/static/v0100.light.png" />
 </picture>
 <br />
 <br />
@@ -188,3 +188,5 @@ not to trick anybody.
 ### Credits
 
 * [Lunar phase icons](https://thenounproject.com/icon/moon-phases-1129569/) by [Andrew Doane](https://thenounproject.com/creator/andydoane/) from the [Noun Project](https://thenounproject.com/).
+* [Gothicus](https://fonts.adobe.com/fonts/gothicus) by Aerotype
+* [Leander](https://www.dafont.com/leander.font) by Tension Type
