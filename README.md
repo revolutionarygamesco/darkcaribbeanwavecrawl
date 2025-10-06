@@ -1,4 +1,5 @@
-# Dark Caribbean Wave Crawl
+![The Dark Caribbean Wave Crawl](./src/artwork/title.dark.png#gh-dark-mode-only)
+![The Dark Caribbean Wave Crawl](./src/artwork/title.light.png#gh-light-mode-only)
 
 ![Latest Release](https://img.shields.io/github/v/release/revolutionarygamesco/darkcaribbeanwavecrawl?label=Latest+release&style=for-the-badge)
 ![Foundry Version](https://img.shields.io/badge/Foundry-v13-informational?label=Foundry+version&style=for-the-badge)
