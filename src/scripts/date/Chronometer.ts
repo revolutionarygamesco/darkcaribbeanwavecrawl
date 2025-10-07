@@ -1,8 +1,8 @@
 import { MODULE_ID } from '../settings.ts'
-import getMinutes from './get-minutes.ts'
 import adjustTime from './adjust.ts'
 import getDate from './get.ts'
 import getTime from './time.ts'
+import ringBell from './ring.ts'
 
 export default class Chronometer {
   private interval: number | null = null
@@ -35,13 +35,7 @@ export default class Chronometer {
 
   private async increment () {
     await adjustTime(1)
-    await this.checkBell()
-  }
-
-  private async checkBell () {
-    const minutes = getMinutes()
-    const m = minutes % 60
-    if (m === 0 || m === 30) await this.ringBell()
+    if (ringBell()) await this.ringBell()
   }
 
   private async ringBell () {
