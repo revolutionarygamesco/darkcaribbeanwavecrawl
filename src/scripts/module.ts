@@ -16,8 +16,12 @@ const initSetting = (setting: string, type: any, defaultValue: any, config: bool
 Hooks.once('init', async () => {
   initSetting(MODULE_SETTINGS.ROTATION, Number, 180)
   initSetting(MODULE_SETTINGS.STARTDATE, String, '24 July 1715')
+  initSetting(MODULE_SETTINGS.HISTORICAL, Boolean, false)
 
-  game.modules.get(MODULE_ID).api = {
+  const crawl = game.modules.get(MODULE_ID)
+  if (!crawl) return
+
+  crawl.api = {
     generateInsult
   }
 })
