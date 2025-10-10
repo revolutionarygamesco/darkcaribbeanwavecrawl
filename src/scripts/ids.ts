@@ -1,7 +1,7 @@
 const ids: Record<string, Record<string, string>> = {
   adventure: {
     abs: 'Compendium.revolutionary-darkcaribbean.dark-caribbean-wave-crawl.Adventure.xg1pARNljnvGWpMA',
-    compendium: 'Compendium.revolutionary-darkcaribbean.dark-caribbean-wave-crawl',
+    compendium: 'revolutionary-darkcaribbean.dark-caribbean-wave-crawl',
     rel: 'xg1pARNljnvGWpMA'
   },
   haunt: {

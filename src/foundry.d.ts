@@ -49,10 +49,13 @@ interface GameSettings {
   default: any
 }
 
-interface Actor {
+interface Document {
   id: string
   name: string
   img: string
+}
+
+interface Actor extends Document {
   type: string
   attributes: {
     speed?: {
@@ -74,6 +77,10 @@ interface Actor {
     silver?: number
   }
   update(data?: object, operation?: any): Promise<any>
+}
+
+interface Adventure extends Document {
+  flags: any
 }
 
 interface Module {
@@ -102,12 +109,9 @@ declare const game: {
   i18n: {
     localize: (key: string) => string
   },
-  actors: {
-    get: (id: string) => Actor | undefined
-  },
-  modules: {
-    get: (id: string) => Module
-  },
+  actors: Map<string, Actor>
+  modules: Map<string, Module>
+  packs: Map<string, any>
   paused: boolean,
   scenes: {
     active?: Scene
