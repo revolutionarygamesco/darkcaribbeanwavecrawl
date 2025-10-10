@@ -1,5 +1,4 @@
 import initCrawlState from './init.ts'
-import {CrawlTeam} from './state.ts'
 
 describe('initCrawlState', () => {
   const state = initCrawlState()
@@ -8,13 +7,6 @@ describe('initCrawlState', () => {
     expect(actual.getFullYear()).toBe(year)
     expect(actual.getMonth()).toBe(month)
     expect(actual.getDate()).toBe(date)
-  }
-
-  const expectTeam = (team: CrawlTeam, officer: string): void => {
-    expect(team.officer).toBe(officer)
-    expect(team.helm).toBe('')
-    expect(team.lookout).toBe('')
-    expect(team.crew).toHaveLength(0)
   }
 
   it('defaults start date to 24 July 1715', () => {
@@ -32,17 +24,17 @@ describe('initCrawlState', () => {
     expect(state.date.minutes).toBe(0)
   })
 
-  it('starts crew positions as an empty map', () => {
-    expect(state.crew.positions.size).toBe(0)
+  it('starts crew positions as an empty record', () => {
+    expect(state.crew.positions).toEqual({})
   })
 
   it('starts both teams empty', () => {
-    expectTeam(state.crew.teams[0], 'quartermaster')
-    expectTeam(state.crew.teams[1], 'sailing-master')
+    expect(state.crew.teams.quartermaster.crew).toHaveLength(0)
+    expect(state.crew.teams.sailmaster.crew).toHaveLength(0)
   })
 
-  it('starts xp as an empty map', () => {
-    expect(state.crew.xp.size).toBe(0)
+  it('starts xp as an empty record', () => {
+    expect(state.crew.xp).toEqual({})
   })
 
   it('starts all provisions at zero', () => {
@@ -56,9 +48,7 @@ describe('initCrawlState', () => {
   })
 
   it('starts without a ship', () => {
-    const { actor, token } = state.ship
-    const ids = [actor, token]
-    for (const id of ids) expect(id).toBe('')
+    expect(state.ship).not.toBeDefined()
   })
 
   it('starts with chapter 1', () => {

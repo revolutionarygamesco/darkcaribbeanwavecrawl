@@ -1,14 +1,16 @@
 export interface CrawlTeam {
-  officer: 'quartermaster' | 'sailing-master'
-  helm: string
-  lookout: string
+  helm?: string
+  lookout?: string
   crew: string[]
 }
 
 export interface CrawlCrew {
-  positions: Map<string, string[]>
-  teams: [CrawlTeam, CrawlTeam],
-  xp: Map<string, Map<string, number>>
+  positions: Record<string, string[]>
+  teams: {
+    quartermaster: CrawlTeam
+    sailmaster: CrawlTeam
+  }
+  xp: Record<string, Record<string, number>>
 }
 
 export interface CrawlDate {
@@ -24,7 +26,7 @@ export interface CrawlProvisions {
 
 export interface CrawlSilver {
   ship: number
-  crew: Map<string, number>
+  crew: Record<string, number>
 }
 
 export interface CrawlShip {
@@ -37,7 +39,7 @@ interface CrawlState {
   crew: CrawlCrew
   provisions: CrawlProvisions
   silver: CrawlSilver
-  ship: CrawlShip
+  ship?: CrawlShip
   chapter: number
   winds: number
   haunt: number

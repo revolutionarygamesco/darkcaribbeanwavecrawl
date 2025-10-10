@@ -12,22 +12,12 @@ const initCrawlState = (): CrawlState => {
       minutes: 0
     },
     crew: {
-      positions: new Map<string, string[]>(),
-      teams: [
-        {
-          officer: 'quartermaster',
-          helm: '',
-          lookout: '',
-          crew: []
-        },
-        {
-          officer: 'sailing-master',
-          helm: '',
-          lookout: '',
-          crew: []
-        }
-      ],
-      xp: new Map<string, Map<string, number>>()
+      positions: {},
+      teams: {
+        quartermaster: { crew: [] },
+        sailmaster: { crew: [] }
+      },
+      xp: {}
     },
     provisions: {
       food: 0,
@@ -36,11 +26,7 @@ const initCrawlState = (): CrawlState => {
     },
     silver: {
       ship: 0,
-      crew: new Map<string, number>()
-    },
-    ship: {
-      actor: '',
-      token: ''
+      crew: {}
     },
     chapter: 1,
     winds: 2,
