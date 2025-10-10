@@ -9,9 +9,9 @@ const saveCrawlState = async (
   stack: CrawlState[] = getSavedCrawlStates(),
   skipSave: boolean = false
 ): Promise<CrawlState[]> => {
-  const present = latest.date.minutes
+  const present = latest.minutes
   const cutoff = present - (MAX_DAYS_SAVED * 24 * 60)
-  const kept = stack.filter(state => state.date.minutes >= cutoff)
+  const kept = stack.filter(state => state.minutes >= cutoff)
   const saved = [...kept, latest]
 
   if (!skipSave) await setSavedCrawlStates(saved)

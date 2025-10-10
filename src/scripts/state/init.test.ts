@@ -3,25 +3,8 @@ import initCrawlState from './init.ts'
 describe('initCrawlState', () => {
   const state = initCrawlState()
 
-  const expectDate = (actual: Date, year: number, month: number, date: number): void => {
-    expect(actual.getFullYear()).toBe(year)
-    expect(actual.getMonth()).toBe(month)
-    expect(actual.getDate()).toBe(date)
-  }
-
-  it('defaults start date to 24 July 1715', () => {
-    expectDate(state.date.start, 1715, 6, 24)
-  })
-
-  it('takes start date from settings', () => {
-    game.settings.get = jest.fn().mockReturnValue('21 December 1719')
-    const state = initCrawlState()
-    expectDate(state.date.start, 1719, 11, 21)
-    jest.clearAllMocks()
-  })
-
   it('starts minutes at zero', () => {
-    expect(state.date.minutes).toBe(0)
+    expect(state.minutes).toBe(0)
   })
 
   it('starts crew positions as an empty record', () => {
@@ -29,8 +12,13 @@ describe('initCrawlState', () => {
   })
 
   it('starts both teams empty', () => {
-    expect(state.crew.teams.quartermaster.crew).toHaveLength(0)
-    expect(state.crew.teams.sailmaster.crew).toHaveLength(0)
+    expect(state.crew.teams.starboard.crew).toHaveLength(0)
+    expect(state.crew.teams.larboard.crew).toHaveLength(0)
+  })
+
+  it('default starboard to quartermaster, larboard to sailing master', () => {
+    expect(state.crew.teams.starboard.officer).toBe('quartermaster')
+    expect(state.crew.teams.larboard.officer).toBe('sailing-master')
   })
 
   it('starts xp as an empty record', () => {
