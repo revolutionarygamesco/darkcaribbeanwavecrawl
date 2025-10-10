@@ -53,6 +53,8 @@ interface Document {
   id: string
   name: string
   img: string
+  getFlag<T>(scope: string, key: string): T
+  setFlag<T>(scope: string, key: string, value: T): void
 }
 
 interface Actor extends Document {
