@@ -1,0 +1,28 @@
+import CrawlState, { CrawlTeamSide } from '../../../state.ts'
+import getOppositeSide from '../opposite.ts'
+import getCrawlState from '../../../get.ts'
+import cloneCrawlState from '../../../clone.ts'
+import setCrawlState from '../../../set.ts'
+import getActorId from '../../../../utilities/actor-id.ts'
+
+const setLookout = async (
+  side: CrawlTeamSide,
+  helm: Actor | string,
+  previous: CrawlState = getCrawlState(),
+  skipSave: boolean = false
+): Promise<CrawlState> => {
+  const id = getActorId(helm)
+  const opposite = getOppositeSide(side)
+  const { officer } = previous.crew.teams[opposite]
+  if ((previous.crew.positions[officer] ?? []).includes(id)) return previous
+
+  const copy = cloneCrawlState(previous)
+  copy.crew.teams[side].lookout = id
+  copy.crew.teams[side].crew = [...new Set([...copy.crew.teams[side].crew, id])]
+  copy.crew.teams[opposite].crew = copy.crew.teams[opposite].crew
+    .filter(cid => cid !== id)
+
+  return skipSave ? copy : await setCrawlState(copy)
+}
+
+export default setLookout
