@@ -31,6 +31,10 @@ describe('initCrawlState', () => {
     for (const provision of provisions) expect(provision).toBe(0)
   })
 
+  it('starts without any foraged food', () => {
+    expect(state.provisions.forage).toBe(false)
+  })
+
   it('starts ship silver at zero', () => {
     expect(state.silver.ship).toBe(0)
   })

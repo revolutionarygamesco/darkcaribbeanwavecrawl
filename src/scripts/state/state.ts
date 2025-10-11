@@ -20,6 +20,7 @@ export interface CrawlProvisions {
   food: number
   water: number
   rum: number
+  forage: boolean
 }
 
 export interface CrawlSilver {

@@ -12,7 +12,8 @@ const initCrawlState = (): CrawlState => ({
   provisions: {
     food: 0,
     water: 0,
-    rum: 0
+    rum: 0,
+    forage: false
   },
   silver: {
     ship: 0,
