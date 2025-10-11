@@ -16,10 +16,15 @@ export interface CrawlCrew {
   xp: Record<ActorID, Record<Position, number>>
 }
 
-export interface CrawlProvisions {
+export interface CrawlProvisionStores {
   food: number
   water: number
   rum: number
+}
+
+export type Provision = keyof CrawlProvisionStores
+
+export interface CrawlProvisions extends CrawlProvisionStores {
   forage: boolean
 }
 
