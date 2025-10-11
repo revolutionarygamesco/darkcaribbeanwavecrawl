@@ -4,6 +4,7 @@ import getCrawlState from '../../../get.ts'
 import cloneCrawlState from '../../../clone.ts'
 import setCrawlState from '../../../set.ts'
 import getActorId from '../../../../utilities/actor-id.ts'
+import removeTeamMember from '../remove.ts'
 
 const setLookout = async (
   side: CrawlTeamSide,
@@ -19,9 +20,7 @@ const setLookout = async (
   const copy = cloneCrawlState(previous)
   copy.crew.teams[side].lookout = id
   copy.crew.teams[side].crew = [...new Set([...copy.crew.teams[side].crew, id])]
-  copy.crew.teams[opposite].crew = copy.crew.teams[opposite].crew
-    .filter(cid => cid !== id)
-
+  removeTeamMember(opposite, id, copy)
   return skipSave ? copy : await setCrawlState(copy)
 }
 
