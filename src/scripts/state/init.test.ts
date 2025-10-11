@@ -36,7 +36,11 @@ describe('initCrawlState', () => {
   })
 
   it('starts without a ship', () => {
-    expect(state.ship).not.toBeDefined()
+    expect(state.ship.actor).not.toBeDefined()
+  })
+
+  it('starts with a clean hull', () => {
+    expect(state.ship.barnacles).toBe(0)
   })
 
   it('starts with chapter 1', () => {

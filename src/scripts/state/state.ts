@@ -1,17 +1,19 @@
+export type Position = string
+export type ActorID = string
+export type CrawlTeamOfficer = 'quartermaster' | 'sailing-master'
+export type CrawlTeamSide = 'starboard' | 'larboard'
+
 export interface CrawlTeam {
-  officer: 'quartermaster' | 'sailing-master'
+  officer: CrawlTeamOfficer
   helm?: string
   lookout?: string
   crew: string[]
 }
 
 export interface CrawlCrew {
-  positions: Record<string, string[]>
-  teams: {
-    starboard: CrawlTeam
-    larboard: CrawlTeam
-  }
-  xp: Record<string, Record<string, number>>
+  positions: Record<Position, ActorID[]>
+  teams: Record<CrawlTeamSide, CrawlTeam>
+  xp: Record<ActorID, Record<Position, number>>
 }
 
 export interface CrawlProvisions {
@@ -22,19 +24,19 @@ export interface CrawlProvisions {
 
 export interface CrawlSilver {
   ship: number
-  crew: Record<string, number>
+  crew: Record<ActorID, number>
 }
 
 export interface CrawlShip {
-  actor: string
-  token: string
+  actor?: ActorID
+  barnacles: number
 }
 
 interface CrawlState {
   crew: CrawlCrew
   provisions: CrawlProvisions
   silver: CrawlSilver
-  ship?: CrawlShip
+  ship: CrawlShip
   minutes: number
   chapter: number
   winds: number

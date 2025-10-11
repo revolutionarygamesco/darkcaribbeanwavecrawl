@@ -18,6 +18,9 @@ const initCrawlState = (): CrawlState => ({
     ship: 0,
     crew: {}
   },
+  ship: {
+    barnacles: 0
+  },
   minutes: 0,
   chapter: 1,
   winds: 2,
