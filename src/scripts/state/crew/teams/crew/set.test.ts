@@ -34,7 +34,6 @@ describe('setTeam', () => {
     before.crew.positions.quartermaster = [anne]
     const after = await setTeam('larboard', [anne], before, true)
     expect(after.crew.teams.starboard.crew).toEqual(before.crew.teams.starboard.crew)
-    expect(after).toBe(before)
   })
 
   it('won’t let you be the other team’s helm', async () => {

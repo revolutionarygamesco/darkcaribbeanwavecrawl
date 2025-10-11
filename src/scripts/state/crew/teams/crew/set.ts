@@ -17,7 +17,7 @@ const setTeam = async (
   const ids = crew
     .map(member => getActorId(member))
     .filter(id => !otherOfficers.includes(id))
-  if (ids.length < 1) return previous
+  if (otherOfficers.length > 1 && ids.length < 1) return previous
 
   const copy = cloneCrawlState(previous)
   copy.crew.teams[side].crew = ids
