@@ -4,9 +4,10 @@ import getAdventure from './get-adventure.ts'
 
 const setCrawlState = async (state: CrawlState): Promise<CrawlState> => {
   const adventure = getAdventure()
-  if (!adventure) return state
-  await adventure.setFlag(MODULE_ID, CRAWL_STATE, state)
-  return state
+  const copy = { ...state }
+  if (!adventure) return copy
+  await adventure.setFlag(MODULE_ID, CRAWL_STATE, copy)
+  return copy
 }
 
 export default setCrawlState
