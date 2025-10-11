@@ -11,8 +11,7 @@ const setProvisions = async (
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
   copy.provisions[type] = Math.max(amount, 0)
-  if (!skipSave) await setCrawlState(copy)
-  return copy
+  return skipSave ? copy : await setCrawlState(copy)
 }
 
 export default setProvisions

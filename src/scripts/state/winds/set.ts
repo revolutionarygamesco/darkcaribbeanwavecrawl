@@ -11,8 +11,7 @@ const setWinds = async (
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
   copy.winds = clamp(value, 1, 4)
-  if (!skipSave) await setCrawlState(copy)
-  return copy
+  return skipSave ? copy : await setCrawlState(copy)
 }
 
 export default setWinds

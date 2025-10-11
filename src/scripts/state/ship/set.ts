@@ -11,8 +11,7 @@ const setShip = async (
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
   copy.ship.actor = getActorId(ship)
-  if (!skipSave) await setCrawlState(copy)
-  return copy
+  return skipSave ? copy : await setCrawlState(copy)
 }
 
 export default setShip

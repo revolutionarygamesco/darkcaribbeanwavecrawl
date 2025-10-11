@@ -10,8 +10,7 @@ const setMinutes = async (
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
   copy.minutes = minutes
-  if (!skipSave) await setCrawlState(copy)
-  return copy
+  return skipSave ? copy : await setCrawlState(copy)
 }
 
 export default setMinutes

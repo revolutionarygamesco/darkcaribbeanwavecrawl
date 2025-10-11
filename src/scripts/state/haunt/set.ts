@@ -11,8 +11,7 @@ const setHaunt = async (
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
   copy.haunt = clamp(value, 1, 3)
-  if (!skipSave) await setCrawlState(copy)
-  return copy
+  return skipSave ? copy : await setCrawlState(copy)
 }
 
 export default setHaunt

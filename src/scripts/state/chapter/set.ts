@@ -11,8 +11,7 @@ const setChapter = async (
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
   copy.chapter = clamp(chapter, 1, 6)
-  if (!skipSave) await setCrawlState(copy)
-  return copy
+  return skipSave ? copy : await setCrawlState(copy)
 }
 
 export default setChapter

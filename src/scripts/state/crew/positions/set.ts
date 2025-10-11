@@ -11,8 +11,7 @@ const setAssigned = async (
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
   copy.crew.positions[position] = typeof characters === 'string' ? [characters] : characters
-  if (!skipSave) await setCrawlState(copy)
-  return copy
+  return skipSave ? copy : await setCrawlState(copy)
 }
 
 export default setAssigned

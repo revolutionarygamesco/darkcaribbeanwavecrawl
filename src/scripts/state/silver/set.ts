@@ -10,8 +10,7 @@ const setSilver = async (
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
   copy.silver.ship = Math.max(amount, 0)
-  if (!skipSave) await setCrawlState(copy)
-  return copy
+  return skipSave ? copy : await setCrawlState(copy)
 }
 
 export default setSilver
