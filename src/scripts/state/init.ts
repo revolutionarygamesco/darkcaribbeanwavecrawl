@@ -16,7 +16,7 @@ const initCrawlState = (): CrawlState => ({
     forage: false
   },
   silver: {
-    ship: 0,
+    company: 0,
     crew: {}
   },
   ship: {

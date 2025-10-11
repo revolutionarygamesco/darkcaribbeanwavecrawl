@@ -7,7 +7,7 @@ const addSilver = async (
   previous: CrawlState = getCrawlState(),
   skipSave: boolean = false
 ): Promise<CrawlState> => {
-  const sum = previous.silver.ship + amount
+  const sum = previous.silver.company + amount
   return await setSilver(sum, previous, skipSave)
 }
 

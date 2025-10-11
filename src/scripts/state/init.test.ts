@@ -36,7 +36,7 @@ describe('initCrawlState', () => {
   })
 
   it('starts ship silver at zero', () => {
-    expect(state.silver.ship).toBe(0)
+    expect(state.silver.company).toBe(0)
   })
 
   it('starts without a ship', () => {

@@ -29,7 +29,7 @@ export interface CrawlProvisions extends CrawlProvisionStores {
 }
 
 export interface CrawlSilver {
-  ship: number
+  company: number
   crew: Record<ActorID, number>
 }
 

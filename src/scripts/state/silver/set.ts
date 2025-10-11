@@ -9,7 +9,7 @@ const setSilver = async (
   skipSave: boolean = false
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
-  copy.silver.ship = Math.max(amount, 0)
+  copy.silver.company = Math.max(amount, 0)
   return skipSave ? copy : await setCrawlState(copy)
 }
 
