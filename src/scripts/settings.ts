@@ -4,6 +4,7 @@ export const SAVE_STATE = 'saved-crawl-states'
 
 export const MODULE_SETTINGS = {
   HISTORICAL: 'historical',
-  STARTDATE: 'startdate',
+  START_DATE: 'start-date',
+  DAYS_SAVED: 'days-saved',
   ROTATION: 'rotation'
 } as const
