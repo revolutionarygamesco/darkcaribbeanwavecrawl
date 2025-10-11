@@ -1,6 +1,7 @@
 import type CrawlState from '../state.ts'
 import getCrawlState from '../get.ts'
 import setCrawlState from '../set.ts'
+import cloneCrawlState from '../clone.ts'
 import clamp from '../../utilities/clamp.ts'
 
 const setWinds = async (
@@ -8,7 +9,7 @@ const setWinds = async (
   previous: CrawlState = getCrawlState(),
   skipSave: boolean = false
 ): Promise<CrawlState> => {
-  const copy = { ...previous }
+  const copy = cloneCrawlState(previous)
   copy.winds = clamp(value, 1, 4)
   if (!skipSave) await setCrawlState(copy)
   return copy
