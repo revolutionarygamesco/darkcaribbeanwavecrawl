@@ -8,8 +8,8 @@ const removeTeamMember = (
 ): void => {
   const ids = (Array.isArray(characters) ? characters : [characters])
     .map(char => getActorId(char))
-  const { crew, helm, lookout } = state.crew.teams[side]
-  state.crew.teams[side].crew = crew.filter(id => !ids.includes(id))
+  const { members, helm, lookout } = state.crew.teams[side]
+  state.crew.teams[side].members = members.filter(id => !ids.includes(id))
   if (helm && ids.includes(helm)) delete state.crew.teams[side].helm
   if (lookout && ids.includes(lookout)) delete state.crew.teams[side].lookout
 }

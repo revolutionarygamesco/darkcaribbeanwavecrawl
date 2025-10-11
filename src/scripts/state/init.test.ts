@@ -7,13 +7,13 @@ describe('initCrawlState', () => {
     expect(state.minutes).toBe(0)
   })
 
-  it('starts crew positions as an empty record', () => {
+  it('starts members positions as an empty record', () => {
     expect(state.crew.positions).toEqual({})
   })
 
   it('starts both teams empty', () => {
-    expect(state.crew.teams.starboard.crew).toHaveLength(0)
-    expect(state.crew.teams.larboard.crew).toHaveLength(0)
+    expect(state.crew.teams.starboard.members).toHaveLength(0)
+    expect(state.crew.teams.larboard.members).toHaveLength(0)
   })
 
   it('default starboard to quartermaster, larboard to sailing master', () => {

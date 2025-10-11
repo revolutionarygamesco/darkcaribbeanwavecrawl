@@ -26,8 +26,8 @@ const setAssigned = async (
     const { helm, lookout } = copy.crew.teams[opp]
     if (helm && ids.includes(helm)) delete copy.crew.teams[opp].helm
     if (lookout && ids.includes(lookout)) delete copy.crew.teams[opp].lookout
-    copy.crew.teams[opp].crew = copy.crew.teams[opp].crew.filter(id => !ids.includes(id))
-    copy.crew.teams[team].crew = [...new Set([...copy.crew.teams[team].crew, ...ids])]
+    copy.crew.teams[opp].members = copy.crew.teams[opp].members.filter(id => !ids.includes(id))
+    copy.crew.teams[team].members = [...new Set([...copy.crew.teams[team].members, ...ids])]
   }
 
   return save ? await setCrawlState(copy) : copy

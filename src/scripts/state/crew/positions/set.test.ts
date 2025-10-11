@@ -8,7 +8,7 @@ describe('setAssigned', () => {
   const mary = 'mary-read'
 
   const expectNotOnTeam = (state: CrawlState, id: string, team: CrawlTeamSide): void => {
-    expect(state.crew.teams[team].crew).not.toContain(id)
+    expect(state.crew.teams[team].members).not.toContain(id)
     expect(state.crew.teams[team].helm).toBeUndefined()
     expect(state.crew.teams[team].lookout).toBeUndefined()
   }
@@ -26,55 +26,55 @@ describe('setAssigned', () => {
     expect(after).not.toBe(before)
   })
 
-  it('adds new quartermaster to starboard crew', async () => {
+  it('adds new quartermaster to starboard members', async () => {
     const before = initCrawlState()
     before.crew.teams.starboard.officer = 'quartermaster'
     before.crew.teams.larboard.officer = 'sailing-master'
-    before.crew.teams.larboard.crew = [anne]
+    before.crew.teams.larboard.members = [anne]
     before.crew.teams.larboard.helm = anne
     before.crew.teams.larboard.lookout = anne
 
     const actual = await setAssigned('quartermaster', [anne], before, false)
-    expect(actual.crew.teams.starboard.crew).toContain(anne)
+    expect(actual.crew.teams.starboard.members).toContain(anne)
     expectNotOnTeam(actual, anne, 'larboard')
   })
 
-  it('adds new quartermaster to larboard crew', async () => {
+  it('adds new quartermaster to larboard members', async () => {
     const before = initCrawlState()
     before.crew.teams.starboard.officer = 'sailing-master'
     before.crew.teams.larboard.officer = 'quartermaster'
-    before.crew.teams.starboard.crew = [anne]
+    before.crew.teams.starboard.members = [anne]
     before.crew.teams.starboard.helm = anne
     before.crew.teams.starboard.lookout = anne
 
     const actual = await setAssigned('quartermaster', [anne], before, false)
-    expect(actual.crew.teams.larboard.crew).toContain(anne)
+    expect(actual.crew.teams.larboard.members).toContain(anne)
     expectNotOnTeam(actual, anne, 'starboard')
   })
 
-  it('adds new sailing master to larboard crew', async () => {
+  it('adds new sailing master to larboard members', async () => {
     const before = initCrawlState()
     before.crew.teams.starboard.officer = 'quartermaster'
     before.crew.teams.larboard.officer = 'sailing-master'
-    before.crew.teams.starboard.crew = [anne]
+    before.crew.teams.starboard.members = [anne]
     before.crew.teams.starboard.helm = anne
     before.crew.teams.starboard.lookout = anne
 
     const actual = await setAssigned('sailing-master', [anne], before, false)
-    expect(actual.crew.teams.larboard.crew).toContain(anne)
+    expect(actual.crew.teams.larboard.members).toContain(anne)
     expectNotOnTeam(actual, anne, 'starboard')
   })
 
-  it('adds new sailing master to starboard crew', async () => {
+  it('adds new sailing master to starboard members', async () => {
     const before = initCrawlState()
     before.crew.teams.starboard.officer = 'sailing-master'
     before.crew.teams.larboard.officer = 'quartermaster'
-    before.crew.teams.larboard.crew = [anne]
+    before.crew.teams.larboard.members = [anne]
     before.crew.teams.larboard.helm = anne
     before.crew.teams.larboard.lookout = anne
 
     const actual = await setAssigned('sailing-master', [anne], before, false)
-    expect(actual.crew.teams.starboard.crew).toContain(anne)
+    expect(actual.crew.teams.starboard.members).toContain(anne)
     expectNotOnTeam(actual, anne, 'larboard')
   })
 

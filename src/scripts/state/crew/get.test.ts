@@ -27,7 +27,7 @@ describe('getRoster', () => {
     game.actors = originalActors
   })
 
-  it('returns a roster of every character on the crew', () => {
+  it('returns a roster of every character on the members', () => {
     const actual = getRoster(before)
     const ids = actual.map(actor => actor.id)
     expect(actual).toHaveLength(3)

@@ -25,13 +25,13 @@ describe('getLookout', () => {
 
   it('returns null if there is no such actor', () => {
     const state = initCrawlState()
-    state.crew.teams.starboard = { officer: 'quartermaster', crew: [anne], lookout: 'pew' }
+    state.crew.teams.starboard = { officer: 'quartermaster', members: [anne], lookout: 'pew', onDuty: true }
     expect(getLookout('starboard', state)).toBeNull()
   })
 
   it('returns the team’s designated lookout', () => {
     const state = initCrawlState()
-    state.crew.teams.starboard = { officer: 'quartermaster', crew: [anne], lookout: anne }
+    state.crew.teams.starboard = { officer: 'quartermaster', members: [anne], lookout: anne, onDuty: true }
     expect(getLookout('starboard', state)?.id).toBe(anne)
   })
 })

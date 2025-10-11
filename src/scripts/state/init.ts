@@ -4,8 +4,8 @@ const initCrawlState = (): CrawlState => ({
   crew: {
     positions: {},
     teams: {
-      starboard: { officer: 'quartermaster', crew: [] },
-      larboard: { officer: 'sailing-master', crew: [] }
+      starboard: { officer: 'quartermaster', members: [], onDuty: true },
+      larboard: { officer: 'sailing-master', members: [], onDuty: false }
     },
     xp: {}
   },

@@ -7,7 +7,8 @@ export interface CrawlTeam {
   officer: CrawlTeamOfficer
   helm?: string
   lookout?: string
-  crew: string[]
+  members: string[]
+  onDuty: boolean
 }
 
 export interface CrawlCrew {

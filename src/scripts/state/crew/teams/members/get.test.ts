@@ -14,10 +14,10 @@ describe('getTeam', () => {
 
   beforeEach(() => {
     before = initCrawlState()
-    before.crew.teams.starboard = { officer: 'quartermaster', crew: [anne, mary] }
+    before.crew.teams.starboard = { officer: 'quartermaster', members: [anne, mary], onDuty: true }
 
     game.actors = new Map<string, Actor>()
-    for (const id of before.crew.teams.starboard.crew) game.actors.set(id, { id } as Actor)
+    for (const id of before.crew.teams.starboard.members) game.actors.set(id, { id } as Actor)
   })
 
   afterEach(() => {

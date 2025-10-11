@@ -17,8 +17,8 @@ const setOfficer = async (
   copy.crew.teams[side].officer = officer
   copy.crew.teams[otherTeam].officer = otherOfficer
 
-  let thisCrew = copy.crew.teams[side].crew
-  let thatCrew = copy.crew.teams[otherTeam].crew
+  let thisCrew = copy.crew.teams[side].members
+  let thatCrew = copy.crew.teams[otherTeam].members
 
   thisCrew = [...new Set([...thisCrew, ...(copy.crew.positions[officer] ?? [])])]
   thatCrew = [...new Set([...thatCrew, ...(copy.crew.positions[otherOfficer] ?? [])])]
@@ -32,8 +32,8 @@ const setOfficer = async (
   if (thatHelm && !thatCrew.includes(thatHelm)) delete copy.crew.teams[otherTeam].helm
   if (thatLookout && !thatCrew.includes(thatLookout)) delete copy.crew.teams[otherTeam].lookout
 
-  copy.crew.teams[side].crew = thisCrew
-  copy.crew.teams[otherTeam].crew = thatCrew
+  copy.crew.teams[side].members = thisCrew
+  copy.crew.teams[otherTeam].members = thatCrew
   return save ? await setCrawlState(copy) : copy
 }
 

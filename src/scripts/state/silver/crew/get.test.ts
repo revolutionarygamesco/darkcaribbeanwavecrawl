@@ -2,7 +2,7 @@ import initCrawlState from '../../init.ts'
 import getCrewSilver from './get.ts'
 
 describe('getCrewSilver', () => {
-  it('returns the silver held by a crew member from the state', () => {
+  it('returns the silver held by a members member from the state', () => {
     const id = 'calico-jack'
     const state = initCrawlState()
     state.silver.crew[id] = 350000

@@ -3,17 +3,17 @@ import getCrawlState from '../../../get.ts'
 import getActorId from '../../../../utilities/actor-id.ts'
 import setTeam from './set.ts'
 
-const addToTeam = async (
+const removeFromTeam = async (
   side: CrawlTeamSide,
-  recruits: Actor | string | (Actor | string)[],
+  removals: Actor | string | (Actor | string)[],
   previous: CrawlState = getCrawlState(),
   save: boolean = true
 ): Promise<CrawlState> => {
-  const existing = previous.crew.teams[side].crew
-  const ids = (Array.isArray(recruits) ? recruits : [recruits])
+  const ids = (Array.isArray(removals) ? removals : [removals])
     .map(actor => getActorId(actor))
-  const newTeam = [...new Set([...existing, ...ids])]
+  const newTeam = previous.crew.teams[side].members
+    .filter(id => !ids.includes(id))
   return await setTeam(side, newTeam, previous, save)
 }
 
-export default addToTeam
+export default removeFromTeam

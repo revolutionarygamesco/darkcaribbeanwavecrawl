@@ -8,22 +8,22 @@ describe('setLookout', () => {
     const before = initCrawlState()
     const after = await setLookout('starboard', anne, before, false)
     expect(after.crew.teams.starboard.lookout).toBe(anne)
-    expect(after.crew.teams.starboard.crew).toContain(anne)
+    expect(after.crew.teams.starboard.members).toContain(anne)
   })
 
-  it('removes character from other crew', async () => {
+  it('removes character from other members', async () => {
     const before = initCrawlState()
-    before.crew.teams.larboard.crew = [anne]
+    before.crew.teams.larboard.members = [anne]
     const after = await setLookout('starboard', anne, before, false)
-    expect(after.crew.teams.larboard.crew).toEqual([])
+    expect(after.crew.teams.larboard.members).toEqual([])
   })
 
   it('won’t allow the other team’s officer to take lookout', async () => {
     const before = initCrawlState()
     before.crew.positions.quartermaster = [anne]
-    before.crew.teams.larboard = { officer: 'quartermaster', crew: [anne] }
+    before.crew.teams.larboard = { officer: 'quartermaster', members: [anne], onDuty: true }
     const after = await setLookout('starboard', anne, before, false)
     expect(after.crew.teams.starboard.lookout).toBeUndefined()
-    expect(after.crew.teams.larboard.crew).toEqual([anne])
+    expect(after.crew.teams.larboard.members).toEqual([anne])
   })
 })

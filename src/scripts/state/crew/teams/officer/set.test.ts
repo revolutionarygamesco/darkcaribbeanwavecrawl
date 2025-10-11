@@ -14,13 +14,13 @@ describe('setOfficer', () => {
   it('moves members to new teams', async () => {
     const before = initCrawlState()
     before.crew.positions.quartermaster = [anne]
-    before.crew.teams.larboard.crew = [anne]
+    before.crew.teams.larboard.members = [anne]
     before.crew.teams.larboard.helm = anne
     before.crew.teams.larboard.lookout = anne
 
     const after = await setOfficer('starboard', 'quartermaster', before, false)
-    expect(after.crew.teams.starboard.crew).toContain(anne)
-    expect(after.crew.teams.larboard.crew).not.toContain(anne)
+    expect(after.crew.teams.starboard.members).toContain(anne)
+    expect(after.crew.teams.larboard.members).not.toContain(anne)
     expect(after.crew.teams.larboard.helm).toBeUndefined()
     expect(after.crew.teams.larboard.lookout).toBeUndefined()
   })

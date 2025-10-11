@@ -19,7 +19,7 @@ const setLookout = async (
 
   const copy = cloneCrawlState(previous)
   copy.crew.teams[side].lookout = id
-  copy.crew.teams[side].crew = [...new Set([...copy.crew.teams[side].crew, id])]
+  copy.crew.teams[side].members = [...new Set([...copy.crew.teams[side].members, id])]
   removeTeamMember(opposite, id, copy)
   return save ? await setCrawlState(copy) : copy
 }

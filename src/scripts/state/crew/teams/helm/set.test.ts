@@ -8,22 +8,22 @@ describe('setHelm', () => {
     const before = initCrawlState()
     const after = await setHelm('starboard', anne, before, false)
     expect(after.crew.teams.starboard.helm).toBe(anne)
-    expect(after.crew.teams.starboard.crew).toContain(anne)
+    expect(after.crew.teams.starboard.members).toContain(anne)
   })
 
-  it('removes character from other crew', async () => {
+  it('removes character from other members', async () => {
     const before = initCrawlState()
-    before.crew.teams.larboard.crew = [anne]
+    before.crew.teams.larboard.members = [anne]
     const after = await setHelm('starboard', anne, before, false)
-    expect(after.crew.teams.larboard.crew).toEqual([])
+    expect(after.crew.teams.larboard.members).toEqual([])
   })
 
   it('won’t allow the other team’s officer to take the helm', async () => {
     const before = initCrawlState()
     before.crew.positions.quartermaster = [anne]
-    before.crew.teams.larboard = { officer: 'quartermaster', crew: [anne] }
+    before.crew.teams.larboard = { officer: 'quartermaster', members: [anne], onDuty: true }
     const after = await setHelm('starboard', anne, before, false)
     expect(after.crew.teams.starboard.helm).toBeUndefined()
-    expect(after.crew.teams.larboard.crew).toEqual([anne])
+    expect(after.crew.teams.larboard.members).toEqual([anne])
   })
 })

@@ -25,13 +25,13 @@ describe('getHelm', () => {
 
   it('returns null if there is no such actor', () => {
     const state = initCrawlState()
-    state.crew.teams.starboard = { officer: 'quartermaster', crew: [anne], helm: 'dread-pirate-roberts' }
+    state.crew.teams.starboard = { officer: 'quartermaster', members: [anne], helm: 'dread-pirate-roberts', onDuty: true }
     expect(getHelm('starboard', state)).toBeNull()
   })
 
   it('returns the team’s designated helmsman', () => {
     const state = initCrawlState()
-    state.crew.teams.starboard = { officer: 'quartermaster', crew: [anne], helm: anne }
+    state.crew.teams.starboard = { officer: 'quartermaster', members: [anne], helm: anne, onDuty: true }
     expect(getHelm('starboard', state)?.id).toBe(anne)
   })
 })
