@@ -7,11 +7,11 @@ import getActorId from '../../utilities/actor-id.ts'
 const setShip = async (
   ship: Actor | string,
   previous: CrawlState = getCrawlState(),
-  skipSave: boolean = false
+  save: boolean = true
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
   copy.ship.actor = getActorId(ship)
-  return skipSave ? copy : await setCrawlState(copy)
+  return save ? await setCrawlState(copy) : copy
 }
 
 export default setShip

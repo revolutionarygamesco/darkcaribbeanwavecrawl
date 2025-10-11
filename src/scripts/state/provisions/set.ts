@@ -7,11 +7,11 @@ const setProvisions = async (
   type: Provision,
   amount: number,
   previous: CrawlState = getCrawlState(),
-  skipSave: boolean = false
+  save: boolean = true
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
   copy.provisions[type] = Math.max(amount, 0)
-  return skipSave ? copy : await setCrawlState(copy)
+  return save ? await setCrawlState(copy) : copy
 }
 
 export default setProvisions

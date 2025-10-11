@@ -6,7 +6,7 @@ describe('setHelm', () => {
 
   it('sets character as the team’s designated helmsman', async () => {
     const before = initCrawlState()
-    const after = await setHelm('starboard', anne, before, true)
+    const after = await setHelm('starboard', anne, before, false)
     expect(after.crew.teams.starboard.helm).toBe(anne)
     expect(after.crew.teams.starboard.crew).toContain(anne)
   })
@@ -14,7 +14,7 @@ describe('setHelm', () => {
   it('removes character from other crew', async () => {
     const before = initCrawlState()
     before.crew.teams.larboard.crew = [anne]
-    const after = await setHelm('starboard', anne, before, true)
+    const after = await setHelm('starboard', anne, before, false)
     expect(after.crew.teams.larboard.crew).toEqual([])
   })
 
@@ -22,7 +22,7 @@ describe('setHelm', () => {
     const before = initCrawlState()
     before.crew.positions.quartermaster = [anne]
     before.crew.teams.larboard = { officer: 'quartermaster', crew: [anne] }
-    const after = await setHelm('starboard', anne, before, true)
+    const after = await setHelm('starboard', anne, before, false)
     expect(after.crew.teams.starboard.helm).toBeUndefined()
     expect(after.crew.teams.larboard.crew).toEqual([anne])
   })

@@ -23,30 +23,30 @@ describe('assign', () => {
 
   it('assigns a character to a position in a new state', async () => {
     const before = initCrawlState()
-    const after = await assign('captain', jack, before, true)
+    const after = await assign('captain', jack, before, false)
     expect(after.crew.positions.captain).toEqual([jack])
     expect(after).not.toBe(before)
   })
 
   it('assigns multiple characters to a position in a new state', async () => {
     const before = initCrawlState()
-    const after = await assign('gunner', [anne, mary], before, true)
+    const after = await assign('gunner', [anne, mary], before, false)
     expect(after.crew.positions.gunner).toEqual([anne, mary])
     expect(after).not.toBe(before)
   })
 
   it('assigns additional characters to a position in a new state', async () => {
     const before = initCrawlState()
-    const mid = await assign('gunner', anne, before, true)
-    const after = await assign('gunner', mary, mid, true)
+    const mid = await assign('gunner', anne, before, false)
+    const after = await assign('gunner', mary, mid, false)
     expect(after.crew.positions.gunner).toEqual([anne, mary])
     expect(after).not.toBe(before)
   })
 
   it('removes duplicates', async () => {
     const before = initCrawlState()
-    const mid = await assign('gunner', anne, before, true)
-    const after = await assign('gunner', [anne, mary], mid, true)
+    const mid = await assign('gunner', anne, before, false)
+    const after = await assign('gunner', [anne, mary], mid, false)
     expect(after.crew.positions.gunner).toEqual([anne, mary])
     expect(after).not.toBe(before)
   })

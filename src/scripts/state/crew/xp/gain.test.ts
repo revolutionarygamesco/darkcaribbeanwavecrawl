@@ -23,7 +23,7 @@ describe('gainXP', () => {
   })
 
   it('increases XP in each position the character holds', async () => {
-    const after = await gainXP(4, before)
+    const after = await gainXP(4, before, false)
 
     expect(after.crew.xp[jack].captain).toBe(4)
     expect(after.crew.xp[jack].quartermaster).toBe(200)

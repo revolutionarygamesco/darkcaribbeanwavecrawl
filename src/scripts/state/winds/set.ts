@@ -7,11 +7,11 @@ import clamp from '../../utilities/clamp.ts'
 const setWinds = async (
   value: number,
   previous: CrawlState = getCrawlState(),
-  skipSave: boolean = false
+  save: boolean = true
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
   copy.winds = clamp(value, 1, 4)
-  return skipSave ? copy : await setCrawlState(copy)
+  return save ? await setCrawlState(copy) : copy
 }
 
 export default setWinds

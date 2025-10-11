@@ -12,19 +12,19 @@ describe('addProvisions', () => {
   })
 
   it.each(['food', 'water', 'rum'] as Provision[])('adds 15 days to the %s stores', async (type: Provision) => {
-    const after = await addProvisions(type, 15, before, true)
+    const after = await addProvisions(type, 15, before, false)
     expect(after.provisions[type]).toBe(starting[type] + 15)
     expect(before.provisions[type]).toBe(starting[type])
     expect(after).not.toBe(before)
   })
 
   it.each(['food', 'water', 'rum'] as Provision[])('reduces the %s stores by 3 days', async (type: Provision) => {
-    const after = await addProvisions(type, -3, before, true)
+    const after = await addProvisions(type, -3, before, false)
     expect(after.provisions[type]).toBe(starting[type] -3)
   })
 
   it.each(['food', 'water', 'rum'] as Provision[])('won’t reduce the %s stores below zero', async (type: Provision) => {
-    const after = await addProvisions(type, -100, before, true)
+    const after = await addProvisions(type, -100, before, false)
     expect(after.provisions[type]).toBe(0)
   })
 })

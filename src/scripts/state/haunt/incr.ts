@@ -4,9 +4,9 @@ import addHaunt from './add.ts'
 
 const incrHaunt = async (
   previous: CrawlState = getCrawlState(),
-  skipSave: boolean = false
+  save: boolean = true
 ): Promise<CrawlState> => {
-  return await addHaunt(1, previous, skipSave)
+  return await addHaunt(1, previous, save)
 }
 
 export default incrHaunt

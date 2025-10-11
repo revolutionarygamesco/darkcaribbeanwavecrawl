@@ -6,11 +6,11 @@ import cloneCrawlState from '../../clone.ts'
 const setBarnacles = async (
   minutes: number,
   previous: CrawlState = getCrawlState(),
-  skipSave: boolean = false
+  save: boolean = true
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
   copy.ship.barnacles = minutes
-  return skipSave ? copy : await setCrawlState(copy)
+  return save ? await setCrawlState(copy) : copy
 }
 
 export default setBarnacles

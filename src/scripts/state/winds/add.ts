@@ -5,9 +5,9 @@ import setWinds from './set.ts'
 const addWinds = async (
   add: number,
   previous: CrawlState = getCrawlState(),
-  skipSave: boolean = false
+  save: boolean = true
 ): Promise<CrawlState> => {
-  return await setWinds(previous.winds + add, previous, skipSave)
+  return await setWinds(previous.winds + add, previous, save)
 }
 
 export default addWinds

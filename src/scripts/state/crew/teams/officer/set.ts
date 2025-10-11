@@ -8,7 +8,7 @@ const setOfficer = async (
   side: CrawlTeamSide,
   officer: CrawlTeamOfficer,
   previous: CrawlState,
-  skipSave: boolean = false
+  save: boolean = true
 ): Promise<CrawlState> => {
   const otherTeam = getOppositeSide(side)
   const otherOfficer = getOppositeOfficer(officer)
@@ -34,7 +34,7 @@ const setOfficer = async (
 
   copy.crew.teams[side].crew = thisCrew
   copy.crew.teams[otherTeam].crew = thatCrew
-  return skipSave ? copy : await setCrawlState(copy)
+  return save ? await setCrawlState(copy) : copy
 }
 
 export default setOfficer

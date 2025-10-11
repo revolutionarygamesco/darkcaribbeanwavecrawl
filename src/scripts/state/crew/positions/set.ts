@@ -9,7 +9,7 @@ const setAssigned = async (
   position: string,
   characters: string | string[],
   previous: CrawlState = getCrawlState(),
-  skipSave: boolean = false
+  save: boolean = true
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
   copy.crew.positions[position] = typeof characters === 'string' ? [characters] : characters
@@ -30,7 +30,7 @@ const setAssigned = async (
     copy.crew.teams[team].crew = [...new Set([...copy.crew.teams[team].crew, ...ids])]
   }
 
-  return skipSave ? copy : await setCrawlState(copy)
+  return save ? await setCrawlState(copy) : copy
 }
 
 export default setAssigned

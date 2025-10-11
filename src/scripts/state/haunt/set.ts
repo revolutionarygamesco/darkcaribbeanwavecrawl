@@ -7,11 +7,11 @@ import clamp from '../../utilities/clamp.ts'
 const setHaunt = async (
   value: number,
   previous: CrawlState = getCrawlState(),
-  skipSave: boolean = false
+  save: boolean = true
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
   copy.haunt = clamp(value, 1, 3)
-  return skipSave ? copy : await setCrawlState(copy)
+  return save ? await setCrawlState(copy) : copy
 }
 
 export default setHaunt

@@ -6,7 +6,7 @@ describe('setLookout', () => {
 
   it('sets character as the team’s designated lookout', async () => {
     const before = initCrawlState()
-    const after = await setLookout('starboard', anne, before, true)
+    const after = await setLookout('starboard', anne, before, false)
     expect(after.crew.teams.starboard.lookout).toBe(anne)
     expect(after.crew.teams.starboard.crew).toContain(anne)
   })
@@ -14,7 +14,7 @@ describe('setLookout', () => {
   it('removes character from other crew', async () => {
     const before = initCrawlState()
     before.crew.teams.larboard.crew = [anne]
-    const after = await setLookout('starboard', anne, before, true)
+    const after = await setLookout('starboard', anne, before, false)
     expect(after.crew.teams.larboard.crew).toEqual([])
   })
 
@@ -22,7 +22,7 @@ describe('setLookout', () => {
     const before = initCrawlState()
     before.crew.positions.quartermaster = [anne]
     before.crew.teams.larboard = { officer: 'quartermaster', crew: [anne] }
-    const after = await setLookout('starboard', anne, before, true)
+    const after = await setLookout('starboard', anne, before, false)
     expect(after.crew.teams.starboard.lookout).toBeUndefined()
     expect(after.crew.teams.larboard.crew).toEqual([anne])
   })

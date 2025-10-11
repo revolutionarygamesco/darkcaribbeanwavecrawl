@@ -5,10 +5,10 @@ import setBarnacles from './set.ts'
 const addBarnacles = async (
   minutes: number,
   previous: CrawlState = getCrawlState(),
-  skipSave: boolean = false
+  save: boolean = true
 ): Promise<CrawlState> => {
   const updated = previous.ship.barnacles + minutes
-  return await setBarnacles(updated, previous, skipSave)
+  return await setBarnacles(updated, previous, save)
 }
 
 export default addBarnacles

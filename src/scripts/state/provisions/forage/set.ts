@@ -6,12 +6,11 @@ import cloneCrawlState from '../../clone.ts'
 const setForage = async (
   value: boolean,
   previous: CrawlState = getCrawlState(),
-  skipSave: boolean = false
+  save: boolean = true
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
   copy.provisions.forage = value
-  if (!skipSave) await setCrawlState(copy)
-  return copy
+  return save ? await setCrawlState(copy) : copy
 }
 
 export default setForage

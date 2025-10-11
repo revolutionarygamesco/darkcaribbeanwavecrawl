@@ -4,9 +4,9 @@ import addWinds from './add.ts'
 
 const incrWinds = async (
   previous: CrawlState = getCrawlState(),
-  skipSave: boolean = false
+  save: boolean = true
 ): Promise<CrawlState> => {
-  return await addWinds(1, previous, skipSave)
+  return await addWinds(1, previous, save)
 }
 
 export default incrWinds

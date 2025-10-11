@@ -28,19 +28,19 @@ describe('unassign', () => {
   })
 
   it('removes a character from a position in a new state', async () => {
-    const after = await unassign('captain', jack, before, true)
+    const after = await unassign('captain', jack, before, false)
     expect(after.crew.positions.captain).toHaveLength(0)
     expect(after).not.toBe(before)
   })
 
   it('removes multiple characters from a position in a new state', async () => {
-    const after = await unassign('gunner', [anne, mary], before, true)
+    const after = await unassign('gunner', [anne, mary], before, false)
     expect(after.crew.positions.gunner).toHaveLength(0)
     expect(after).not.toBe(before)
   })
 
   it('retains other characters', async () => {
-    const after = await unassign('gunner', mary, before, true)
+    const after = await unassign('gunner', mary, before, false)
     expect(after.crew.positions.gunner).toEqual([anne])
     expect(after).not.toBe(before)
   })

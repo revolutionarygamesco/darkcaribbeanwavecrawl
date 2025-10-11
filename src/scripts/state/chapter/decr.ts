@@ -4,9 +4,9 @@ import addChapter from './add.ts'
 
 const decrChapter = async (
   previous: CrawlState = getCrawlState(),
-  skipSave: boolean = false
+  save: boolean = true
 ): Promise<CrawlState> => {
-  return await addChapter(-1, previous, skipSave)
+  return await addChapter(-1, previous, save)
 }
 
 export default decrChapter

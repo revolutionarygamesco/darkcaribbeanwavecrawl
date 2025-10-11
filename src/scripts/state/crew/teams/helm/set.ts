@@ -10,7 +10,7 @@ const setHelm = async (
   side: CrawlTeamSide,
   helm: Actor | string,
   previous: CrawlState = getCrawlState(),
-  skipSave: boolean = false
+  save: boolean = true
 ): Promise<CrawlState> => {
   const id = getActorId(helm)
   const opposite = getOppositeSide(side)
@@ -21,7 +21,7 @@ const setHelm = async (
   copy.crew.teams[side].helm = id
   copy.crew.teams[side].crew = [...new Set([...copy.crew.teams[side].crew, id])]
   removeTeamMember(opposite, id, copy)
-  return skipSave ? copy : await setCrawlState(copy)
+  return save ? await setCrawlState(copy) : copy
 }
 
 export default setHelm

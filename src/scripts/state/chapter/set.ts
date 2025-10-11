@@ -7,11 +7,11 @@ import clamp from '../../utilities/clamp.ts'
 const setChapter = async (
   chapter: number,
   previous: CrawlState = getCrawlState(),
-  skipSave: boolean = false
+  save: boolean = true
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
   copy.chapter = clamp(chapter, 1, 6)
-  return skipSave ? copy : await setCrawlState(copy)
+  return save ? await setCrawlState(copy) : copy
 }
 
 export default setChapter

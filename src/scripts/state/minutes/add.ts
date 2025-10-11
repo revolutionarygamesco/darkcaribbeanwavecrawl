@@ -5,9 +5,9 @@ import setMinutes from './set.ts'
 const addMinutes = async (
   minutes: number,
   previous: CrawlState = getCrawlState(),
-  skipSave: boolean = false
+  save: boolean = true
 ): Promise<CrawlState> => {
-  return await setMinutes(previous.minutes + minutes, previous, skipSave)
+  return await setMinutes(previous.minutes + minutes, previous, save)
 }
 
 export default addMinutes

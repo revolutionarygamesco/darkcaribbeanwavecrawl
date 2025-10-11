@@ -6,7 +6,7 @@ import cloneCrawlState from '../../clone.ts'
 const gainXP = async (
   hours: number,
   previous: CrawlState = getCrawlState(),
-  skipSave: boolean = false
+  save: boolean = true
 ): Promise<CrawlState> => {
   const copy = cloneCrawlState(previous)
 
@@ -17,7 +17,7 @@ const gainXP = async (
     }
   }
 
-  return skipSave ? copy : await setCrawlState(copy)
+  return save ? await setCrawlState(copy) : copy
 }
 
 export default gainXP

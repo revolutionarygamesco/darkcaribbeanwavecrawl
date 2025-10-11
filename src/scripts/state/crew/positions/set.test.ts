@@ -19,7 +19,7 @@ describe('setAssigned', () => {
     ['captain', []]
   ] as [string, string | string[]][])('sets %s to %s', async (position, value) => {
     const before = initCrawlState()
-    const after = await setAssigned(position, value, before, true)
+    const after = await setAssigned(position, value, before, false)
     const arr = typeof value === 'string' ? [value] : value
     expect(after.crew.positions[position]).toHaveLength(arr.length)
     expect(after.crew.positions[position]).toEqual(arr)
@@ -34,7 +34,7 @@ describe('setAssigned', () => {
     before.crew.teams.larboard.helm = anne
     before.crew.teams.larboard.lookout = anne
 
-    const actual = await setAssigned('quartermaster', [anne], before, true)
+    const actual = await setAssigned('quartermaster', [anne], before, false)
     expect(actual.crew.teams.starboard.crew).toContain(anne)
     expectNotOnTeam(actual, anne, 'larboard')
   })
@@ -47,7 +47,7 @@ describe('setAssigned', () => {
     before.crew.teams.starboard.helm = anne
     before.crew.teams.starboard.lookout = anne
 
-    const actual = await setAssigned('quartermaster', [anne], before, true)
+    const actual = await setAssigned('quartermaster', [anne], before, false)
     expect(actual.crew.teams.larboard.crew).toContain(anne)
     expectNotOnTeam(actual, anne, 'starboard')
   })
@@ -60,7 +60,7 @@ describe('setAssigned', () => {
     before.crew.teams.starboard.helm = anne
     before.crew.teams.starboard.lookout = anne
 
-    const actual = await setAssigned('sailing-master', [anne], before, true)
+    const actual = await setAssigned('sailing-master', [anne], before, false)
     expect(actual.crew.teams.larboard.crew).toContain(anne)
     expectNotOnTeam(actual, anne, 'starboard')
   })
@@ -73,7 +73,7 @@ describe('setAssigned', () => {
     before.crew.teams.larboard.helm = anne
     before.crew.teams.larboard.lookout = anne
 
-    const actual = await setAssigned('sailing-master', [anne], before, true)
+    const actual = await setAssigned('sailing-master', [anne], before, false)
     expect(actual.crew.teams.starboard.crew).toContain(anne)
     expectNotOnTeam(actual, anne, 'larboard')
   })
@@ -81,7 +81,7 @@ describe('setAssigned', () => {
   it('won’t let you be quartermaster and sailing master', async () => {
     const before = initCrawlState()
     before.crew.positions.quartermaster = [anne]
-    const actual = await setAssigned('sailing-master', [anne], before, true)
+    const actual = await setAssigned('sailing-master', [anne], before, false)
     expect(actual.crew.positions.quartermaster).not.toContain(anne)
     expect(actual.crew.positions['sailing-master']).toContain(anne)
   })
@@ -89,7 +89,7 @@ describe('setAssigned', () => {
   it('won’t let you be sailing master and quartermaster', async () => {
     const before = initCrawlState()
     before.crew.positions['sailing-master'] = [anne]
-    const actual = await setAssigned('quartermaster', [anne], before, true)
+    const actual = await setAssigned('quartermaster', [anne], before, false)
     expect(actual.crew.positions.quartermaster).toContain(anne)
     expect(actual.crew.positions['sailing-master']).not.toContain(anne)
   })

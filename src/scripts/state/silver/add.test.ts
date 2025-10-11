@@ -5,7 +5,7 @@ describe('addSilver', () => {
   it('adds to the ship silver in a new state', async () => {
     const before = initCrawlState()
     before.silver.company = 100
-    const after = await addSilver(100, before, true)
+    const after = await addSilver(100, before, false)
     expect(before.silver.company).toBe(100)
     expect(after.silver.company).toBe(200)
   })
@@ -13,13 +13,13 @@ describe('addSilver', () => {
   it('subtracts from the ship silver in a new state', async () => {
     const before = initCrawlState()
     before.silver.company = 100
-    const after = await addSilver(-25, before, true)
+    const after = await addSilver(-25, before, false)
     expect(before.silver.company).toBe(100)
     expect(after.silver.company).toBe(75)
   })
 
   it('won’t reduce silver below zero', async () => {
-    const actual = await addSilver(-25, initCrawlState(), true)
+    const actual = await addSilver(-25, initCrawlState(), false)
     expect(actual.silver.company).toBe(0)
   })
 })

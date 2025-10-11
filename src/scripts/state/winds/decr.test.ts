@@ -5,14 +5,14 @@ describe('decrWinds', () => {
   it('reduces winds', async () => {
     const before = initCrawlState()
     before.winds = 3
-    const after = await decrWinds(before, true)
+    const after = await decrWinds(before, false)
     expect(after.winds).toBe(2)
   })
 
   it('won’t reduce winds below 1', async () => {
     const before = initCrawlState()
     before.winds = 1
-    const after = await decrWinds(initCrawlState(), true)
+    const after = await decrWinds(initCrawlState(), false)
     expect(after.winds).toBe(1)
     expect(after).not.toBe(before)
   })
