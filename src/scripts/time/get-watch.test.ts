@@ -1,10 +1,10 @@
 import getWatch from './get-watch.ts'
 
-describe('getWatch', () => {
-  const formatTime = (h: number, m: number): string => {
-    return `${h.toString().padStart(2, '0')}${m.toString().padStart(2, '0')}`
-  }
+export const formatTime = (h: number, m: number): string => {
+  return `${h.toString().padStart(2, '0')}${m.toString().padStart(2, '0')}`
+}
 
+describe('getWatch', () => {
   const minutes: number[] = []
   for (let i = 0; i < 24; i++) minutes.push(Math.floor(Math.random() * 59 + 1))
 
