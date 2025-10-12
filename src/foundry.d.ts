@@ -124,6 +124,7 @@ declare const game: {
     get: <T>(namespace: string, name: string) => T
   },
   time: {
+    worldTime: number
     set(time: number, options?: object): Promise<number>
   },
   user: {
