@@ -51,7 +51,7 @@ interface CrawlState {
   provisions: CrawlProvisions
   silver: CrawlSilver
   ship: CrawlShip
-  minutes: number
+  timestamp: number
   chapter: number
   winds: number
   haunt: number

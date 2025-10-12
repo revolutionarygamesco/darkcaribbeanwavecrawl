@@ -3,8 +3,8 @@ import initCrawlState from './init.ts'
 describe('initCrawlState', () => {
   const state = initCrawlState()
 
-  it('starts minutes at zero', () => {
-    expect(state.minutes).toBe(0)
+  it('starts at noon on 24 July 1715', () => {
+    expect(state.timestamp).toBe(-8029350000)
   })
 
   it('starts members positions as an empty record', () => {

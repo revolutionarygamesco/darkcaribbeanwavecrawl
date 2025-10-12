@@ -10,7 +10,7 @@ describe('saveCrawlState', () => {
   it('discards states older than 14 days', async () => {
     const init = initCrawlState()
     const later = initCrawlState()
-    later.minutes = 15 * 24 * 60
+    later.timestamp += 15 * 24 * 60
 
     const actual = await saveCrawlState(later, [init], false)
     expect(actual.length).toBe(1)

@@ -5,7 +5,7 @@ describe('setCrawlState', () => {
   it('returns state', async () => {
     const input = initCrawlState()
     const actual = await setCrawlState(input)
-    expect(actual.minutes).toBe(input.minutes)
+    expect(actual.timestamp).toBe(input.timestamp)
   })
 
   it('is immutable', async () => {
