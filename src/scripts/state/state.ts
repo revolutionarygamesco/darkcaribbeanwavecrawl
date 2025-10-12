@@ -34,14 +34,16 @@ export interface CrawlSilver {
   crew: Record<ActorID, number>
 }
 
+export interface CrawlShipPosition {
+  x: number
+  y: number
+  rotation: number
+}
+
 export interface CrawlShip {
   actor?: ActorID
   barnacles: number
-  position: {
-    x: number,
-    y: number,
-    rotation: number
-  }
+  position: CrawlShipPosition
 }
 
 interface CrawlState {

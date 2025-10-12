@@ -99,6 +99,9 @@ interface Scene {
 interface Token {
   actorId: string
   id: string
+  x: number
+  y: number
+  rotation: number
 }
 
 declare const Hooks: {
