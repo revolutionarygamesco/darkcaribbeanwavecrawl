@@ -37,6 +37,11 @@ export interface CrawlSilver {
 export interface CrawlShip {
   actor?: ActorID
   barnacles: number
+  position: {
+    x: number,
+    y: number,
+    rotation: number
+  }
 }
 
 interface CrawlState {

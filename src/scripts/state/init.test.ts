@@ -47,6 +47,13 @@ describe('initCrawlState', () => {
     expect(state.ship.barnacles).toBe(0)
   })
 
+  it('starts in Nassau', () => {
+    const { x, y, rotation } = state.ship.position
+    expect(x).toBe(2750)
+    expect(y).toBe(1083)
+    expect(rotation).toBe(30)
+  })
+
   it('starts with chapter 1', () => {
     expect(state.chapter).toBe(1)
   })
