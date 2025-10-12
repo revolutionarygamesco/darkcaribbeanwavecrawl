@@ -1,6 +1,7 @@
 import { MODULE_ID, MODULE_SETTINGS } from './settings'
 
 import Stopwatch from './time/stopwatch.ts'
+import ringBell from './time/ring-bell.ts'
 
 import generateInsult from './insults/generate.ts'
 
@@ -39,6 +40,7 @@ Hooks.on('pauseGame', (paused: boolean) => {
   watch.handlePause(paused)
 })
 
-Hooks.on('updateWorldTime', (worldTime, delta, _, userId) => {
+Hooks.on('updateWorldTime', async (worldTime, delta, _, userId) => {
   console.log(`User ${userId} changed time by ${delta} seconds to ${worldTime}`)
+  await ringBell()
 })

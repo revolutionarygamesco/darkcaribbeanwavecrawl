@@ -1,0 +1,35 @@
+import { MODULE_ID } from '../settings.ts'
+import getCaribbeanHour from './get-caribbean-hour.ts'
+import getDate from './get-date.ts'
+import getWatch from './get-watch.ts'
+import getBells from './get-bells.ts'
+
+export const shouldBellRing = (minutes: number): boolean => {
+  return minutes === 0 || minutes === 30
+}
+
+const ringBell = async (): Promise<void> => {
+  const now = getDate()
+  const hour = getCaribbeanHour(now)
+  const minutes = now.getUTCMinutes()
+  if (!shouldBellRing(minutes)) return
+
+  const watch = getWatch(hour, minutes)
+  const bells = getBells(hour, minutes)
+  const localizedWatch = game.i18n.localize(`${MODULE_ID}.watches.${watch}`)
+  const localizedBells = game.i18n.localize(`${MODULE_ID}.bells.${bells}`)
+  const content = `${localizedWatch}, ${localizedBells}`
+
+  await foundry.audio.AudioHelper.play({
+    autoplay: true,
+    channel: 'environment',
+    src: `modules/${MODULE_ID}/sfx/bell.mp3`
+  })
+
+  await foundry.documents.ChatMessage.create({
+    speaker: { alias: game.i18n.localize(`${MODULE_ID}.ships-bell`) },
+    content
+  })
+}
+
+export default ringBell
