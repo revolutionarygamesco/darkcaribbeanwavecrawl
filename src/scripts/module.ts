@@ -1,7 +1,10 @@
 import { MODULE_ID, MODULE_SETTINGS } from './settings'
 
 import Stopwatch from './time/stopwatch.ts'
+import getDate from './time/get-date.ts'
 import ringBell from './time/ring-bell.ts'
+
+import DatePanel from './panels/date.ts'
 
 import generateInsult from './insults/generate.ts'
 
@@ -34,13 +37,19 @@ Hooks.once('init', async () => {
 Hooks.once('ready', async () => {
   await watch.start()
   watch.handlePause(game.paused)
+
+  const datePanel = new DatePanel()
+  await datePanel.render(true)
 })
 
 Hooks.on('pauseGame', (paused: boolean) => {
   watch.handlePause(paused)
 })
 
-Hooks.on('updateWorldTime', async (worldTime, delta, _, userId) => {
-  console.log(`User ${userId} changed time by ${delta} seconds to ${worldTime}`)
+Hooks.on('updateWorldTime', async (worldTime, delta) => {
+  const previously = worldTime - delta
+  const now = getDate(worldTime).toLocaleDateString(undefined, { weekday: 'long', hour: 'numeric', minute: '2-digit', timeZone: 'Etc/GMT+5' })
+  const then = getDate(previously).toLocaleDateString(undefined, { weekday: 'long', hour: 'numeric', minute: '2-digit', timeZone: 'Etc/GMT+5' })
+  console.log(`World time changed from ${then} to ${now}`)
   await ringBell()
 })
