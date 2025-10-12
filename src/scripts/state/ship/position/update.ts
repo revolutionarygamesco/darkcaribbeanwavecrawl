@@ -4,7 +4,7 @@ import cloneCrawlState from '../../clone.ts'
 import setCrawlState from '../../set.ts'
 import getShipToken from '../get-token.ts'
 
-const getShipPosition = (state: CrawlState = getCrawlState()): CrawlShipPosition | null => {
+export const getShipPosition = (state: CrawlState = getCrawlState()): CrawlShipPosition | null => {
   const token = getShipToken(state)
   if (!token) return null
   return { x: token.x, y: token.y, rotation: token.rotation }
