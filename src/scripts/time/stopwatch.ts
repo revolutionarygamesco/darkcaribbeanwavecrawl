@@ -21,7 +21,5 @@ export default class Stopwatch {
 
   private async increment () {
     await game.time.advance(this.intervalSeconds)
-    const { worldTime } = game.time
-    console.log(`Stopwatch just updated world time to ${worldTime} (${new Date(worldTime)})`)
   }
 }

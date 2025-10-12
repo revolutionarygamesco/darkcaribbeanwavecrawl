@@ -1,6 +1,10 @@
 import { MODULE_ID, MODULE_SETTINGS } from './settings'
 
+import Stopwatch from './time/stopwatch.ts'
+
 import generateInsult from './insults/generate.ts'
+
+const watch = new Stopwatch()
 
 const initSetting = (setting: string, type: any, defaultValue: any, config: boolean = true) => {
   game.settings.register(MODULE_ID, setting, {
@@ -24,4 +28,17 @@ Hooks.once('init', async () => {
   crawl.api = {
     generateInsult
   }
+})
+
+Hooks.once('ready', async () => {
+  await watch.start()
+  watch.handlePause(game.paused)
+})
+
+Hooks.on('pauseGame', (paused: boolean) => {
+  watch.handlePause(paused)
+})
+
+Hooks.on('updateWorldTime', (worldTime, delta, _, userId) => {
+  console.log(`User ${userId} changed time by ${delta} seconds to ${worldTime}`)
 })
