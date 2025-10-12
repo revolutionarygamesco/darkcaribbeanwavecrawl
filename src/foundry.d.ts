@@ -123,6 +123,9 @@ declare const game: {
     set: <T>(namespace: string, name: string, value: T) => Promise<T>,
     get: <T>(namespace: string, name: string) => T
   },
+  time: {
+    set(time: number, options?: object): Promise<number>
+  },
   user: {
     isGM: boolean
   },

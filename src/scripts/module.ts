@@ -15,7 +15,6 @@ const initSetting = (setting: string, type: any, defaultValue: any, config: bool
 
 Hooks.once('init', async () => {
   initSetting(MODULE_SETTINGS.ROTATION, Number, 180)
-  initSetting(MODULE_SETTINGS.START_DATE, String, '24 July 1715')
   initSetting(MODULE_SETTINGS.DAYS_SAVED, Number, 14)
   initSetting(MODULE_SETTINGS.HISTORICAL, Boolean, false)
 

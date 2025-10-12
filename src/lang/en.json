@@ -5,10 +5,6 @@
         "name": "Include historical content",
         "hint": "Do not activate without a frank and open discussion with everyone at the table about including these elements. See the journal entry for Dark Caribbean Wave Crawl: Historical Content for more information."
       },
-      "start-date": {
-        "name": "Start date",
-        "hint": "The date on which your adventure begins (e.g., 24 July 1715)."
-      },
       "days-saved": {
         "name": "Days saved",
         "hint": "This sets the number of days that saved game state data is retained, meaning this is how far back you can rewind time in your game before you run out of saved data."
