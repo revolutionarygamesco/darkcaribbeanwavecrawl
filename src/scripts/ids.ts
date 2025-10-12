@@ -4,6 +4,9 @@ const ids: Record<string, Record<string, string>> = {
     compendium: 'revolutionary-darkcaribbean.dark-caribbean-wave-crawl',
     rel: 'xg1pARNljnvGWpMA'
   },
+  scenes: {
+    map: '3JvJSgDc5iwQjKye'
+  },
   haunt: {
     normal: 'PnhdnvyA7xh4kFVu',
     bloody: 'ccWf6Xm5vE5W1UaT',

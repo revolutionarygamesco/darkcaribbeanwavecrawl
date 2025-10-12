@@ -115,9 +115,7 @@ declare const game: {
   modules: Map<string, Module>
   packs: Map<string, any>
   paused: boolean,
-  scenes: {
-    active?: Scene
-  },
+  scenes: Map<string, any>,
   settings: {
     register: (namespace: string, name: string, settings: GameSettings) => void,
     set: <T>(namespace: string, name: string, value: T) => Promise<T>,
