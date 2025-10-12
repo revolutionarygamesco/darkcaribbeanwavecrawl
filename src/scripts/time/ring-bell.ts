@@ -3,6 +3,7 @@ import getCaribbeanHour from './get-caribbean-hour.ts'
 import getDate from './get-date.ts'
 import getWatch from './get-watch.ts'
 import getBells from './get-bells.ts'
+import describeNauticalTime from './nautical-time.ts'
 
 export const shouldBellRing = (minutes: number): boolean => {
   return minutes === 0 || minutes === 30
@@ -16,9 +17,7 @@ const ringBell = async (): Promise<void> => {
 
   const watch = getWatch(hour, minutes)
   const bells = getBells(hour, minutes)
-  const localizedWatch = game.i18n.localize(`${MODULE_ID}.watches.${watch}`)
-  const localizedBells = game.i18n.localize(`${MODULE_ID}.bells.${bells}`)
-  const content = `${localizedWatch}, ${localizedBells}`
+  const content = describeNauticalTime(watch, bells)
 
   await foundry.audio.AudioHelper.play({
     autoplay: true,
