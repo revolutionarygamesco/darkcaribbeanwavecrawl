@@ -6,7 +6,7 @@ import getBells from '../time/get-bells.ts'
 import getLunarPhase, { lunarIcons } from '../time/get-phase.ts'
 import getDayNight from '../time/get-day-night.ts'
 import describeNauticalTime from '../time/nautical-time.ts'
-import getCaribbeanHour from '../time/get-caribbean-hour.ts'
+import setTime, { SetTimeOptions } from '../time/set.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 
@@ -35,6 +35,92 @@ export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2)
     }
   }
 
+  parseSetTimeSelect (coll: HTMLFormControlsCollection, field: string, fallback: number): number {
+    const select = coll[field as any] as HTMLSelectElement
+    const parsed = parseInt(select.value)
+    return isNaN(parsed) ? fallback : parsed
+  }
+
+  async openSetTimeDialog () {
+    const curr = getDate()
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+    const years: string[] = []
+    for (let year = 1600; year < 1800; year++) {
+      const option = curr.getUTCFullYear() === year
+        ? `<option selected>${year}</option>`
+        : `<option>${year}</option>`
+      years.push(option)
+    }
+
+    const months: string[] = []
+    for (let month = 0; month < 12; month++) {
+      const option = curr.getUTCMonth() === month
+        ? `<option value="${month}" selected>${monthNames[month]}</option>`
+        : `<option value="${month}">${monthNames[month]}</option>`
+      months.push(option)
+    }
+
+    const days: string[] = []
+    for (let day = 1; day < 32; day++) {
+      const option = curr.getUTCDate() === day
+        ? `<option selected>${day}</option>`
+        : `<option>${day}</option>`
+      days.push(option)
+    }
+
+    const hours: string[] = []
+    for (let hour = 0; hour < 24; hour++) {
+      const option = curr.getUTCHours() === hour
+        ? `<option selected>${hour}</option>`
+        : `<option>${hour}</option>`
+      hours.push(option)
+    }
+
+    const minutes: string[] = []
+    for (let minute = 0; minute < 60; minute++) {
+      const option = curr.getUTCMinutes() === minute
+        ? `<option selected>${minute}</option>`
+        : `<option>${minute}</option>`
+      minutes.push(option)
+    }
+
+    const dialog = new foundry.applications.api.DialogV2({
+      id: `${MODULE_ID}-set-time`,
+      window: { title: 'Set the date' },
+      content: `
+      <label for="set-time-year">Year</label><select id="set-time-year" name="year">${years.join('')}</select>
+      <label for="set-time-month">Month</label><select id="set-time-month" name="month">${months.join('')}</select>
+      <label for="set-time-date">Day</label><select id="set-time-date" name="date">${days.join('')}</select>
+      <label for="set-time-hour">Hour</label><select id="set-time-hour" name="hour">${hours.join('')}</select>
+      <label for="set-time-minute">Minute</label><select id="set-time-minute" name="minute">${minutes.join('')}</select>
+      `,
+      buttons: [
+        {
+          action: 'set',
+          label: 'Set Time',
+          default: true,
+          callback: async (_event: Event, button: HTMLButtonElement) => {
+            const coll = button.form?.elements
+            if (!coll) return
+
+            const options: SetTimeOptions = {
+              year: this.parseSetTimeSelect(coll, 'year', curr.getUTCFullYear()),
+              month: this.parseSetTimeSelect(coll, 'month', curr.getUTCMonth()),
+              date: this.parseSetTimeSelect(coll, 'date', curr.getUTCDate()),
+              hour: this.parseSetTimeSelect(coll, 'hour', curr.getUTCHours()),
+              minute: this.parseSetTimeSelect(coll, 'minute', curr.getUTCMinutes())
+            }
+
+            await setTime(options, curr)
+          }
+        }
+      ]
+    })
+
+    await dialog.render(true)
+  }
+
   async _fetchSVG (url: string, alt: string): Promise<string> {
     if (this.lunarSVGIcons.has(url)) return this.lunarSVGIcons.get(url)!
 
@@ -60,6 +146,9 @@ export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2)
 
   async _adjustTime (event: Event) {
     const target = event.target as HTMLElement
+    const set = target.closest('button[data-action="set-time"]') as HTMLElement
+    if (set) return await this.openSetTimeDialog()
+
     const button = target.closest('button[data-action="adjust-time"]') as HTMLElement
     if (!button) return
 
@@ -70,14 +159,14 @@ export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2)
 
   async _prepareContext () {
     const date = getDate()
-    const hour = getCaribbeanHour(date)
+    const hour = date.getUTCHours()
     const minutes = date.getUTCMinutes()
     const watch = getWatch(hour, minutes)
     const bells = getBells(hour, minutes)
 
-    const day = date.toLocaleDateString(undefined, { weekday: 'long', timeZone: 'Etc/GMT+5' })
+    const day = date.toLocaleDateString(undefined, { weekday: 'long', timeZone: 'UTC' })
     const time = `${day} (${getDayNight(date)})`
-    const exact = date.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit', timeZone: 'Etc/GMT+5' })
+    const exact = date.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit', timeZone: 'UTC' })
     const lunar = await this._prepareLunarPhase(date)
 
     return {

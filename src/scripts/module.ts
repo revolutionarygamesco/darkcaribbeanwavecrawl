@@ -48,8 +48,8 @@ Hooks.on('pauseGame', (paused: boolean) => {
 
 Hooks.on('updateWorldTime', async (worldTime, delta) => {
   const previously = worldTime - delta
-  const now = getDate(worldTime).toLocaleDateString(undefined, { weekday: 'long', hour: 'numeric', minute: '2-digit', timeZone: 'Etc/GMT+5' })
-  const then = getDate(previously).toLocaleDateString(undefined, { weekday: 'long', hour: 'numeric', minute: '2-digit', timeZone: 'Etc/GMT+5' })
+  const now = getDate(worldTime).toLocaleDateString(undefined, { weekday: 'long', hour: 'numeric', minute: '2-digit', timeZone: 'UTC' })
+  const then = getDate(previously).toLocaleDateString(undefined, { weekday: 'long', hour: 'numeric', minute: '2-digit', timeZone: 'UTC' })
   console.log(`World time changed from ${then} to ${now}`)
   await ringBell()
 })

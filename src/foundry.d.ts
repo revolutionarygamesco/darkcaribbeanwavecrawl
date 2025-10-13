@@ -2,6 +2,10 @@ declare class ApplicationV2 {
   render: (options: boolean) => Promise<ApplicationV2>
 }
 
+declare class DialogV2 extends ApplicationV2 {
+  constructor(options?: any)
+}
+
 declare class HandlebarsApplication {
   constructor(options?: any)
   dragDrop?: DragDrop[]
@@ -143,6 +147,7 @@ declare const foundry: {
   applications: {
     api: {
       ApplicationV2: typeof ApplicationV2,
+      DialogV2: typeof DialogV2,
       HandlebarsApplicationMixin: HandlebarsApplicationMixin
     },
     ux: {
