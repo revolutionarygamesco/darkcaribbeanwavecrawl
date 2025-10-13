@@ -13,11 +13,11 @@ const setTime = async (
   baseline: Date = getDate(),
   save: boolean = true
 ): Promise<Date> => {
-  const year = options.year ?? baseline.getUTCFullYear()
-  const month = options.month ? options.month - 1 : baseline.getUTCMonth()
-  const date = options.date ?? baseline.getUTCDate()
-  const hour = options.hour ? options.hour + 5 : baseline.getUTCHours()
-  const minute = options.minute ?? baseline.getUTCMinutes()
+  const year = options.year === undefined ? baseline.getUTCFullYear() : options.year
+  const month = options.month === undefined ? baseline.getUTCMonth() : options.month
+  const date = options.date === undefined ? baseline.getUTCDate() : options.date
+  const hour = options.hour === undefined ? baseline.getUTCHours() : options.hour
+  const minute = options.minute === undefined ? baseline.getUTCMinutes() : options.minute
   const d = new Date(Date.UTC(year, month, date, hour, minute, 0, 0))
   if (save) await game.time.set(Math.floor(d.getTime() / 1000))
   return d
