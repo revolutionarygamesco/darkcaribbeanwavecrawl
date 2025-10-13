@@ -7,6 +7,23 @@
     overflow: auto;
   }
 
+  nav.tabs {
+    border-top: 0;
+    border-bottom: 0;
+
+    button {
+      border-radius: 0;
+      border: 0;
+      border-bottom: 1px solid transparent;
+
+      &.active {
+        border-bottom-color: var(--color-shadow-primary);
+        box-shadow: none;
+        outline: none;
+      }
+    }
+  }
+
   .crew-positions-page {
     padding: 1em;
   }
