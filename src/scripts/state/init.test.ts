@@ -17,8 +17,8 @@ describe('initCrawlState', () => {
     ['cook', 1.25],
     ['surgeon', 1.25],
     ['master-arms', 1.25],
-    ['deck-priest', 1.25],
-    ['deck-sorcerer', 1.25]
+    ['priest', 1.25],
+    ['sorcerer', 1.25]
   ])('initializes the %s’s role with %d shares and no one assigned', (position: string, expected: number) => {
     const { shares, assigned } = state.crew.positions[position]
     expect(shares).toBe(expected)
