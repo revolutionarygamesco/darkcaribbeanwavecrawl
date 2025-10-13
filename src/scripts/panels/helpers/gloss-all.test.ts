@@ -1,14 +1,12 @@
 import { MODULE_ID } from '../../settings.ts'
-import { PositionData } from '../../state/state.ts'
-import glossPosition from './gloss.ts'
+import initCrawlState from '../../state/init.ts'
+import glossAllPositions from './gloss-all.ts'
 
-describe('glossPosition', () => {
+describe('glossAllPositions', () => {
+  const before = initCrawlState()
   let originalActors: Map<string, Actor>
   const jack = 'calico-jack'
-  const capt: PositionData = {
-    assigned: [jack],
-    shares: 2
-  }
+  before.crew.positions.captain.assigned = [jack]
 
   beforeAll(() => {
     originalActors = game.actors
@@ -23,12 +21,12 @@ describe('glossPosition', () => {
     game.actors = originalActors
   })
 
-  it('glosses the position', () => {
-    const actual = glossPosition('captain', capt)
-    const { assigned, actors, shares, title, description, sans } = actual
+  it('glosses all positions', () => {
+    const actual = glossAllPositions(before)
+    const { assigned, actors, shares, title, description, sans } = actual.captain
     expect(assigned).toEqual([jack])
     expect(actors).toEqual([game.actors.get(jack)])
-    expect(shares).toBe(capt.shares)
+    expect(shares).toBe(before.crew.positions.captain.shares)
     expect(title).toBe(`${MODULE_ID}.crew-panel.positions.glossary.captain.title`)
     expect(description).toBe(`${MODULE_ID}.crew-panel.positions.glossary.captain.desc`)
     expect(sans).toBe(`${MODULE_ID}.crew-panel.positions.glossary.captain.sans`)
