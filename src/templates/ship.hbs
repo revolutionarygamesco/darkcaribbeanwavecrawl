@@ -1,0 +1,19 @@
+<div class="crew-ship">
+  {{#if this.ship}}
+    <figure>
+      <img src="{{ship.image}}" alt="{{ship.name}}" />
+      <figcaption>{{ship.name}}</figcaption>
+    </figure>
+    <button type="button" data-action="remove-ship">
+      {{localize 'revolutionary-darkcaribbean.crew-panel.ship.remove'}}
+    </button>
+  {{else}}
+    <figre class="no-ship">
+      <div></div>
+      <figcaption class="no-ship">
+        <strong>{{localize 'revolutionary-darkcaribbean.crew-panel.ship.null.heading'}}</strong>
+        <p>{{localize 'revolutionary-darkcaribbean.crew-panel.ship.null.instructions'}}</p>
+      </figcaption>
+    </figre>
+  {{/if}}
+</div>

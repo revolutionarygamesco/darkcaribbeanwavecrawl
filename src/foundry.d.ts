@@ -6,6 +6,10 @@ declare class DialogV2 extends ApplicationV2 {
   constructor(options?: any)
 }
 
+declare class Handlebars {
+  static registerPartial(id: string, template: string): any
+}
+
 declare class HandlebarsApplication {
   constructor(options?: any)
   dragDrop?: DragDrop[]
@@ -14,6 +18,7 @@ declare class HandlebarsApplication {
   render: (options?: boolean) => Promise<HandlebarsApplication>
   close(options?: any): Promise<this>
   _onRender(context: any, options: any): Promise<void>
+  _prepareTabs: (group: string) => any
 }
 
 declare class AudioHelper {
@@ -149,6 +154,10 @@ declare const foundry: {
       ApplicationV2: typeof ApplicationV2,
       DialogV2: typeof DialogV2,
       HandlebarsApplicationMixin: HandlebarsApplicationMixin
+    },
+    handlebars: {
+      getTemplate(path: string, id?: string): Promise<any>
+      loadTemplates(paths: string[]): Promise<any>
     },
     ux: {
       DragDrop: typeof DragDrop,

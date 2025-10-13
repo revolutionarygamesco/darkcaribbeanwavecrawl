@@ -1,0 +1,31 @@
+<div class="crew-positions-page">
+  {{#each positions}}
+  <section class="position" data-position-id="{{@key}}" data-drag="true">
+    <fieldset class="shares">
+      <label for="{{@key}}-shares">{{localize 'revolutionary-darkcaribbean.crew-panel.positions.shares'}}</label>
+      <input
+        id="{{@key}}-shares"
+        type="number"
+        min="0"
+        value="{{this.shares}}"
+        data-position-id="{{@key}}"
+        class="shares" />
+    </fieldset>
+    <details>
+      <summary>{{this.title}}</summary>
+      <p>{{{this.description}}}</p>
+    </details>
+    {{#if this.actors}}
+      <table class="crew-assignments">
+        <tbody>
+          {{#each this.actors}}
+          {{> listing actor=this canRemove=true removeText='revolutionary-darkcaribbean.crew-panel.positions.remove' }}
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      <p class="sans">{{{this.sans}}}</p>
+    {{/if}}
+  </section>
+  {{/each}}
+</div>
