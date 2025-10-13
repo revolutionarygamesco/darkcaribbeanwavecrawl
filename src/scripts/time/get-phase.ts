@@ -1,4 +1,4 @@
-const anchor = new Date(Date.UTC(2000, 0, 6, 18, 14))
+const anchor = new Date(Date.UTC(1722, 0, 17, 0, 0))
 const synodic = 29.530588853
 
 export const lunarIcons: Record<string, string> = {
