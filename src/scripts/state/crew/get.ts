@@ -1,4 +1,5 @@
 import type CrawlState from '../state.ts'
+import mapIdsToActors from '../../utilities/map-ids-to-actors.ts'
 
 const getRoster = (state: CrawlState): Actor[] => {
   let ids: string[] = []
@@ -8,8 +9,7 @@ const getRoster = (state: CrawlState): Actor[] => {
     ids = [...new Set([...ids, ...state.crew.positions[position].assigned])]
   }
 
-  return ids.map(id => game.actors.get(id))
-    .filter((a: Actor | undefined): a is Actor => a !== undefined)
+  return mapIdsToActors(ids)
 }
 
 export default getRoster
