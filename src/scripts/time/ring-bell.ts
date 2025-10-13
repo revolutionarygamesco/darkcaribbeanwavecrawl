@@ -1,5 +1,4 @@
 import { MODULE_ID } from '../settings.ts'
-import getCaribbeanHour from './get-caribbean-hour.ts'
 import getDate from './get-date.ts'
 import getWatch from './get-watch.ts'
 import getBells from './get-bells.ts'
@@ -11,7 +10,7 @@ export const shouldBellRing = (minutes: number): boolean => {
 
 const ringBell = async (): Promise<void> => {
   const now = getDate()
-  const hour = getCaribbeanHour(now)
+  const hour = now.getUTCHours()
   const minutes = now.getUTCMinutes()
   if (!shouldBellRing(minutes)) return
 
