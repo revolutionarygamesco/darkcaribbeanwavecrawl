@@ -1,7 +1,5 @@
-<nav class="crew-panel-tabs">
-  <ul>
-    <li>{{localize 'revolutionary-darkcaribbean.crew-panel.tabs.ship'}}</li>
-    <li>{{localize 'revolutionary-darkcaribbean.crew-panel.tabs.positions'}}</li>
-    <li>{{localize 'revolutionary-darkcaribbean.crew-panel.tabs.teams'}}</li>
-  </ul>
+<nav class="tabs" data-group="crew-tabs">
+  {{> crew-tab tab="ship" label="revolutionary-darkcaribbean.crew-panel.tabs.ship" }}
+  {{> crew-tab tab="positions" label="revolutionary-darkcaribbean.crew-panel.tabs.positions" }}
+  {{> crew-tab tab="teams" label="revolutionary-darkcaribbean.crew-panel.tabs.teams" }}
 </nav>

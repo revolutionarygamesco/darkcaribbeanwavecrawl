@@ -29,6 +29,11 @@ declare class ChatMessage {
   create(data?: any, operation?: any): Promise<any>
 }
 
+declare class Tabs {
+  constructor(config?: any)
+  bind(html: HTMLElement): void
+}
+
 declare class DragDrop {
   constructor(options?: any)
   bind(options?: any): any
@@ -161,6 +166,7 @@ declare const foundry: {
     },
     ux: {
       DragDrop: typeof DragDrop,
+      Tabs: typeof Tabs,
       TextEditor: typeof TextEditor
     }
   },

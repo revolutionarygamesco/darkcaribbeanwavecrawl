@@ -20,7 +20,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       resizable: true,
       title: 'The Company'
     },
-    position: getPanelDimensions(1/3, 2/3),
+    position: getPanelDimensions(1/2, 2/3),
     dragDrop: [{ dropSelector }]
   }
 
@@ -44,9 +44,13 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static TABS = {
     primary: {
-      tabs: [{ id: 'crew-panel-ship' }, { id: 'crew-panel-positions' }, { id: 'crew-panel-teams' }],
-      initial: ship ? 'crew-panel-positions' : 'crew-panel-ship'
+      tabs: [{ id: 'ship' }, { id: 'positions' }, { id: 'teams' }],
+      initial: CrewPanel._getInitialTab()
     }
+  }
+
+  static _getInitialTab () {
+    return ship ? 'positions' : 'ship'
   }
 
   async _prepareContext() {
@@ -107,6 +111,18 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     }
 
     return context
+  }
+
+  async _onRender(context: any, options: any) {
+    await super._onRender(context, options);
+
+    const tabs = new foundry.applications.ux.Tabs({
+      navSelector: '.tabs',
+      contentSelector: 'section',
+      initial: CrewPanel._getInitialTab(),
+      group: 'crew-tabs'
+    });
+    tabs.bind(this.element)
   }
 }
 
