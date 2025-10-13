@@ -11,7 +11,7 @@ const gainXP = async (
   const copy = cloneCrawlState(previous)
 
   for (const position in copy.crew.positions) {
-    for (const id of copy.crew.positions[position]) {
+    for (const id of copy.crew.positions[position]?.assigned ?? []) {
       if (!copy.crew.xp[id][position]) copy.crew.xp[id][position] = 0
       copy.crew.xp[id][position] += hours
     }

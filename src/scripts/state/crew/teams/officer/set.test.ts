@@ -13,7 +13,7 @@ describe('setOfficer', () => {
 
   it('moves members to new teams', async () => {
     const before = initCrawlState()
-    before.crew.positions.quartermaster = [anne]
+    before.crew.positions.quartermaster = { shares: 1, assigned: [anne] }
     before.crew.teams.larboard.members = [anne]
     before.crew.teams.larboard.helm = anne
     before.crew.teams.larboard.lookout = anne

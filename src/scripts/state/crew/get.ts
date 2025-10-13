@@ -4,7 +4,8 @@ const getRoster = (state: CrawlState): Actor[] => {
   let ids: string[] = []
 
   for (const position in state.crew.positions) {
-    ids = [...new Set([...ids, ...state.crew.positions[position]])]
+    if (!state.crew.positions[position]?.assigned) continue
+    ids = [...new Set([...ids, ...state.crew.positions[position].assigned])]
   }
 
   return ids.map(id => game.actors.get(id))

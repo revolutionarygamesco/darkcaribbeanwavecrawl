@@ -24,14 +24,18 @@ describe('assign', () => {
   it('assigns a character to a position in a new state', async () => {
     const before = initCrawlState()
     const after = await assign('captain', jack, before, false)
-    expect(after.crew.positions.captain).toEqual([jack])
+    const { assigned, shares } = after.crew.positions.captain
+    expect(shares).toBe(2)
+    expect(assigned).toEqual([jack])
     expect(after).not.toBe(before)
   })
 
   it('assigns multiple characters to a position in a new state', async () => {
     const before = initCrawlState()
     const after = await assign('gunner', [anne, mary], before, false)
-    expect(after.crew.positions.gunner).toEqual([anne, mary])
+    const { assigned, shares } = after.crew.positions.gunner
+    expect(shares).toBe(1.5)
+    expect(assigned).toEqual([anne, mary])
     expect(after).not.toBe(before)
   })
 
@@ -39,7 +43,9 @@ describe('assign', () => {
     const before = initCrawlState()
     const mid = await assign('gunner', anne, before, false)
     const after = await assign('gunner', mary, mid, false)
-    expect(after.crew.positions.gunner).toEqual([anne, mary])
+    const { assigned, shares } = after.crew.positions.gunner
+    expect(shares).toBe(1.5)
+    expect(assigned).toEqual([anne, mary])
     expect(after).not.toBe(before)
   })
 
@@ -47,7 +53,9 @@ describe('assign', () => {
     const before = initCrawlState()
     const mid = await assign('gunner', anne, before, false)
     const after = await assign('gunner', [anne, mary], mid, false)
-    expect(after.crew.positions.gunner).toEqual([anne, mary])
+    const { assigned, shares } = after.crew.positions.gunner
+    expect(shares).toBe(1.5)
+    expect(assigned).toEqual([anne, mary])
     expect(after).not.toBe(before)
   })
 })

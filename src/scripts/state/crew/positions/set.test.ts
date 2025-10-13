@@ -21,8 +21,8 @@ describe('setAssigned', () => {
     const before = initCrawlState()
     const after = await setAssigned(position, value, before, false)
     const arr = typeof value === 'string' ? [value] : value
-    expect(after.crew.positions[position]).toHaveLength(arr.length)
-    expect(after.crew.positions[position]).toEqual(arr)
+    expect(after.crew.positions[position].assigned).toHaveLength(arr.length)
+    expect(after.crew.positions[position].assigned).toEqual(arr)
     expect(after).not.toBe(before)
   })
 
@@ -80,17 +80,17 @@ describe('setAssigned', () => {
 
   it('won’t let you be quartermaster and sailing master', async () => {
     const before = initCrawlState()
-    before.crew.positions.quartermaster = [anne]
+    before.crew.positions.quartermaster = { shares: 1, assigned: [anne] }
     const actual = await setAssigned('sailing-master', [anne], before, false)
-    expect(actual.crew.positions.quartermaster).not.toContain(anne)
-    expect(actual.crew.positions['sailing-master']).toContain(anne)
+    expect(actual.crew.positions.quartermaster.assigned).not.toContain(anne)
+    expect(actual.crew.positions['sailing-master'].assigned).toContain(anne)
   })
 
   it('won’t let you be sailing master and quartermaster', async () => {
     const before = initCrawlState()
-    before.crew.positions['sailing-master'] = [anne]
+    before.crew.positions['sailing-master'] = { shares: 1, assigned: [anne] }
     const actual = await setAssigned('quartermaster', [anne], before, false)
-    expect(actual.crew.positions.quartermaster).toContain(anne)
-    expect(actual.crew.positions['sailing-master']).not.toContain(anne)
+    expect(actual.crew.positions.quartermaster.assigned).toContain(anne)
+    expect(actual.crew.positions['sailing-master'].assigned).not.toContain(anne)
   })
 })

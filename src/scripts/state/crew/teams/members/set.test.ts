@@ -31,7 +31,7 @@ describe('setTeam', () => {
     const before = initCrawlState()
     before.crew.teams.starboard.officer = 'quartermaster'
     before.crew.teams.larboard.officer = 'sailing-master'
-    before.crew.positions.quartermaster = [anne]
+    before.crew.positions.quartermaster = { shares: 1, assigned: [anne] }
     const after = await setTeam('larboard', [anne], before, false)
     expect(after.crew.teams.starboard.members).toEqual(before.crew.teams.starboard.members)
   })

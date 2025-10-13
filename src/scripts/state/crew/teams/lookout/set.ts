@@ -15,7 +15,7 @@ const setLookout = async (
   const id = getActorId(helm)
   const opposite = getOppositeSide(side)
   const { officer } = previous.crew.teams[opposite]
-  if ((previous.crew.positions[officer] ?? []).includes(id)) return previous
+  if ((previous.crew.positions[officer]?.assigned ?? []).includes(id)) return previous
 
   const copy = cloneCrawlState(previous)
   copy.crew.teams[side].lookout = id

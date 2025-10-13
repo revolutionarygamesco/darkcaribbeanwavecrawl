@@ -16,8 +16,8 @@ describe('unassign', () => {
 
   beforeEach(() => {
     before = initCrawlState()
-    before.crew.positions.captain = [jack]
-    before.crew.positions.gunner = [anne, mary]
+    before.crew.positions.captain = { shares: 1, assigned: [jack] }
+    before.crew.positions.gunner = { shares: 1, assigned: [anne, mary] }
 
     game.actors = new Map<string, Actor>()
     for (const id of crew) game.actors.set(id, { id } as Actor)
@@ -29,19 +29,19 @@ describe('unassign', () => {
 
   it('removes a character from a position in a new state', async () => {
     const after = await unassign('captain', jack, before, false)
-    expect(after.crew.positions.captain).toHaveLength(0)
+    expect(after.crew.positions.captain.assigned).toHaveLength(0)
     expect(after).not.toBe(before)
   })
 
   it('removes multiple characters from a position in a new state', async () => {
     const after = await unassign('gunner', [anne, mary], before, false)
-    expect(after.crew.positions.gunner).toHaveLength(0)
+    expect(after.crew.positions.gunner.assigned).toHaveLength(0)
     expect(after).not.toBe(before)
   })
 
   it('retains other characters', async () => {
     const after = await unassign('gunner', mary, before, false)
-    expect(after.crew.positions.gunner).toEqual([anne])
+    expect(after.crew.positions.gunner.assigned).toEqual([anne])
     expect(after).not.toBe(before)
   })
 })

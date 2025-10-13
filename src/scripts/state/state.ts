@@ -11,8 +11,20 @@ export interface CrawlTeam {
   onDuty: boolean
 }
 
+export interface PositionData {
+  assigned: ActorID[]
+  shares: number
+}
+
+export interface GlossedPositionData extends PositionData {
+  title: string
+  description: string
+  sans: string
+  actors: Actor[]
+}
+
 export interface CrawlCrew {
-  positions: Record<Position, ActorID[]>
+  positions: Record<Position, PositionData>
   teams: Record<CrawlTeamSide, CrawlTeam>
   xp: Record<ActorID, Record<Position, number>>
 }

@@ -16,8 +16,8 @@ describe('getRoster', () => {
 
   beforeEach(() => {
     before = initCrawlState()
-    before.crew.positions.captain = [jack]
-    before.crew.positions.gunner = [anne, mary]
+    before.crew.positions.captain = { shares: 1, assigned: [jack] }
+    before.crew.positions.gunner = { shares: 1, assigned: [anne, mary] }
 
     game.actors = new Map<string, Actor>()
     for (const id of crew) game.actors.set(id, { id } as Actor)
@@ -35,8 +35,8 @@ describe('getRoster', () => {
   })
 
   it('removes duplicates from multiple positions', () => {
-    before.crew.positions.quartermaster = [anne]
-    before.crew.positions['sailing-master'] = [mary]
+    before.crew.positions.quartermaster = { shares: 1, assigned: [anne] }
+    before.crew.positions['sailing-master'] = { shares: 1, assigned: [mary] }
     const actual = getRoster(before)
     const ids = actual.map(actor => actor.id)
     expect(actual).toHaveLength(3)

@@ -11,9 +11,9 @@ describe('gainXP', () => {
   beforeEach(() => {
     before = initCrawlState()
     before.crew.positions = {
-      captain: [jack],
-      quartermaster: [anne],
-      gunner: [anne, mary]
+      captain: { shares: 1, assigned: [jack] },
+      quartermaster: { shares: 1, assigned: [anne] },
+      gunner: { shares: 1, assigned: [anne, mary] }
     }
     before.crew.xp = {
       [jack]: { quartermaster: 200, gunner: 10 },

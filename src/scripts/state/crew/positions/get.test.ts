@@ -16,7 +16,7 @@ describe('getAssigned', () => {
     game.actors.set(jack, { id: jack } as Actor)
 
     state = initCrawlState()
-    state.crew.positions.captain = [jack]
+    state.crew.positions.captain = { shares: 1, assigned: [jack] }
   })
 
   afterEach(() => {

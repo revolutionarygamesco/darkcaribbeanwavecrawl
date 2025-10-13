@@ -20,8 +20,8 @@ const setOfficer = async (
   let thisCrew = copy.crew.teams[side].members
   let thatCrew = copy.crew.teams[otherTeam].members
 
-  thisCrew = [...new Set([...thisCrew, ...(copy.crew.positions[officer] ?? [])])]
-  thatCrew = [...new Set([...thatCrew, ...(copy.crew.positions[otherOfficer] ?? [])])]
+  thisCrew = [...new Set([...thisCrew, ...(copy.crew.positions[officer]?.assigned ?? [])])]
+  thatCrew = [...new Set([...thatCrew, ...(copy.crew.positions[otherOfficer]?.assigned ?? [])])]
   thatCrew = thatCrew.filter(id => !thisCrew.includes(id))
   thisCrew = thisCrew.filter(id => !thatCrew.includes(id))
 

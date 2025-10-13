@@ -2,7 +2,19 @@ import type CrawlState from './state.ts'
 
 const initCrawlState = (): CrawlState => ({
   crew: {
-    positions: {},
+    positions: {
+      captain: { shares: 2, assigned: [] },
+      quartermaster: { shares: 2, assigned: [] },
+      ['sailing-master']: { shares: 1.5, assigned: [] },
+      bosun: { shares: 1.5, assigned: [] },
+      gunner: { shares: 1.5, assigned: [] },
+      carpenter: { shares: 1.25, assigned: [] },
+      cook: { shares: 1.25, assigned: [] },
+      surgeon: { shares: 1.25, assigned: [] },
+      ['master-arms']: { shares: 1.25, assigned: [] },
+      ['deck-priest']: { shares: 1.25, assigned: [] },
+      ['deck-sorcerer']: { shares: 1.25, assigned: [] }
+    },
     teams: {
       starboard: { officer: 'quartermaster', members: [], onDuty: true },
       larboard: { officer: 'sailing-master', members: [], onDuty: false }

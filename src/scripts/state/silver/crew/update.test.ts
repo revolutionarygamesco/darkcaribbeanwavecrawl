@@ -20,8 +20,8 @@ describe('updateCrewSilver', () => {
 
   beforeEach(() => {
     before = initCrawlState()
-    before.crew.positions.captain = [jack]
-    before.crew.positions.gunner = [anne, mary]
+    before.crew.positions.captain = { shares: 1, assigned: [jack] }
+    before.crew.positions.gunner = { shares: 1, assigned: [anne, mary] }
     game.actors = new Map<string, Actor>()
     for (const id in ledger) game.actors.set(id, { id, system: { silver: ledger[id] } } as Actor)
   })
