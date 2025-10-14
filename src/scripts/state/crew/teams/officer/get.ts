@@ -1,7 +1,11 @@
 import CrawlState, { CrawlTeamSide, CrawlTeamOfficer } from '../../../state.ts'
+import getCrawlState from '../../../get.ts'
 
-const getOfficer = (side: CrawlTeamSide, state: CrawlState): CrawlTeamOfficer => {
-  return state.crew.teams[side].officer
+const getOfficer = async (
+  side: CrawlTeamSide,
+  state?: CrawlState
+): Promise<CrawlTeamOfficer> => {
+  return (state ?? await getCrawlState()).crew.teams[side].officer
 }
 
 export default getOfficer

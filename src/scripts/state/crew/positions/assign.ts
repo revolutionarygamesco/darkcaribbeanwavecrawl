@@ -6,10 +6,11 @@ import setAssigned from './set.ts'
 const assign = async (
   position: string,
   characters: string | string[],
-  previous: CrawlState = getCrawlState(),
+  state?: CrawlState,
   save: boolean = true
 ): Promise<CrawlState> => {
-  const before = getAssigned(position, previous).map(actor => actor.id)
+  const previous = state ?? await getCrawlState()
+  const before = (await getAssigned(position, previous)).map(actor => actor.id)
   const ids = typeof characters === 'string' ? [characters] : characters
   const after = [...new Set([...before, ...ids])]
   return await setAssigned(position, after, previous, save)

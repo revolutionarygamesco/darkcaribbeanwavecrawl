@@ -23,8 +23,8 @@ describe('getAssigned', () => {
     game.actors = originalActors
   })
 
-  it('gets the characters assigned to a position from the state', () => {
-    const captains = getAssigned('captain', state)
+  it('gets the characters assigned to a position from the state', async () => {
+    const captains = await getAssigned('captain', state)
     expect(captains).toHaveLength(1)
     expect(captains[0].id).toBe(jack)
   })

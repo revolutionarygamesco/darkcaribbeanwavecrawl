@@ -4,9 +4,10 @@ import setSilver from './set.ts'
 
 const addSilver = async (
   amount: number,
-  previous: CrawlState = getCrawlState(),
+  state?: CrawlState,
   save: boolean = true
 ): Promise<CrawlState> => {
+  const previous = state ?? await getCrawlState()
   const sum = previous.silver.company + amount
   return await setSilver(sum, previous, save)
 }

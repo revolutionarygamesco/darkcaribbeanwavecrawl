@@ -18,20 +18,20 @@ describe('getLookout', () => {
     game.actors = originalActors
   })
 
-  it('returns null if the team has no lookout defined', () => {
+  it('returns null if the team has no lookout defined', async () => {
     const state = initCrawlState()
-    expect(getLookout('starboard', state)).toBeNull()
+    expect(await getLookout('starboard', state)).toBeNull()
   })
 
-  it('returns null if there is no such actor', () => {
+  it('returns null if there is no such actor', async () => {
     const state = initCrawlState()
     state.crew.teams.starboard = { officer: 'quartermaster', members: [anne], lookout: 'pew', onDuty: true }
-    expect(getLookout('starboard', state)).toBeNull()
+    expect(await getLookout('starboard', state)).toBeNull()
   })
 
-  it('returns the team’s designated lookout', () => {
+  it('returns the team’s designated lookout', async () => {
     const state = initCrawlState()
     state.crew.teams.starboard = { officer: 'quartermaster', members: [anne], lookout: anne, onDuty: true }
-    expect(getLookout('starboard', state)?.id).toBe(anne)
+    expect((await getLookout('starboard', state))?.id).toBe(anne)
   })
 })

@@ -18,22 +18,22 @@ describe('getShip', () => {
     game.actors = originalActors
   })
 
-  it('gets the ship from the state', () => {
+  it('gets the ship from the state', async () => {
     const state = initCrawlState()
     state.ship.actor = id
-    const ship = getShip(state)
+    const ship = await getShip(state)
     expect(ship?.id).toBe(id)
   })
 
-  it('returns null if there is no ship', () => {
-    const ship = getShip(initCrawlState())
+  it('returns null if there is no ship', async () => {
+    const ship = await getShip(initCrawlState())
     expect(ship).toBeNull()
   })
 
-  it('returns null if there is no such actor', () => {
+  it('returns null if there is no such actor', async () => {
     const state = initCrawlState()
     state.ship.actor = 'nope'
-    const ship = getShip(state)
+    const ship = await getShip(state)
     expect(ship).toBeNull()
   })
 })

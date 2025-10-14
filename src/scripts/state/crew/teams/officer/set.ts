@@ -1,4 +1,5 @@
 import CrawlState, { CrawlTeamSide, CrawlTeamOfficer } from '../../../state.ts'
+import getCrawlState from '../../../get.ts'
 import cloneCrawlState from '../../../clone.ts'
 import getOppositeOfficer from './opposite.ts'
 import getOppositeSide from '../opposite.ts'
@@ -7,9 +8,10 @@ import setCrawlState from '../../../set.ts'
 const setOfficer = async (
   side: CrawlTeamSide,
   officer: CrawlTeamOfficer,
-  previous: CrawlState,
+  state?: CrawlState,
   save: boolean = true
 ): Promise<CrawlState> => {
+  const previous = state ?? await getCrawlState()
   const otherTeam = getOppositeSide(side)
   const otherOfficer = getOppositeOfficer(officer)
   const copy = cloneCrawlState(previous)

@@ -1,8 +1,10 @@
 import type CrawlState from '../state.ts'
 import getCrawlState from '../get.ts'
 
-const getChapter = (state: CrawlState = getCrawlState()): number => {
-  return state.chapter
+const getChapter = async (
+  state?: CrawlState
+): Promise<number> => {
+  return (state ?? await getCrawlState()).chapter
 }
 
 export default getChapter

@@ -24,8 +24,8 @@ describe('getTeam', () => {
     game.actors = originalActors
   })
 
-  it('returns a roster of every character on the team', () => {
-    const actual = getTeam('starboard', before)
+  it('returns a roster of every character on the team', async () => {
+    const actual = await getTeam('starboard', before)
     expect(actual).toHaveLength(2)
     for (const actor of actual) expect([anne, mary]).toContain(actor.id)
   })

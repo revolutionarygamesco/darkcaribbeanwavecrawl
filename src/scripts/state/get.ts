@@ -3,8 +3,8 @@ import type CrawlState from './state.ts'
 import getAdventure from './get-adventure.ts'
 import initCrawlState from './init.ts'
 
-const getCrawlState = (): CrawlState => {
-  const adventure = getAdventure()
+const getCrawlState = async (): Promise<CrawlState> => {
+  const adventure = await getAdventure()
   if (!adventure) return initCrawlState()
   return adventure.getFlag(MODULE_ID, CRAWL_STATE) ?? initCrawlState()
 }

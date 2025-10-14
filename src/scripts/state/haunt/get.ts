@@ -3,8 +3,10 @@ import type Haunt from './haunt.ts'
 import getCrawlState from '../get.ts'
 import describeHaunt from './describe.ts'
 
-const getHaunt = (state: CrawlState = getCrawlState()): Haunt => {
-  const value = state.haunt
+const getHaunt = async (
+  state?: CrawlState
+): Promise<Haunt> => {
+  const value = (state ?? await getCrawlState()).haunt
   const description = describeHaunt(value)
   return { value, description }
 }

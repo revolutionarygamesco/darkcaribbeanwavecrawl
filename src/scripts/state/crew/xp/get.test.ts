@@ -22,13 +22,13 @@ describe('getXP', () => {
     game.actors = originalActors
   })
 
-  it.each(['quartermaster', 'captain'])('returns Jack’s experience as %s (as ID)', (position) => {
-    const actual = getXP(jack, position, state)
+  it.each(['quartermaster', 'captain'])('returns Jack’s experience as %s (as ID)', async (position) => {
+    const actual = await getXP(jack, position, state)
     expect(actual).toBe(state.crew.xp[jack][position])
   })
 
-  it.each(['quartermaster', 'captain'])('returns Jack’s experience as %s (as Actor)', (position) => {
-    const actual = getXP({ id: jack } as Actor, position, state)
+  it.each(['quartermaster', 'captain'])('returns Jack’s experience as %s (as Actor)', async (position) => {
+    const actual = await getXP({ id: jack } as Actor, position, state)
     expect(actual).toBe(state.crew.xp[jack][position])
   })
 })

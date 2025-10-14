@@ -8,12 +8,13 @@ const limit = MAX_DAYS_SAVED * 24 * 60 * 60
 
 const saveCrawlState = async (
   latest: CrawlState,
-  stack: CrawlState[] = getSavedCrawlStates(),
+  stack?: CrawlState[],
   save: boolean = true
 ): Promise<CrawlState[]> => {
+  const history = stack ?? await getSavedCrawlStates()
   const present = latest.timestamp
   const cutoff = present - limit
-  const kept = stack.filter(state => state.timestamp <= cutoff)
+  const kept = history.filter(state => state.timestamp <= cutoff)
   const saved = [...kept, latest]
   return save ? await setSavedCrawlStates(saved) : saved
 }

@@ -3,9 +3,10 @@ import getCrawlState from '../get.ts'
 import addWinds from './add.ts'
 
 const decrWinds = async (
-  previous: CrawlState = getCrawlState(),
+  state?: CrawlState,
   save: boolean = true
 ): Promise<CrawlState> => {
+  const previous = state ?? await getCrawlState()
   return await addWinds(-1, previous, save)
 }
 

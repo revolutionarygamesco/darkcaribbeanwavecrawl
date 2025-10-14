@@ -7,6 +7,10 @@
     overflow: auto;
   }
 
+  figcaption {
+    font-style: normal;
+  }
+
   nav.tabs {
     border-top: 0;
     border-bottom: 0;
@@ -21,6 +25,20 @@
         box-shadow: none;
         outline: none;
       }
+    }
+  }
+
+  .crew-ship {
+    padding: 1em;
+    text-align: center;
+
+    figure.no-ship div {
+      aspect-ratio: 1;
+      background: #333 url('/modules/revolutionary-darkcaribbean/artwork/no-ship.jpg') center;
+      background-size: contain;
+      box-shadow: 0 0 1em #000;
+      margin: 1em auto;
+      width: 60%;
     }
   }
 

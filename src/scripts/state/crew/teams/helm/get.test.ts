@@ -18,20 +18,20 @@ describe('getHelm', () => {
     game.actors = originalActors
   })
 
-  it('returns null if the team has no helm defined', () => {
+  it('returns null if the team has no helm defined', async () => {
     const state = initCrawlState()
-    expect(getHelm('starboard', state)).toBeNull()
+    expect(await getHelm('starboard', state)).toBeNull()
   })
 
-  it('returns null if there is no such actor', () => {
+  it('returns null if there is no such actor', async () => {
     const state = initCrawlState()
     state.crew.teams.starboard = { officer: 'quartermaster', members: [anne], helm: 'dread-pirate-roberts', onDuty: true }
-    expect(getHelm('starboard', state)).toBeNull()
+    expect(await getHelm('starboard', state)).toBeNull()
   })
 
-  it('returns the team’s designated helmsman', () => {
+  it('returns the team’s designated helmsman', async () => {
     const state = initCrawlState()
     state.crew.teams.starboard = { officer: 'quartermaster', members: [anne], helm: anne, onDuty: true }
-    expect(getHelm('starboard', state)?.id).toBe(anne)
+    expect((await getHelm('starboard', state))?.id).toBe(anne)
   })
 })

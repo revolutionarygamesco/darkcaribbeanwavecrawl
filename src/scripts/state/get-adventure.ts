@@ -1,8 +1,9 @@
 import ids from '../ids.ts'
 
-const getAdventure = (): Adventure => {
-  const { compendium, rel } = ids.adventure
-  return game.packs?.get(compendium).get(rel)
+const getAdventure = async (): Promise<Adventure | null> => {
+  if (typeof fromUuid === 'undefined') return null
+  const uuid = ids.adventure.abs
+  return await fromUuid(uuid) as Adventure | null
 }
 
 export default getAdventure

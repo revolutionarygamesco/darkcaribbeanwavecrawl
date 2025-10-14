@@ -1,14 +1,13 @@
 import type CrawlState from '../../state.ts'
-import getCrawlState from '../../get.ts'
 import setCrawlState from '../../set.ts'
-import cloneCrawlState from '../../clone.ts'
+import getCopy from '../../get-copy.ts'
 
 const gainXP = async (
   hours: number,
-  previous: CrawlState = getCrawlState(),
+  state?: CrawlState,
   save: boolean = true
 ): Promise<CrawlState> => {
-  const copy = cloneCrawlState(previous)
+  const copy = await getCopy(state)
 
   for (const position in copy.crew.positions) {
     for (const id of copy.crew.positions[position]?.assigned ?? []) {

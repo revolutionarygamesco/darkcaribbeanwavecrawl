@@ -4,9 +4,10 @@ import setWinds from './set.ts'
 
 const addWinds = async (
   add: number,
-  previous: CrawlState = getCrawlState(),
+  state?: CrawlState,
   save: boolean = true
 ): Promise<CrawlState> => {
+  const previous = state ?? await getCrawlState()
   return await setWinds(previous.winds + add, previous, save)
 }
 

@@ -5,9 +5,10 @@ import setProvisions from './set.ts'
 const addProvisions = async (
   type: Provision,
   amount: number,
-  previous: CrawlState = getCrawlState(),
+  state?: CrawlState,
   save: boolean = true
 ): Promise<CrawlState> => {
+  const previous = state ?? await getCrawlState()
   const sum = previous.provisions[type] + amount
   return await setProvisions(type, sum, previous, save)
 }

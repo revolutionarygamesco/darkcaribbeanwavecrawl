@@ -1,7 +1,12 @@
 import CrawlState, { CrawlTeamSide } from '../../../state.ts'
+import getCrawlState from '../../../get.ts'
 
-const getLookout = (side: CrawlTeamSide, state: CrawlState): Actor | null => {
-  const id = state.crew.teams[side].lookout
+const getLookout = async (
+  side: CrawlTeamSide,
+  state?: CrawlState
+): Promise<Actor | null> => {
+  const cs = state ?? await getCrawlState()
+  const id = cs.crew.teams[side].lookout
   return id ? game.actors.get(id) ?? null : null
 }
 

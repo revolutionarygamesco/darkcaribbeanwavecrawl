@@ -4,7 +4,7 @@ import getAdventure from './get-adventure.ts'
 import cloneCrawlState from './clone.ts'
 
 const setCrawlState = async (state: CrawlState): Promise<CrawlState> => {
-  const adventure = getAdventure()
+  const adventure = await getAdventure()
   const copy = cloneCrawlState(state)
   if (!adventure) return copy
   await adventure.setFlag(MODULE_ID, CRAWL_STATE, copy)

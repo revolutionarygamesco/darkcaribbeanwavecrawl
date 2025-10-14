@@ -3,13 +3,13 @@ import { MODULE_ID } from '../settings.ts'
 import getCrawlState from '../state/get.ts'
 import getPanelDimensions from '../utilities/get-dimensions.ts'
 import getShip from '../state/ship/get.ts'
+import setShip from '../state/ship/set.ts'
 import glossAllPositions from './helpers/gloss-all.ts'
 import mapIdsToActors from '../utilities/map-ids-to-actors.ts'
 import registerPartials from './register-partials.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 const dropSelector = '.droppable'
-const ship = getShip()
 
 export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
@@ -45,12 +45,29 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   static TABS = {
     primary: {
       tabs: [{ id: 'ship' }, { id: 'positions' }, { id: 'teams' }],
-      initial: CrewPanel._getInitialTab()
+      initial: 'ship'
     }
   }
 
-  static _getInitialTab () {
-    return ship ? 'positions' : 'ship'
+  constructor(options = {}) {
+    super(options)
+    this.dragDrop = this.#createDragDropHandlers()
+  }
+
+  #createDragDropHandlers () {
+    return this.options.dragDrop.map((d: DragDrop) => {
+      d.permissions = {
+        dragstart: this._canDragStart.bind(this),
+        drop: this._canDragDrop.bind(this)
+      }
+      d.callbacks = {
+        dragstart: this._onDragStart.bind(this),
+        dragover: this._onDragOver.bind(this),
+        drop: this._onDrop.bind(this),
+      }
+
+      return new foundry.applications.ux.DragDrop(d)
+    })
   }
 
   async _prepareContext() {
@@ -71,6 +88,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   async _prepareShipTab (context: any) {
+    const ship = await getShip()
     if (!ship) return context
 
     context.ship = {
@@ -82,12 +100,12 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   async _preparePositionsTab (context: any) {
-    context.positions = glossAllPositions()
+    context.positions = await glossAllPositions()
     return context
   }
 
   async _prepareTeam (side: 'starboard' | 'larboard') {
-    const state = getCrawlState()
+    const state = await getCrawlState()
     const team = state.crew.teams[side]
     const officerIDs = state.crew.positions[team.officer].assigned
     const named: string[] = [...officerIDs, team.helm, team.lookout]
@@ -116,13 +134,47 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   async _onRender(context: any, options: any) {
     await super._onRender(context, options);
 
+    if (!this.dragDrop) return
+    this.dragDrop.forEach((d) => d.bind(this.element))
+
+    const ship = await getShip()
     const tabs = new foundry.applications.ux.Tabs({
       navSelector: '.tabs',
       contentSelector: 'section',
-      initial: CrewPanel._getInitialTab(),
+      initial: ship ? 'positions' : 'ship',
       group: 'crew-tabs'
     });
     tabs.bind(this.element)
+  }
+
+  _canDragDrop() { return true }
+  _canDragStart() { return true }
+  _onDragOver() {}
+
+  _onDragStart(event: DragEvent) {
+    const id = (event.target as HTMLElement).dataset.entryId
+    if (!id || !event.dataTransfer) return
+    if ('setData' in event.dataTransfer) event.dataTransfer.setData('text/plain', id)
+  }
+
+  async _onShipDrop (event: DragEvent) {
+    const data = foundry.applications.ux.TextEditor.getDragEventData(event)
+    if (data.type !== 'Actor') return
+
+    const id = data.uuid.split('.').pop()
+    const actor = game.actors.get(id)
+    if (!actor || actor.type !== 'vehicle') return
+
+    await setShip(actor)
+    await this.render()
+  }
+
+  async _onDrop (event: DragEvent): Promise<void> {
+    const target = event.target as HTMLElement
+    const el = target.closest(dropSelector) as HTMLElement
+    if (!el) return
+
+    if (el.classList.contains('ship')) return this._onShipDrop(event)
   }
 }
 

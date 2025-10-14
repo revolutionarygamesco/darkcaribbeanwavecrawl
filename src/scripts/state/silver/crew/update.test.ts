@@ -31,7 +31,7 @@ describe('updateCrewSilver', () => {
   })
 
   it('returns new state with silver updated from character documents', async () => {
-    const actual = await updateCrewSilver(before, true)
+    const actual = await updateCrewSilver(before, false)
     for (const id in ledger) {
       expect(actual.silver.crew[id]).toBe(ledger[id])
     }

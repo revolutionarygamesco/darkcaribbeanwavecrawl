@@ -11,7 +11,7 @@ describe('getProvisions', () => {
     state.provisions = expected
   })
 
-  it.each(['food', 'water', 'rum'] as Provision[])('gets the %s', (type: Provision) => {
-    expect(getProvisions(type, state)).toBe(expected[type])
+  it.each(['food', 'water', 'rum'] as Provision[])('gets the %s', async (type: Provision) => {
+    expect(await getProvisions(type, state)).toBe(expected[type])
   })
 })

@@ -21,8 +21,8 @@ describe('glossAllPositions', () => {
     game.actors = originalActors
   })
 
-  it('glosses all positions', () => {
-    const actual = glossAllPositions(before)
+  it('glosses all positions', async () => {
+    const actual = await glossAllPositions(before)
     const { assigned, actors, shares, title, description, sans } = actual.captain
     expect(assigned).toEqual([jack])
     expect(actors).toEqual([game.actors.get(jack)])

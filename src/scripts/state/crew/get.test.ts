@@ -27,17 +27,17 @@ describe('getRoster', () => {
     game.actors = originalActors
   })
 
-  it('returns a roster of every character on the members', () => {
-    const actual = getRoster(before)
+  it('returns a roster of every character on the members', async () => {
+    const actual = await getRoster(before)
     const ids = actual.map(actor => actor.id)
     expect(actual).toHaveLength(3)
     for (const id of crew) expect(ids).toContain(id)
   })
 
-  it('removes duplicates from multiple positions', () => {
+  it('removes duplicates from multiple positions', async () => {
     before.crew.positions.quartermaster = { shares: 1, assigned: [anne] }
     before.crew.positions['sailing-master'] = { shares: 1, assigned: [mary] }
-    const actual = getRoster(before)
+    const actual = await getRoster(before)
     const ids = actual.map(actor => actor.id)
     expect(actual).toHaveLength(3)
     for (const id of crew) expect(ids).toContain(id)

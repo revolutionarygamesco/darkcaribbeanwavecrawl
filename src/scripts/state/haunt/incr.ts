@@ -3,9 +3,10 @@ import getCrawlState from '../get.ts'
 import addHaunt from './add.ts'
 
 const incrHaunt = async (
-  previous: CrawlState = getCrawlState(),
+  state?: CrawlState,
   save: boolean = true
 ): Promise<CrawlState> => {
+  const previous = state ?? await getCrawlState()
   return await addHaunt(1, previous, save)
 }
 

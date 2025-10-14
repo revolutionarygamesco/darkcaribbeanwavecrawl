@@ -1,21 +1,20 @@
 import type CrawlState from './state.ts'
-import getCrawlState from './get.ts'
+import getCopy from './get-copy.ts'
 import setCrawlState from './set.ts'
-import cloneCrawlState from './clone.ts'
 import { getShipPosition } from './ship/position/update.ts'
 import { fetchCrewSilver } from './silver/crew/update.ts'
 
 const updateState = async (
-  previous: CrawlState = getCrawlState(),
+  state?: CrawlState,
   save: boolean = true
 ): Promise<CrawlState> => {
-  const copy = cloneCrawlState(previous)
+  const copy = await getCopy(state)
   copy.timestamp = game.time.worldTime
 
-  const position = getShipPosition()
+  const position = await getShipPosition()
   if (position) copy.ship.position = position
 
-  copy.silver.crew = fetchCrewSilver(copy)
+  copy.silver.crew = await fetchCrewSilver(copy)
 
   return save ? await setCrawlState(copy) : copy
 }

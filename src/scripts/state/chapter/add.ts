@@ -4,9 +4,10 @@ import setChapter from './set.ts'
 
 const addChapter = async (
   add: number,
-  previous: CrawlState = getCrawlState(),
+  state?: CrawlState,
   save: boolean = true
 ): Promise<CrawlState> => {
+  const previous = state ?? await getCrawlState()
   return await setChapter(previous.chapter + add, previous, save)
 }
 

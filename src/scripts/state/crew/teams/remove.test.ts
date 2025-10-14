@@ -5,7 +5,7 @@ describe('removeTeamMember', () => {
   const anne = 'anne-bonny'
   const mary = 'mary-read'
 
-  it('removes a member from the team by ID', () => {
+  it('removes a member from the team by ID', async () => {
     const state = initCrawlState()
     state.crew.teams.starboard = { officer: 'quartermaster', members: [anne, mary], helm: anne, lookout: anne, onDuty: true }
     removeTeamMember('starboard', anne, state)
@@ -14,7 +14,7 @@ describe('removeTeamMember', () => {
     expect(state.crew.teams.starboard.lookout).toBeUndefined()
   })
 
-  it('removes multiple members from the team as IDs', () => {
+  it('removes multiple members from the team as IDs', async () => {
     const state = initCrawlState()
     state.crew.teams.starboard = { officer: 'quartermaster', members: [anne, mary], helm: mary, lookout: anne, onDuty: true }
     removeTeamMember('starboard', [anne, mary], state)
@@ -23,7 +23,7 @@ describe('removeTeamMember', () => {
     expect(state.crew.teams.starboard.lookout).toBeUndefined()
   })
 
-  it('removes a member from the team as Actor', () => {
+  it('removes a member from the team as Actor', async () => {
     const state = initCrawlState()
     state.crew.teams.starboard = { officer: 'quartermaster', members: [anne, mary], helm: anne, lookout: anne, onDuty: true }
     removeTeamMember('starboard', { id: anne } as Actor, state)

@@ -4,9 +4,10 @@ import setHaunt from './set.ts'
 
 const addHaunt = async (
   add: number,
-  previous: CrawlState = getCrawlState(),
+  state?: CrawlState,
   save: boolean = true
 ): Promise<CrawlState> => {
+  const previous = state ?? await getCrawlState()
   return await setHaunt(previous.haunt + add, previous, save)
 }
 

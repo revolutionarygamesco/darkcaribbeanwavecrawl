@@ -9,9 +9,10 @@ import removeTeamMember from '../remove.ts'
 const setHelm = async (
   side: CrawlTeamSide,
   helm: Actor | string,
-  previous: CrawlState = getCrawlState(),
+  state?: CrawlState,
   save: boolean = true
 ): Promise<CrawlState> => {
+  const previous = state ?? await getCrawlState()
   const id = getActorId(helm)
   const opposite = getOppositeSide(side)
   const { officer } = previous.crew.teams[opposite]

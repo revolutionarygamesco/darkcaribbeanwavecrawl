@@ -1,7 +1,11 @@
 import type CrawlState from '../../state.ts'
+import getCrawlState from '../../get.ts'
 
-const getCrewSilver = (id: string, state: CrawlState): number | null => {
-  return state.silver.crew[id] ?? null
+const getCrewSilver = async (
+  id: string,
+  state?: CrawlState
+): Promise<number | null> => {
+  return (state ?? await getCrawlState()).silver.crew[id] ?? null
 }
 
 export default getCrewSilver

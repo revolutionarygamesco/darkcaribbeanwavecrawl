@@ -8,9 +8,10 @@ import initPosition from './init.ts'
 const setAssigned = async (
   position: string,
   characters: string | string[],
-  previous: CrawlState = getCrawlState(),
+  state?: CrawlState,
   save: boolean = true
 ): Promise<CrawlState> => {
+  const previous = state ?? await getCrawlState()
   let copy = await initPosition(position, 1, previous)
   copy.crew.positions[position].assigned = typeof characters === 'string' ? [characters] : characters
 
