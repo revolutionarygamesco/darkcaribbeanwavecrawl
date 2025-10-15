@@ -4,6 +4,7 @@ import getCrawlState from '../state/get.ts'
 import getPanelDimensions from '../utilities/get-dimensions.ts'
 import getShip from '../state/ship/get.ts'
 import setShip from '../state/ship/set.ts'
+import removeShip from '../state/ship/remove.ts'
 import glossAllPositions from './helpers/gloss-all.ts'
 import mapIdsToActors from '../utilities/map-ids-to-actors.ts'
 import registerPartials from './register-partials.ts'
@@ -12,6 +13,8 @@ const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 const dropSelector = '.droppable'
 
 export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
+  private _buttonHandler: ((event: Event) => Promise<void>) | null = null
+
   static DEFAULT_OPTIONS = {
     id: `${MODULE_ID}-crew`,
     tag: 'section',
@@ -145,6 +148,11 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       group: 'crew-tabs'
     });
     tabs.bind(this.element)
+
+    if (!this._buttonHandler) {
+      this._buttonHandler = this._handleButtonClick.bind(this)
+      this.element.addEventListener('click', this._buttonHandler)
+    }
   }
 
   _canDragDrop() { return true }
@@ -175,6 +183,19 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     if (!el) return
 
     if (el.classList.contains('ship')) return this._onShipDrop(event)
+  }
+
+  async _handleButtonClick (event: Event) {
+    const target = event.target as HTMLElement
+    const button = target.closest('button') as HTMLElement
+    if (!button) return
+
+    if (button.dataset.action === 'remove-ship') return await this._removeShip()
+  }
+
+  async _removeShip () {
+    await removeShip()
+    await this.render()
   }
 }
 
