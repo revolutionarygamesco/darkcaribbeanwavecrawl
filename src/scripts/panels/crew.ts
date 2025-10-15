@@ -11,9 +11,11 @@ import registerPartials from './register-partials.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 const dropSelector = '.droppable'
+const INITIAL_TAB_UNSET = 'unset'
 
 export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   private _buttonHandler: ((event: Event) => Promise<void>) | null = null
+  private _initialTab?: string = INITIAL_TAB_UNSET
 
   static DEFAULT_OPTIONS = {
     id: `${MODULE_ID}-crew`,
@@ -135,19 +137,24 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   async _onRender(context: any, options: any) {
-    await super._onRender(context, options);
+    await super._onRender(context, options)
 
     if (!this.dragDrop) return
     this.dragDrop.forEach((d) => d.bind(this.element))
 
-    const ship = await getShip()
+    if (this._initialTab === INITIAL_TAB_UNSET) {
+      const ship = await getShip()
+      this._initialTab = ship ? 'positions' : 'ship'
+    }
+
     const tabs = new foundry.applications.ux.Tabs({
       navSelector: '.tabs',
       contentSelector: 'section',
-      initial: ship ? 'positions' : 'ship',
+      initial: this._initialTab,
       group: 'crew-tabs'
     });
     tabs.bind(this.element)
+    this._initialTab = undefined
 
     if (!this._buttonHandler) {
       this._buttonHandler = this._handleButtonClick.bind(this)
