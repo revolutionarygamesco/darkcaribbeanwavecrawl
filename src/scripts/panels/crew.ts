@@ -4,6 +4,7 @@ import getCrawlState from '../state/get.ts'
 import getPanelDimensions from '../utilities/get-dimensions.ts'
 import getShip from '../state/ship/get.ts'
 import setShip from '../state/ship/set.ts'
+import assign from '../state/crew/positions/assign.ts'
 import removeShip from '../state/ship/remove.ts'
 import glossAllPositions from './helpers/gloss-all.ts'
 import mapIdsToActors from '../utilities/map-ids-to-actors.ts'
@@ -11,11 +12,11 @@ import registerPartials from './register-partials.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 const dropSelector = '.droppable'
-const INITIAL_TAB_UNSET = 'unset'
+const CURRENT_TAB_UNSET = 'unset'
 
 export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   private _buttonHandler: ((event: Event) => Promise<void>) | null = null
-  private _initialTab?: string = INITIAL_TAB_UNSET
+  private _currentTab: string = CURRENT_TAB_UNSET
 
   static DEFAULT_OPTIONS = {
     id: `${MODULE_ID}-crew`,
@@ -142,19 +143,26 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     if (!this.dragDrop) return
     this.dragDrop.forEach((d) => d.bind(this.element))
 
-    if (this._initialTab === INITIAL_TAB_UNSET) {
+    if (this._currentTab === CURRENT_TAB_UNSET) {
       const ship = await getShip()
-      this._initialTab = ship ? 'positions' : 'ship'
+      this._currentTab = ship ? 'positions' : 'ship'
     }
 
     const tabs = new foundry.applications.ux.Tabs({
       navSelector: '.tabs',
       contentSelector: 'section',
-      initial: this._initialTab,
+      initial: this._currentTab,
       group: 'crew-tabs'
-    });
+    })
+
+    tabs._onClickNav = (event: PointerEvent) => {
+      const btn = event?.target as HTMLElement | undefined
+      if (!btn) return
+      this._currentTab = btn.closest('button')?.dataset.tab ?? this._currentTab
+      tabs.activate(this._currentTab)
+    }
+
     tabs.bind(this.element)
-    this._initialTab = undefined
 
     if (!this._buttonHandler) {
       this._buttonHandler = this._handleButtonClick.bind(this)
@@ -172,15 +180,30 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     if ('setData' in event.dataTransfer) event.dataTransfer.setData('text/plain', id)
   }
 
-  async _onShipDrop (event: DragEvent) {
+  _droppedActor (event: DragEvent, type: string = 'character'): Actor | null {
     const data = foundry.applications.ux.TextEditor.getDragEventData(event)
-    if (data.type !== 'Actor') return
+    if (data.type !== 'Actor') return null
 
     const id = data.uuid.split('.').pop()
     const actor = game.actors.get(id)
-    if (!actor || actor.type !== 'vehicle') return
+    return actor && actor.type === type ? actor : null
+  }
 
+  async _onShipDrop (event: DragEvent) {
+    const actor = this._droppedActor(event, 'vehicle')
+    if (!actor) return
     await setShip(actor)
+    await this.render()
+  }
+
+  async _onPositionDrop (event: DragEvent, el: HTMLElement) {
+    const actor = this._droppedActor(event)
+    if (!actor) return
+
+    const position = el.dataset.positionId
+    if (!position) return
+
+    await assign(position, actor.id)
     await this.render()
   }
 
@@ -190,6 +213,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     if (!el) return
 
     if (el.classList.contains('ship')) return this._onShipDrop(event)
+    if (el.classList.contains('position')) return this._onPositionDrop(event, el)
   }
 
   async _handleButtonClick (event: Event) {
@@ -203,6 +227,10 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   async _removeShip () {
     await removeShip()
     await this.render()
+  }
+
+  _onClose () {
+    this._currentTab = CURRENT_TAB_UNSET
   }
 }
 

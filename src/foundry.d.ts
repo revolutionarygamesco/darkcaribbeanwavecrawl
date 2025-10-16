@@ -18,6 +18,7 @@ declare class HandlebarsApplication {
   render: (options?: boolean) => Promise<HandlebarsApplication>
   close(options?: any): Promise<this>
   _onRender(context: any, options: any): Promise<void>
+  _onClose(options: any): void
   _prepareTabs: (group: string) => any
 }
 
@@ -31,7 +32,9 @@ declare class ChatMessage {
 
 declare class Tabs {
   constructor(config?: any)
+  activate(tabName: string, triggerRollback?: boolean): void
   bind(html: HTMLElement): void
+  _onClickNav: (event: PointerEvent) => void
 }
 
 declare class DragDrop {
