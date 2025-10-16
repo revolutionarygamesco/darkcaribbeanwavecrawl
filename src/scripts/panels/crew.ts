@@ -7,6 +7,7 @@ import setShip from '../state/ship/set.ts'
 import removeShip from '../state/ship/remove.ts'
 import assign from '../state/crew/positions/assign.ts'
 import unassign from '../state/crew/positions/unassign.ts'
+import setShares from '../state/crew/positions/shares/set.ts'
 import glossAllPositions from './helpers/gloss-all.ts'
 import mapIdsToActors from '../utilities/map-ids-to-actors.ts'
 import registerPartials from './register-partials.ts'
@@ -17,6 +18,7 @@ const CURRENT_TAB_UNSET = 'unset'
 
 export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   private _buttonHandler: ((event: Event) => Promise<void>) | null = null
+  private _inputChangeHandler: ((event: Event) => Promise<void>) | null = null
   private _currentTab: string = CURRENT_TAB_UNSET
 
   static DEFAULT_OPTIONS = {
@@ -169,6 +171,11 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       this._buttonHandler = this._handleButtonClick.bind(this)
       this.element.addEventListener('click', this._buttonHandler)
     }
+
+    if (!this._inputChangeHandler) {
+      this._inputChangeHandler = this._handleInputChange.bind(this)
+      this.element.addEventListener('change', this._inputChangeHandler)
+    }
   }
 
   _canDragDrop() { return true }
@@ -226,6 +233,14 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     if (button.dataset.action === 'unassign-position') return await this._unassignPosition(button)
   }
 
+  async _handleInputChange (event: Event) {
+    const target = event.target as HTMLElement
+    const input = target.closest('input') as HTMLElement
+    if (!input) return
+
+    if (input.classList.contains('shares')) return this._changeShares(input)
+  }
+
   async _removeShip () {
     await removeShip()
     await this.render()
@@ -236,6 +251,17 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     const actor = button.dataset.actorId
     if (!position || !actor) return
     await unassign(position, actor)
+    await this.render()
+  }
+
+  async _changeShares (input: HTMLElement) {
+    const position = input.dataset.positionId
+    if (!position) return
+
+    const shares = parseInt((input as HTMLInputElement).value)
+    if (isNaN(shares)) return
+
+    await setShares(position, shares)
     await this.render()
   }
 
