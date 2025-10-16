@@ -4,6 +4,7 @@ import getCrawlState from '../state/get.ts'
 import getPanelDimensions from '../utilities/get-dimensions.ts'
 import getShip from '../state/ship/get.ts'
 import setShip from '../state/ship/set.ts'
+import setOfficer from '../state/crew/teams/officer/set.ts'
 import removeShip from '../state/ship/remove.ts'
 import assign from '../state/crew/positions/assign.ts'
 import unassign from '../state/crew/positions/unassign.ts'
@@ -122,7 +123,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
 
     return {
       side,
-      name: side === 'starboard' ? 'Starboard Crew' : 'Larboard Crew',
+      name: `${MODULE_ID}.crew-panel.teams.sides.${side}`,
       isQuartermaster: team.officer === 'quartermaster',
       officers: mapIdsToActors(officerIDs),
       helm: team.helm ? game.actors.get(team.helm) : undefined,
@@ -133,8 +134,8 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
 
   async _prepareTeamsTab (context: any) {
     context.teams = {
-      starboard: this._prepareTeam('starboard'),
-      larboard: this._prepareTeam('larboard')
+      starboard: await this._prepareTeam('starboard'),
+      larboard: await this._prepareTeam('larboard')
     }
 
     return context
@@ -235,10 +236,11 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
 
   async _handleInputChange (event: Event) {
     const target = event.target as HTMLElement
-    const input = target.closest('input') as HTMLElement
+    const input = target.closest('input, select') as HTMLElement
     if (!input) return
 
     if (input.classList.contains('shares')) return this._changeShares(input)
+    if (input.classList.contains('team-officer')) return this._switchOfficer(input)
   }
 
   async _removeShip () {
@@ -262,6 +264,17 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     if (isNaN(shares)) return
 
     await setShares(position, shares)
+    await this.render()
+  }
+
+  async _switchOfficer (input: HTMLElement) {
+    const team = input.dataset.team
+    if (team !== 'larboard' && team !== 'starboard') return
+
+    const officer = (input as HTMLSelectElement).value
+    if (officer !== 'quartermaster' && officer !== 'sailing-master') return
+
+    await setOfficer(team, officer)
     await this.render()
   }
 

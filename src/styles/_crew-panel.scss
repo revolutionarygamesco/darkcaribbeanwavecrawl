@@ -81,11 +81,6 @@
       padding: 1em 0 0 0;
     }
 
-    p.sans {
-      color: var(--color-form-hint);
-      padding: 1em 0;
-    }
-
     fieldset.shares {
       border: 0;
       float: right;
@@ -98,37 +93,57 @@
         text-align: center;
       }
     }
+  }
 
-    table {
-      clear: both;
+  table.crew-listing {
+    clear: both;
 
-      tr {
-        align-items: center;
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-      }
-
-      td.img {
-        text-align: center;
-        width: 4rem;
-      }
-
-      td.actions {
-        align-items: flex-end;
-        display: flex;
-        flex-direction: column;
-        width: 5rem;
-      }
-
-      img {
-        height: 2rem;
-        width: 2rem;
-      }
-
-      td.name {
-        flex-grow: 1;
-      }
+    tr {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      width: 100%;
     }
+
+    td.img {
+      text-align: center;
+      width: 4rem;
+    }
+
+    td.actions {
+      align-items: flex-end;
+      display: flex;
+      flex-direction: column;
+      width: 5rem;
+    }
+
+    img {
+      height: 2rem;
+      width: 2rem;
+    }
+
+    td.name {
+      flex-grow: 1;
+    }
+  }
+
+  .crew-teams {
+    padding: 2em;
+
+    & > div {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 4em;
+    }
+
+    h4 {
+      font-family: var(--font-body);
+      font-size: var(--font-size-14);
+    }
+  }
+
+  p.null {
+    color: var(--color-form-hint);
+    padding: 1em 0;
   }
 }

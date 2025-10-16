@@ -1,17 +1,17 @@
 <div class="crew-teams-{{team.side}}">
-  <h3>{{ team.name }}</h3>
+  <h3>{{localize team.name}}</h3>
   <label for="officer">{{localize 'revolutionary-darkcaribbean.crew-panel.teams.officer.heading'}}</label>
-  <select name="officer" id="officer">
+  <select name="officer" id="officer" class="team-officer" data-team="{{team.side}}">
     <option value="quartermaster"{{#if team.isQuartermaster}} selected{{/if}}>
-      {{localize 'revolutionary-darkcaribbean.crew-positions.quartermaster.title'}}
+      {{localize 'revolutionary-darkcaribbean.crew-panel.positions.glossary.quartermaster.title'}}
     </option>
     <option value="sailing-master"{{#unless team.isQuartermaster}} selected{{/unless}}>
-      {{localize 'revolutionary-darkcaribbean.crew-positions.sailing-master.title'}}
+      {{localize 'revolutionary-darkcaribbean.crew-panel.positions.glossary.sailing-master.title'}}
     </option>
   </select>
-  {{#if this.officers}}
-  <table class="crew-assignments">
-    {{#each this.officers}}
+  {{#if team.officers}}
+  <table class="crew-listing">
+    {{#each team.officers}}
       {{> listing actor=this canRemove=false }}
     {{/each}}
   </table>
@@ -25,38 +25,44 @@
   </p>
   {{/if}}
 
-  <h4>{{localize 'revolutionary-darkcaribbean.crew-panel.teams.helm.heading'}}</h4>
-  {{#if this.helm}}
-    <table class="crew-assignments">
-      {{> listing actor=this.helm canRemove=true removeText='revolutionary-darkcaribbean.crew-panel.team.helm.remove' }}
-    </table>
-  {{else}}
-    <p class="null">
-      {{localize 'revolutionary-darkcaribbean.crew-panel.teams.helm.null'}}
-    </p>
-  {{/if}}
+  <section class="helm droppable">
+    <h4>{{localize 'revolutionary-darkcaribbean.crew-panel.teams.helm.heading'}}</h4>
+    {{#if team.helm}}
+      <table class="crew-listing">
+        {{> listing actor=team.helm canRemove=true removeText='revolutionary-darkcaribbean.crew-panel.team.helm.remove' }}
+      </table>
+    {{else}}
+      <p class="null">
+        {{localize 'revolutionary-darkcaribbean.crew-panel.teams.helm.null'}}
+      </p>
+    {{/if}}
+  </section>
 
-  <h4>{{localize 'revolutionary-darkcaribbean.crew-panel.teams.lookout.heading'}}</h4>
-  {{#if this.lookout}}
-    <table class="crew-assignments">
-      {{> listing actor=this.lookout canRemove=true removeText='revolutionary-darkcaribbean.crew-panel.team.lookout.remove' }}
-    </table>
-  {{else}}
-    <p class="null">
-      {{localize 'revolutionary-darkcaribbean.crew-panel.teams.lookout.null'}}
-    </p>
-  {{/if}}
+  <section class="lookout">
+    <h4>{{localize 'revolutionary-darkcaribbean.crew-panel.teams.lookout.heading'}}</h4>
+    {{#if team.lookout}}
+      <table class="crew-listing">
+        {{> listing actor=team.lookout canRemove=true removeText='revolutionary-darkcaribbean.crew-panel.team.lookout.remove' }}
+      </table>
+    {{else}}
+      <p class="null">
+        {{localize 'revolutionary-darkcaribbean.crew-panel.teams.lookout.null'}}
+      </p>
+    {{/if}}
+  </section>
 
-  <h4>{{localize 'revolutionary-darkcaribbean.crew-panel.teams.other.heading'}}</h4>
-  {{#if this.others}}
-    <table class="crew-assignments">
-      {{#each this.others}}
-      {{> listing actor=this canRemove=true removeText='revolutionary-darkcaribbean.crew-panel.team.other.remove' }}
-      {{/each}}
-    </table>
-  {{else}}
-    <p class="null">
-      {{localize 'revolutionary-darkcaribbean.crew-panel.teams.other.null'}}
-    </p>
-  {{/if}}
+  <section class="additional-crew">
+    <h4>{{localize 'revolutionary-darkcaribbean.crew-panel.teams.other.heading'}}</h4>
+    {{#if team.others}}
+      <table class="crew-listing">
+        {{#each team.others}}
+        {{> listing actor=this canRemove=true removeText='revolutionary-darkcaribbean.crew-panel.team.other.remove' }}
+        {{/each}}
+      </table>
+    {{else}}
+      <p class="null">
+        {{localize 'revolutionary-darkcaribbean.crew-panel.teams.other.null'}}
+      </p>
+    {{/if}}
+  </section>
 </div>

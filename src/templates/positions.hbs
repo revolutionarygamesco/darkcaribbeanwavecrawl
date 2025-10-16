@@ -16,7 +16,7 @@
       <p>{{{this.description}}}</p>
     </details>
     {{#if this.actors}}
-      <table class="crew-assignments">
+      <table class="crew-listing">
         <tbody>
           {{#each this.actors}}
           {{> listing actor=this position=@../key canRemove=true removeText='revolutionary-darkcaribbean.crew-panel.positions.remove' }}
@@ -24,7 +24,7 @@
         </tbody>
       </table>
     {{else}}
-      <p class="sans">{{{this.sans}}}</p>
+      <p class="null">{{{this.sans}}}</p>
     {{/if}}
   </section>
   {{/each}}

@@ -1,8 +1,8 @@
 const ids: Record<string, Record<string, string>> = {
   adventure: {
-    abs: 'Compendium.revolutionary-darkcaribbean.dark-caribbean-wave-crawl.Adventure.5OWUbMOAgkXSpO5r',
+    abs: 'Compendium.revolutionary-darkcaribbean.dark-caribbean-wave-crawl.Adventure.dVOoy5SCcSPCFttr',
     compendium: 'revolutionary-darkcaribbean.dark-caribbean-wave-crawl',
-    rel: '5OWUbMOAgkXSpO5r'
+    rel: 'dVOoy5SCcSPCFttr'
   },
   scenes: {
     map: '3JvJSgDc5iwQjKye'
