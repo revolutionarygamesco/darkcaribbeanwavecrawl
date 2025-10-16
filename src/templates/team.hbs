@@ -25,7 +25,7 @@
   </p>
   {{/if}}
 
-  <section class="helm droppable">
+  <section class="team-position droppable" data-position="helm" data-team="{{team.side}}">
     <h4>{{localize 'revolutionary-darkcaribbean.crew-panel.teams.helm.heading'}}</h4>
     {{#if team.helm}}
       <table class="crew-listing">
@@ -38,7 +38,7 @@
     {{/if}}
   </section>
 
-  <section class="lookout">
+  <section class="team-position droppable" data-position="lookout" data-team="{{team.side}}">
     <h4>{{localize 'revolutionary-darkcaribbean.crew-panel.teams.lookout.heading'}}</h4>
     {{#if team.lookout}}
       <table class="crew-listing">

@@ -1,9 +1,12 @@
 import { MODULE_ID } from '../settings.ts'
+import { CrawlTeamSide } from '../state/state.ts'
 
 import getCrawlState from '../state/get.ts'
 import getPanelDimensions from '../utilities/get-dimensions.ts'
 import getShip from '../state/ship/get.ts'
 import setShip from '../state/ship/set.ts'
+import setHelm from '../state/crew/teams/helm/set.ts'
+import setLookout from '../state/crew/teams/lookout/set.ts'
 import setOfficer from '../state/crew/teams/officer/set.ts'
 import removeShip from '../state/ship/remove.ts'
 import assign from '../state/crew/positions/assign.ts'
@@ -64,6 +67,10 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     this.dragDrop = this.#createDragDropHandlers()
   }
 
+  static isCrawlTeamSide (str: unknown): str is CrawlTeamSide {
+    return str === 'starboard' || str === 'larboard'
+  }
+
   #createDragDropHandlers () {
     return this.options.dragDrop.map((d: DragDrop) => {
       d.permissions = {
@@ -114,7 +121,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     return context
   }
 
-  async _prepareTeam (side: 'starboard' | 'larboard') {
+  async _prepareTeam (side: CrawlTeamSide) {
     const state = await getCrawlState()
     const team = state.crew.teams[side]
     const officerIDs = state.crew.positions[team.officer].assigned
@@ -216,6 +223,21 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     await this.render()
   }
 
+  async _onTeamPositionDrop (event: DragEvent, el: HTMLElement) {
+    const actor = this._droppedActor(event)
+    if (!actor) return
+
+    const team = el.dataset.team
+    if (!CrewPanel.isCrawlTeamSide(team)) return
+
+    const position = el.dataset.position
+    if (position !== 'helm' && position !== 'lookout') return
+
+    const fn = position === 'helm' ? setHelm : setLookout
+    await fn(team, actor)
+    await this.render()
+  }
+
   async _onDrop (event: DragEvent): Promise<void> {
     const target = event.target as HTMLElement
     const el = target.closest(dropSelector) as HTMLElement
@@ -223,6 +245,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
 
     if (el.classList.contains('ship')) return this._onShipDrop(event)
     if (el.classList.contains('position')) return this._onPositionDrop(event, el)
+    if (el.classList.contains('team-position')) return this._onTeamPositionDrop(event, el)
   }
 
   async _handleButtonClick (event: Event) {
@@ -269,7 +292,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
 
   async _switchOfficer (input: HTMLElement) {
     const team = input.dataset.team
-    if (team !== 'larboard' && team !== 'starboard') return
+    if (!CrewPanel.isCrawlTeamSide(team)) return
 
     const officer = (input as HTMLSelectElement).value
     if (officer !== 'quartermaster' && officer !== 'sailing-master') return
