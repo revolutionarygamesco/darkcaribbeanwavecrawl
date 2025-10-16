@@ -1,19 +1,23 @@
 <section class="tab crew-ship" data-tab="ship" data-group="crew-tabs">
-  {{#if this.ship}}
-    <figure class="droppable ship">
-      <img src="{{ship.image}}" alt="{{ship.name}}" />
-      <figcaption>{{ship.name}}</figcaption>
-    </figure>
-    <button type="button" data-action="remove-ship">
-      {{localize 'revolutionary-darkcaribbean.crew-panel.ship.remove'}}
-    </button>
-  {{else}}
-    <figure class="no-ship droppable ship">
-      <div></div>
-      <figcaption class="no-ship">
-        <strong>{{localize 'revolutionary-darkcaribbean.crew-panel.ship.null.heading'}}</strong>
-        <p>{{localize 'revolutionary-darkcaribbean.crew-panel.ship.null.instructions'}}</p>
-      </figcaption>
-    </figure>
-  {{/if}}
+  <div>
+    <div>
+      {{#if this.ship}}
+        <figure class="droppable ship">
+          <img src="{{ship.image}}" alt="{{ship.name}}" />
+          <figcaption>{{ship.name}}</figcaption>
+        </figure>
+        <button type="button" data-action="remove-ship">
+          {{localize 'revolutionary-darkcaribbean.crew-panel.ship.remove'}}
+        </button>
+      {{else}}
+        <figure class="no-ship droppable ship">
+          <div></div>
+          <figcaption class="no-ship">
+            <strong>{{localize 'revolutionary-darkcaribbean.crew-panel.ship.null.heading'}}</strong>
+            <p>{{localize 'revolutionary-darkcaribbean.crew-panel.ship.null.instructions'}}</p>
+          </figcaption>
+        </figure>
+      {{/if}}
+    </div>
+  </div>
 </section>

@@ -32,13 +32,33 @@
     padding: 1em;
     text-align: center;
 
+    &,
+    & > div {
+      height: 100%;
+    }
+
+    & > div {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+
+    & > div > div,
+    figure {
+      width: 100%;
+    }
+
+    figure.ship img,
     figure.no-ship div {
       aspect-ratio: 1;
-      background: #333 url('/modules/revolutionary-darkcaribbean/artwork/no-ship.jpg') center;
-      background-size: contain;
       box-shadow: 0 0 1em #000;
       margin: 1em auto;
       width: 60%;
+    }
+
+    figure.no-ship div {
+      background: #333 url('/modules/revolutionary-darkcaribbean/artwork/no-ship.jpg') center;
+      background-size: contain;
     }
 
     figure + button {
@@ -63,6 +83,7 @@
 
     p.sans {
       color: var(--color-form-hint);
+      padding: 1em 0;
     }
 
     fieldset.shares {
