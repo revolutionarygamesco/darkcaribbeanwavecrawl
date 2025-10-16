@@ -4,8 +4,9 @@ import getCrawlState from '../state/get.ts'
 import getPanelDimensions from '../utilities/get-dimensions.ts'
 import getShip from '../state/ship/get.ts'
 import setShip from '../state/ship/set.ts'
-import assign from '../state/crew/positions/assign.ts'
 import removeShip from '../state/ship/remove.ts'
+import assign from '../state/crew/positions/assign.ts'
+import unassign from '../state/crew/positions/unassign.ts'
 import glossAllPositions from './helpers/gloss-all.ts'
 import mapIdsToActors from '../utilities/map-ids-to-actors.ts'
 import registerPartials from './register-partials.ts'
@@ -222,10 +223,19 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     if (!button) return
 
     if (button.dataset.action === 'remove-ship') return await this._removeShip()
+    if (button.dataset.action === 'unassign-position') return await this._unassignPosition(button)
   }
 
   async _removeShip () {
     await removeShip()
+    await this.render()
+  }
+
+  async _unassignPosition (button: HTMLElement) {
+    const position = button.dataset.positionId
+    const actor = button.dataset.actorId
+    if (!position || !actor) return
+    await unassign(position, actor)
     await this.render()
   }
 

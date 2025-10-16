@@ -10,8 +10,9 @@
     <button
       type="button"
       class="remove-crew"
-      data-position-id="{{@../key}}"
-      data-actor-id="{{this.id}}"
+      data-action="unassign-position"
+      data-position-id="{{position}}"
+      data-actor-id="{{actor.id}}"
       title="{{localize removeTitle}}">
       <i class="fa-solid fa-trash"></i>
     </button>
