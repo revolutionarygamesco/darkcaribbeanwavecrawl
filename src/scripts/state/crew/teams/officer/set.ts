@@ -4,6 +4,7 @@ import cloneCrawlState from '../../../clone.ts'
 import getOppositeOfficer from './opposite.ts'
 import getOppositeSide from '../opposite.ts'
 import setCrawlState from '../../../set.ts'
+import removeTeamMember from '../remove.ts'
 
 const setOfficer = async (
   side: CrawlTeamSide,
@@ -16,26 +17,23 @@ const setOfficer = async (
   const otherOfficer = getOppositeOfficer(officer)
   const copy = cloneCrawlState(previous)
 
+  let thisCrew = copy.crew.teams[side].members
+  let thatCrew = copy.crew.teams[otherTeam].members
+  const thisOfficers = copy.crew.positions[officer].assigned
+  const thatOfficers = copy.crew.positions[otherOfficer].assigned
+
+  // Switch this team's officer and the other team's officer
   copy.crew.teams[side].officer = officer
   copy.crew.teams[otherTeam].officer = otherOfficer
 
-  let thisCrew = copy.crew.teams[side].members
-  let thatCrew = copy.crew.teams[otherTeam].members
+  // Add each team's officers to its members
+  copy.crew.teams[side].members = [...new Set([...thisCrew, ...thisOfficers])]
+  copy.crew.teams[otherTeam].members = [...new Set([...thatCrew, ...thatOfficers])]
 
-  thisCrew = [...new Set([...thisCrew, ...(copy.crew.positions[officer]?.assigned ?? [])])]
-  thatCrew = [...new Set([...thatCrew, ...(copy.crew.positions[otherOfficer]?.assigned ?? [])])]
-  thatCrew = thatCrew.filter(id => !thisCrew.includes(id))
-  thisCrew = thisCrew.filter(id => !thatCrew.includes(id))
+  // Remove officers from the opposing team
+  removeTeamMember(side, thatOfficers, copy)
+  removeTeamMember(otherTeam, thisOfficers, copy)
 
-  const { helm: thisHelm, lookout: thisLookout } = copy.crew.teams[side]
-  const { helm: thatHelm, lookout: thatLookout } = copy.crew.teams[otherTeam]
-  if (thisHelm && !thisCrew.includes(thisHelm)) delete copy.crew.teams[side].helm
-  if (thisLookout && !thisCrew.includes(thisLookout)) delete copy.crew.teams[side].lookout
-  if (thatHelm && !thatCrew.includes(thatHelm)) delete copy.crew.teams[otherTeam].helm
-  if (thatLookout && !thatCrew.includes(thatLookout)) delete copy.crew.teams[otherTeam].lookout
-
-  copy.crew.teams[side].members = thisCrew
-  copy.crew.teams[otherTeam].members = thatCrew
   return save ? await setCrawlState(copy) : copy
 }
 
