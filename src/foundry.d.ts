@@ -2,6 +2,14 @@ declare class ApplicationV2 {
   render: (options: boolean) => Promise<ApplicationV2>
 }
 
+declare class DialogV2 extends ApplicationV2 {
+  constructor(options?: any)
+}
+
+declare class Handlebars {
+  static registerPartial(id: string, template: string): any
+}
+
 declare class HandlebarsApplication {
   constructor(options?: any)
   dragDrop?: DragDrop[]
@@ -10,6 +18,8 @@ declare class HandlebarsApplication {
   render: (options?: boolean) => Promise<HandlebarsApplication>
   close(options?: any): Promise<this>
   _onRender(context: any, options: any): Promise<void>
+  _onClose(options: any): void
+  _prepareTabs: (group: string) => any
 }
 
 declare class AudioHelper {
@@ -18,6 +28,13 @@ declare class AudioHelper {
 
 declare class ChatMessage {
   create(data?: any, operation?: any): Promise<any>
+}
+
+declare class Tabs {
+  constructor(config?: any)
+  activate(tabName: string, triggerRollback?: boolean): void
+  bind(html: HTMLElement): void
+  _onClickNav: (event: PointerEvent) => void
 }
 
 declare class DragDrop {
@@ -49,10 +66,15 @@ interface GameSettings {
   default: any
 }
 
-interface Actor {
+interface Document {
   id: string
   name: string
   img: string
+  getFlag<T>(scope: string, key: string): T
+  setFlag<T>(scope: string, key: string, value: T): void
+}
+
+interface Actor extends Document {
   type: string
   attributes: {
     speed?: {
@@ -76,6 +98,10 @@ interface Actor {
   update(data?: object, operation?: any): Promise<any>
 }
 
+interface Adventure extends Document {
+  flags: any
+}
+
 interface Module {
   api: Record<string, Function>
 }
@@ -90,6 +116,9 @@ interface Scene {
 interface Token {
   actorId: string
   id: string
+  x: number
+  y: number
+  rotation: number
 }
 
 declare const Hooks: {
@@ -102,20 +131,20 @@ declare const game: {
   i18n: {
     localize: (key: string) => string
   },
-  actors: {
-    get: (id: string) => Actor | undefined
-  },
-  modules: {
-    get: (id: string) => Module
-  },
+  actors: Map<string, Actor>
+  modules: Map<string, Module>
+  packs: Map<string, any>
   paused: boolean,
-  scenes: {
-    active?: Scene
-  },
+  scenes: Map<string, any>,
   settings: {
     register: (namespace: string, name: string, settings: GameSettings) => void,
     set: <T>(namespace: string, name: string, value: T) => Promise<T>,
     get: <T>(namespace: string, name: string) => T
+  },
+  time: {
+    worldTime: number,
+    set(time: number, options?: object): Promise<number>,
+    advance(delta: number, options?: object): Promise<number>
   },
   user: {
     isGM: boolean
@@ -131,10 +160,16 @@ declare const foundry: {
   applications: {
     api: {
       ApplicationV2: typeof ApplicationV2,
+      DialogV2: typeof DialogV2,
       HandlebarsApplicationMixin: HandlebarsApplicationMixin
+    },
+    handlebars: {
+      getTemplate(path: string, id?: string): Promise<any>
+      loadTemplates(paths: string[]): Promise<any>
     },
     ux: {
       DragDrop: typeof DragDrop,
+      Tabs: typeof Tabs,
       TextEditor: typeof TextEditor
     }
   },
@@ -145,3 +180,5 @@ declare const foundry: {
     ChatMessage: ChatMessage
   }
 }
+
+declare function fromUuid(uuid: string): Promise<Document | null>

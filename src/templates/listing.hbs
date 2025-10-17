@@ -1,0 +1,21 @@
+<tr>
+  <td class="img">
+    <img src="{{actor.img}}" alt="{{actor.name}}" />
+  </td>
+  <td class="name">
+    {{actor.name}}
+  </td>
+  <td class="actions">
+  {{#if canRemove}}
+    <button
+      type="button"
+      class="remove-crew"
+      data-action="{{action}}"
+      data-position-id="{{position}}"
+      data-actor-id="{{actor.id}}"
+      title="{{localize removeTitle}}">
+      <i class="fa-solid fa-trash"></i>
+    </button>
+  {{/if}}
+  </td>
+</tr>

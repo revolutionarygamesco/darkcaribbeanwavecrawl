@@ -5,9 +5,9 @@
         "name": "Include historical content",
         "hint": "Do not activate without a frank and open discussion with everyone at the table about including these elements. See the journal entry for Dark Caribbean Wave Crawl: Historical Content for more information."
       },
-      "startdate": {
-        "name": "Start date",
-        "hint": "The date on which your adventure begins (e.g., 24 July 1715)."
+      "days-saved": {
+        "name": "Days saved",
+        "hint": "This sets the number of days that saved game state data is retained, meaning this is how far back you can rewind time in your game before you run out of saved data."
       },
       "rotation": {
         "name": "Ship token rotation",
@@ -17,19 +17,117 @@
     "and": "and",
     "Chapter": "Chapter",
     "ships-bell": "Ship’s Bell",
-    "quartermaster": "Quartermaster",
-    "provisions-out": "We’ve run out of ",
-    "food": "vittles",
-    "water": "fresh water",
-    "rum": "rum",
+    "crew-panel": {
+      "tabs": {
+        "ship": "Ship",
+        "positions": "Positions",
+        "teams": "Watch Crews"
+      },
+      "ship": {
+        "remove": "Remove Ship",
+        "null": {
+          "heading": "No ship.",
+          "instructions": "Drag your ship here to set sail."
+        }
+      },
+      "positions": {
+        "shares": "Shares",
+        "remove": "Remove from position",
+        "glossary": {
+          "captain": {
+            "title": "Captain",
+            "desc": "The captain must be a skilled and dependable seaman and a bold and decisive leader. He’s responsible for choosing prey, how to engage a target, how to pursue it, how to escape authorities, and how to deal with an attack. He’s elected by popular vote and can be replaced the same way. His authority is unquestionable only during action.",
+            "sans": "The captain is a necessary role on your ship. Without a captain, you’re not ready to set sail."
+          },
+          "quartermaster": {
+            "title": "Quartermaster",
+            "desc": "The quartermaster has equal authority to the captain except during action. He’s elected by the crew to represent their interests and check the captain’s power. He takes command when the captain is absent, administers the articles, keeps order, settles conflicts, maintains the ledgers, and dispenses food, water, and rum to each member of the crew.",
+            "sans": "The quartermaster is a necessary role on your ship. Without a quartermaster, you’re not ready to set sail."
+          },
+          "sailing-master": {
+            "title": "Sailing Master",
+            "desc": "The sailing master oversees the navigation and sailing of the ship. He would have to be literate in order to read charts and was usually the most educated member of the crew.",
+            "sans": "The sailing master is a necessary role on your ship. Without a sailing master, you’re not ready to set sail."
+          },
+          "bosun": {
+            "title": "Bosun",
+            "desc": "The bosun (or boatswain) supervises supplies and deck activities, including handling sails and weighing and dropping anchor. He inspects the ship every morning and reports its condition to the captain, but usually reports to the quartermaster. On ships that have a bosun, he takes responsibility for disciple, often making him the most feared member of the crew.",
+            "sans": "The quartermaster can fulfill the bosun’s duties if there is no designated bosun."
+          },
+          "gunner": {
+            "title": "Master Gunner",
+            "desc": "The Master Gunner is responsible for all of the firearms aboard the ship, from personal arms and cannons. He picks and runs the gunnery crew and is the only member of the crew besides the captain and the quartermaster to carry a key to the ship’s powder magazine. He also picks and leads hunting parties, when called for. The master gunner reports to the quartermaster.",
+            "sans": "A ship might be able to get by without a master gunner if the entire crew (and the bosun and/or quartermaster in particular) are conscientious about their firearms."
+          },
+          "carpenter": {
+            "title": "Carpenter",
+            "desc": "The master carpenter is responsible for all of the woodworking aboard the ship, most importantly repairs to the hull, masts, and other wooden parts of the ship. He reports to the bosun (or quartermaster if the ship has no bosun).",
+            "sans": "A ship without a carpenter is at risk of taking on a great deal of bilge from untreated leaks and will have a more difficult time repairing damage taken."
+          },
+          "cook": {
+            "title": "Cook",
+            "desc": "In addition to preparing meals, the cook is responsible for the food, water, and rum aboard the ship. He is the only member of the crew trusted to light a fire below decks. He reports to the bosun (or quartermaster if the ship has no bosun).",
+            "sans": "A ship without a cook will be faced with a potentially terrible fate: the bosun’s cooking."
+          },
+          "surgeon": {
+            "title": "Surgeon",
+            "desc": "The surgeon serves as the ship’s barber, doctor, and medic, though it’s a blessed ship that has a surgeon with actual medical experience. He reports to the quartermaster.",
+            "sans": "A ship without a surgeon will have to make do with the cook or carpenter if a member of the crew is in need of medical attention."
+          },
+          "master-arms": {
+            "title": "Master at Arms",
+            "desc": "The Master at Arms is responsible for training crew in hand-to-hand combat and leading boarding parties. He reports to the quartermaster.",
+            "sans": "Most ships do not have a dedicated master at arms, in which case these duties fall to the quartermaster."
+          },
+          "priest": {
+            "title": "Deck Priest",
+            "desc": "The deck priest is a holy man who calls upon Providence (or some other Power) to aid the ship with fair winds or other divine help. He reports to the sailing master.",
+            "sans": "Most ships do not have a deck priest, and ships with a deck sorcerer almost never have a deck priest as well."
+          },
+          "sorcerer": {
+            "title": "Deck Sorcerer",
+            "desc": "The deck sorcerer is a practitioner of the arcane arts who uses sorcery to provide the ship with fair winds or other magical aid. He reports to the sailing master.",
+            "sans": "Most ships do not have a deck sorcerer, and ships with a deck priest almost never have a deck sorcerer as well."
+          }
+        }
+      },
+      "teams": {
+        "sides": {
+          "larboard": "Larboard Crew",
+          "starboard": "Starboard Crew"
+        },
+        "officer": {
+          "heading": "Officer",
+          "null": {
+            "quartermaster": "This watch crew is commanded by the quartermaster. You can assign crew members to this role on the <strong>Positions</strong> tab.",
+            "sailing-master": "This watch crew is commanded by the sailing master. You can assign crew members to this role on the <strong>Positions</strong> tab."
+          }
+        },
+        "helm": {
+          "heading": "Helm",
+          "null": "Drag a member of the crew here to designate them as this watch crew’s helmsman.",
+          "remove": "Relieve from helm"
+        },
+        "lookout": {
+          "heading": "Lookout",
+          "null": "Drag a member of the crew here to designate them as this watch crew’s lookout.",
+          "remove": "Relieve from lookout"
+        },
+        "other": {
+          "heading": "Other Crew Members",
+          "null": "Drag a member of the crew here to assign them to this watch crew.",
+          "remove": "Remove from watch crew"
+        }
+      }
+    },
     "watches": {
       "first": "First Watch",
       "middle": "Middle Watch",
       "morning": "Morning Watch",
       "forenoon": "Forenoon Watch",
       "afternoon": "Afternoon Watch",
-      "dog1": "First Dog Watch",
-      "dog2": "Second Dog Watch"
+      "first dog": "First Dog Watch",
+      "second dog": "Second Dog Watch"
     },
     "bells": {
       "0": "",
@@ -53,93 +151,6 @@
       "back-step": "Set time back 10 minutes",
       "forward-step": "Advance time 10 minutes",
       "forward-fast": "Advance time 1 hour"
-    },
-    "crew-positions": {
-      "captain": {
-        "title": "Captain",
-        "desc": "While in the navy captains were despots, on a pirate ship the captain’s authority was absolute only during combat. Outside of combat, the crew could always hold a vote on matters of import, though day-to-day administration was delegated to the captain. He was ultimately responsible for every aspect of the ship and every person on it. The captain was also the crew’s public face and the name they are best known by. The cultivation of the captain’s personal legend was a valuable asset that could inspire such fear that prizes would give up without a fight.",
-        "sans": "The captain is a necessary role on your ship. Without a captain, you’re not ready to set sail."
-      },
-      "quartermaster": {
-        "title": "Quartermaster",
-        "desc": "The quartermaster is responsible for the ship's cargo and provisions, but was also the first mate and second in command. He’s the trustee of the ship and her crew, responsible for enforcing the articles and administering punishment when necessary. It’s the quartermaster’s job to represent the crew’s interests and check the captain when necessary.",
-        "sans": "The quartermaster is a necessary role on your ship. Without a quartermaster, you’re not ready to set sail."
-      },
-      "pilot": {
-        "title": "Pilot",
-        "desc": "The pilot or navigator is responsible for setting and maintaining the ship’s course. He would have to be literate in order to read charts and was usually the most educated member of the crew. The pilot is supposed to keep a daily log of depths, currents, winds, and the ship’s location. He reports to the captain.",
-        "sans": "It might be possible to set sail without a navigator if your quartermaster is able to fill in, but he’ll need plenty of help."
-      },
-      "pilot-mate": {
-        "title": "Pilot’s Mate",
-        "desc": "The pilot’s mate is responsible for aiding the pilot in his duties, especially taking over the helm when the pilot sleeps.",
-        "sans": "Without a pilot’s mate, you’ll have to either entrust the helm to someone who doesn’t know what they’re doing while the pilot sleeps, or else wait for your pilot to collapse from exhaustion. Either scenario is likely to result in disaster."
-      },
-      "bosun": {
-        "title": "Bosun",
-        "desc": "The bosun (or boatswain) maintains the ship’s stores of food, water, rum, gunpowder, shot, rope, sails, wood, and tar, handles the loading of cargo into the hold, and manages watches and discipline — this last one making him the most feared man on most ships. The bosun reports to the quartermaster.",
-        "sans": "The quartermaster can fulfill the bosun’s duties if there is no designated bosun."
-      },
-      "bosun-mate": {
-        "title": "Bosun’s Mate",
-        "desc": "The bosun’s mate aids the bosun in his duties.",
-        "sans": "While more important on larger ships, most ships can get by without a bosun’s mate."
-      },
-      "gunner": {
-        "title": "Master Gunner",
-        "desc": "The Master Gunner is responsible for all of the firearms aboard the ship, from personal arms and cannons. He picks and runs the gunnery crew and is the only member of the crew besides the captain and the quartermaster to carry a key to the ship’s powder magazine. Also picks and leads hunting parties, when called for. The master gunner reports to the quartermaster.",
-        "sans": "A ship might be able to get by without a master gunner if the entire crew (and the bosun and/or quartermaster in particular) are conscientious about their firearms."
-      },
-      "gunner-mate": {
-        "title": "Gunner’s Mate",
-        "desc": "The gunner’s mate aids the master gunner in his duties.",
-        "sans": "While the master gunner would no doubt appreciate it, a gunner’s mate is not strictly necessary."
-      },
-      "master": {
-        "title": "Master",
-        "desc": "The sail-master is responsible for maintaining the ship’s sails and rigging. He reports to the pilot.",
-        "sans": "If no sail-master is available, his duties fall to the pilot."
-      },
-      "master-mate": {
-        "title": "Master’s Mate",
-        "desc": "The sail-master’s mate aids the sail-master in his duties.",
-        "sans": "While the sail-master would no doubt appreciate it, he doesn’t necessarily need a mate."
-      },
-      "carpenter": {
-        "title": "Carpenter",
-        "desc": "The master carpenter is responsible for all of the woodworking aboard the ship, most importantly repairs to the hull, masts, and other wooden parts of the ship. He reports to the bosun.",
-        "sans": "A ship without a carpenter is at risk of taking on a great deal of bilge from untreated leaks and will have a more difficult time repairing damage taken."
-      },
-      "carpenter-mate": {
-        "title": "Carpenter’s Mate",
-        "desc": "The carpenter’s mate aid the master carpenter in his duties.",
-        "sans": "While the master carpenter would no doubt appreciate it, he doesn’t necessarily need a mate."
-      },
-      "cook": {
-        "title": "Cook",
-        "desc": "In addition to preparing meals, the cook was responsible for the food, water, and rum aboard the ship. He is the only member of the crew trusted to light a fire below decks. He reports to the bosun.",
-        "sans": "A ship without a cook will be faced with a potentially terrible fate: the bosun’s cooking."
-      },
-      "surgeon": {
-        "title": "Surgeon",
-        "desc": "The surgeon serves as the ship’s barber, doctor, and medic, though he rarely has any actual medical experience. He reports to the quartermaster.",
-        "sans": "A ship without a surgeon will have to make do with the cook or carpenter if a member of the crew is in need of medical attention."
-      },
-      "master-arms": {
-        "title": "Master at Arms",
-        "desc": "The Master at Arms is responsible for training crew in hand-to-hand combat and leading boarding parties. He reports to the quartermaster.",
-        "sans": "Most ships do not have a dedicated master at arms, in which case these duties fall to the quartermaster."
-      },
-      "priest": {
-        "title": "Deck Priest",
-        "desc": "The deck priest is a holy man who calls upon Providence (or some other Power) to aid the ship with fair winds or other divine help. He reports to the pilot.",
-        "sans": "Most ships do not have a deck priest, and ships with a deck sorcerer almost never have a deck priest as well."
-      },
-      "sorcerer": {
-        "title": "Deck Sorcerer",
-        "desc": "The deck sorcerer is a practitioner of the arcane art who uses sorcery to provide the ship with fair winds or other magical aid. He reports to the pilot.",
-        "sans": "Most ships do not have a deck sorcerer, and ships with a deck priest almost never have a deck sorcerer as well."
-      }
     }
   }
 }

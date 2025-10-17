@@ -1,0 +1,30 @@
+import CrawlState, { CrawlTeamSide } from '../../../state.ts'
+import getCrawlState from '../../../get.ts'
+import setCrawlState from '../../../set.ts'
+import cloneCrawlState from '../../../clone.ts'
+import getActorId from '../../../../utilities/actor-id.ts'
+import getOppositeSide from '../opposite.ts'
+import removeTeamMember from '../remove.ts'
+
+const setTeam = async (
+  side: CrawlTeamSide,
+  members: (Actor | string)[],
+  state?: CrawlState,
+  save: boolean = true
+): Promise<CrawlState> => {
+  const previous = state ?? await getCrawlState()
+  const opp = getOppositeSide(side)
+  const otherOfficer = previous.crew.teams[opp].officer
+  const otherOfficers = previous.crew.positions[otherOfficer]?.assigned ?? []
+  const ids = members
+    .map(member => getActorId(member))
+    .filter(id => !otherOfficers.includes(id))
+  if (otherOfficers.length > 1 && ids.length < 1) return previous
+
+  const copy = cloneCrawlState(previous)
+  copy.crew.teams[side].members = ids
+  removeTeamMember(opp, ids, copy)
+  return save ? await setCrawlState(copy) : copy
+}
+
+export default setTeam

@@ -1,4 +1,12 @@
 const ids: Record<string, Record<string, string>> = {
+  adventure: {
+    abs: 'Compendium.revolutionary-darkcaribbean.dark-caribbean-wave-crawl.Adventure.dVOoy5SCcSPCFttr',
+    compendium: 'revolutionary-darkcaribbean.dark-caribbean-wave-crawl',
+    rel: 'dVOoy5SCcSPCFttr'
+  },
+  scenes: {
+    map: '3JvJSgDc5iwQjKye'
+  },
   haunt: {
     normal: 'PnhdnvyA7xh4kFVu',
     bloody: 'ccWf6Xm5vE5W1UaT',
