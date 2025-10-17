@@ -9,6 +9,8 @@ import setHelm from '../state/crew/teams/helm/set.ts'
 import setLookout from '../state/crew/teams/lookout/set.ts'
 import setOfficer from '../state/crew/teams/officer/set.ts'
 import removeShip from '../state/ship/remove.ts'
+import removeHelm from '../state/crew/teams/helm/remove.ts'
+import removeLookout from '../state/crew/teams/lookout/remove.ts'
 import assign from '../state/crew/positions/assign.ts'
 import unassign from '../state/crew/positions/unassign.ts'
 import setShares from '../state/crew/positions/shares/set.ts'
@@ -253,8 +255,12 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     const button = target.closest('button') as HTMLElement
     if (!button) return
 
-    if (button.dataset.action === 'remove-ship') return await this._removeShip()
-    if (button.dataset.action === 'unassign-position') return await this._unassignPosition(button)
+    switch (button.dataset.action) {
+      case 'remove-ship': return await this._removeShip()
+      case 'unassign-position': return await this._unassignPosition(button)
+      case 'unassign-helm': return await this._unassignHelm(button)
+      case 'unassign-lookout': return await this._unassignLookout(button)
+    }
   }
 
   async _handleInputChange (event: Event) {
@@ -276,6 +282,20 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     const actor = button.dataset.actorId
     if (!position || !actor) return
     await unassign(position, actor)
+    await this.render()
+  }
+
+  async _unassignHelm (button: HTMLElement) {
+    const side = button.dataset.positionId
+    if (!CrewPanel.isCrawlTeamSide(side)) return
+    await removeHelm(side)
+    await this.render()
+  }
+
+  async _unassignLookout (button: HTMLElement) {
+    const side = button.dataset.positionId
+    if (!CrewPanel.isCrawlTeamSide(side)) return
+    await removeLookout(side)
     await this.render()
   }
 

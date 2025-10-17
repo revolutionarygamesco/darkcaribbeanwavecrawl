@@ -19,7 +19,7 @@
       <table class="crew-listing">
         <tbody>
           {{#each this.actors}}
-          {{> listing actor=this position=@../key canRemove=true removeText='revolutionary-darkcaribbean.crew-panel.positions.remove' }}
+          {{> listing actor=this position=@../key action="unassign-position" canRemove=true removeText='revolutionary-darkcaribbean.crew-panel.positions.remove' }}
           {{/each}}
         </tbody>
       </table>
