@@ -11,8 +11,8 @@ const getPanelDimensions = (
 ): PanelDimensions => {
   const ww = window.innerWidth
   const wh = window.innerHeight
-  const w = Math.floor(ww * width)
-  const h = Math.floor(wh * height)
+  const w = width > 1 ? width : Math.floor(ww * width)
+  const h = height > 1 ? height : Math.floor(wh * height)
   const left = Math.ceil((ww - w) / 2)
   const top = Math.ceil((wh - h) / 2)
   return { width: w, height: h, left, top }
