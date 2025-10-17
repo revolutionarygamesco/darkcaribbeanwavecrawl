@@ -11,6 +11,7 @@ import setOfficer from '../state/crew/teams/officer/set.ts'
 import removeShip from '../state/ship/remove.ts'
 import removeHelm from '../state/crew/teams/helm/remove.ts'
 import removeLookout from '../state/crew/teams/lookout/remove.ts'
+import removeFromTeam from '../state/crew/teams/members/remove.ts'
 import assign from '../state/crew/positions/assign.ts'
 import unassign from '../state/crew/positions/unassign.ts'
 import setShares from '../state/crew/positions/shares/set.ts'
@@ -260,6 +261,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       case 'unassign-position': return await this._unassignPosition(button)
       case 'unassign-helm': return await this._unassignHelm(button)
       case 'unassign-lookout': return await this._unassignLookout(button)
+      case 'unassign-team': return await this._unassignTeam(button)
     }
   }
 
@@ -296,6 +298,14 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     const side = button.dataset.positionId
     if (!CrewPanel.isCrawlTeamSide(side)) return
     await removeLookout(side)
+    await this.render()
+  }
+
+  async _unassignTeam (button: HTMLElement) {
+    const side = button.dataset.positionId
+    const actor = button.dataset.actorI
+    if (!CrewPanel.isCrawlTeamSide(side) || !actor) return
+    await removeFromTeam(side, actor)
     await this.render()
   }
 

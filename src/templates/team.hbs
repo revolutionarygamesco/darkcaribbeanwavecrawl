@@ -1,35 +1,38 @@
 <div class="crew-teams-{{team.side}}">
   <h3>{{localize team.name}}</h3>
-  <label for="officer">{{localize 'revolutionary-darkcaribbean.crew-panel.teams.officer.heading'}}</label>
-  <select name="officer" id="officer" class="team-officer" data-team="{{team.side}}">
-    <option value="quartermaster"{{#if team.isQuartermaster}} selected{{/if}}>
-      {{localize 'revolutionary-darkcaribbean.crew-panel.positions.glossary.quartermaster.title'}}
-    </option>
-    <option value="sailing-master"{{#unless team.isQuartermaster}} selected{{/unless}}>
-      {{localize 'revolutionary-darkcaribbean.crew-panel.positions.glossary.sailing-master.title'}}
-    </option>
-  </select>
-  {{#if team.officers}}
-  <table class="crew-listing">
-    {{#each team.officers}}
-      {{> listing actor=this canRemove=false }}
-    {{/each}}
-  </table>
-  {{else}}
-  <p class="null">
-    {{#if team.isQuartermaster}}
-      {{{localize 'revolutionary-darkcaribbean.crew-panel.teams.officer.null.quartermaster'}}}
+
+  <section class="team-position">
+    <label for="officer">{{localize 'revolutionary-darkcaribbean.crew-panel.teams.officer.heading'}}</label>
+    <select name="officer" id="officer" class="team-officer" data-team="{{team.side}}">
+      <option value="quartermaster"{{#if team.isQuartermaster}} selected{{/if}}>
+        {{localize 'revolutionary-darkcaribbean.crew-panel.positions.glossary.quartermaster.title'}}
+      </option>
+      <option value="sailing-master"{{#unless team.isQuartermaster}} selected{{/unless}}>
+        {{localize 'revolutionary-darkcaribbean.crew-panel.positions.glossary.sailing-master.title'}}
+      </option>
+    </select>
+    {{#if team.officers}}
+    <table class="crew-listing">
+      {{#each team.officers}}
+        {{> listing actor=this canRemove=false }}
+      {{/each}}
+    </table>
     {{else}}
-      {{{localize 'revolutionary-darkcaribbean.crew-panel.teams.officer.null.sailing-master'}}}
+    <p class="null">
+      {{#if team.isQuartermaster}}
+        {{{localize 'revolutionary-darkcaribbean.crew-panel.teams.officer.null.quartermaster'}}}
+      {{else}}
+        {{{localize 'revolutionary-darkcaribbean.crew-panel.teams.officer.null.sailing-master'}}}
+      {{/if}}
+    </p>
     {{/if}}
-  </p>
-  {{/if}}
+  </section>
 
   <section class="team-position droppable" data-position="helm" data-team="{{team.side}}">
     <h4>{{localize 'revolutionary-darkcaribbean.crew-panel.teams.helm.heading'}}</h4>
     {{#if team.helm}}
       <table class="crew-listing">
-        {{> listing actor=team.helm action="unassign-helm" position=team.side canRemove=true removeTitle='revolutionary-darkcaribbean.crew-panel.team.helm.remove' }}
+        {{> listing actor=team.helm action="unassign-helm" position=team.side canRemove=true removeTitle='revolutionary-darkcaribbean.crew-panel.teams.helm.remove' }}
       </table>
     {{else}}
       <p class="null">
@@ -42,7 +45,7 @@
     <h4>{{localize 'revolutionary-darkcaribbean.crew-panel.teams.lookout.heading'}}</h4>
     {{#if team.lookout}}
       <table class="crew-listing">
-        {{> listing actor=team.lookout action="unassign-lookout" position=team.side canRemove=true removeTitle='revolutionary-darkcaribbean.crew-panel.team.lookout.remove' }}
+        {{> listing actor=team.lookout action="unassign-lookout" position=team.side canRemove=true removeTitle='revolutionary-darkcaribbean.crew-panel.teams.lookout.remove' }}
       </table>
     {{else}}
       <p class="null">
@@ -56,7 +59,7 @@
     {{#if team.others}}
       <table class="crew-listing">
         {{#each team.others}}
-        {{> listing actor=this canRemove=true action="unassign-team" position=team.side removeText='revolutionary-darkcaribbean.crew-panel.team.other.remove' }}
+        {{> listing actor=this canRemove=true action="unassign-team" position=../team.side removeTitle='revolutionary-darkcaribbean.crew-panel.teams.other.remove' }}
         {{/each}}
       </table>
     {{else}}

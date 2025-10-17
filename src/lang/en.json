@@ -116,7 +116,7 @@
         "other": {
           "heading": "Other Crew Members",
           "null": "Drag a member of the crew here to assign them to this watch crew.",
-          "remove": "Remove from team"
+          "remove": "Remove from watch crew"
         }
       }
     },
