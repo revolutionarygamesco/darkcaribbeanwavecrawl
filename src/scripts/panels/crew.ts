@@ -37,7 +37,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       resizable: true,
       title: 'The Company'
     },
-    position: getPanelDimensions(1/3, 2/3),
+    position: getPanelDimensions(1000, 2/3),
     dragDrop: [{ dropSelector }]
   }
 
