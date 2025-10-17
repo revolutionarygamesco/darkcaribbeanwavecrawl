@@ -1,6 +1,7 @@
 import { MODULE_ID } from '../settings.ts'
 import { CrawlTeamSide } from '../state/state.ts'
 
+import addToTeam from '../state/crew/teams/members/add.ts'
 import getCrawlState from '../state/get.ts'
 import getPanelDimensions from '../utilities/get-dimensions.ts'
 import getShip from '../state/ship/get.ts'
@@ -241,6 +242,17 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     await this.render()
   }
 
+  async _onTeamListDrop (event: DragEvent, el: HTMLElement) {
+    const actor = this._droppedActor(event)
+    if (!actor) return
+
+    const team = el.dataset.team
+    if (!CrewPanel.isCrawlTeamSide(team)) return
+
+    await addToTeam(team, actor)
+    await this.render()
+  }
+
   async _onDrop (event: DragEvent): Promise<void> {
     const target = event.target as HTMLElement
     const el = target.closest(dropSelector) as HTMLElement
@@ -249,6 +261,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     if (el.classList.contains('ship')) return this._onShipDrop(event)
     if (el.classList.contains('position')) return this._onPositionDrop(event, el)
     if (el.classList.contains('team-position')) return this._onTeamPositionDrop(event, el)
+    if (el.classList.contains('additional-crew')) return this._onTeamListDrop(event, el)
   }
 
   async _handleButtonClick (event: Event) {
@@ -303,7 +316,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
 
   async _unassignTeam (button: HTMLElement) {
     const side = button.dataset.positionId
-    const actor = button.dataset.actorI
+    const actor = button.dataset.actorId
     if (!CrewPanel.isCrawlTeamSide(side) || !actor) return
     await removeFromTeam(side, actor)
     await this.render()
