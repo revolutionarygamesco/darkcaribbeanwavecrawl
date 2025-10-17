@@ -120,6 +120,47 @@
         }
       }
     },
+    "ledger-panel": {
+      "close": "Close Ledger",
+      "stock": {
+        "title": "Common Stock",
+        "name": "Silver",
+        "units": "pieces of eight",
+        "tooltip": "Adjust common stock"
+      },
+      "provisions": {
+        "title": "Provisions",
+        "types": {
+          "food": {
+            "name": "Vittles",
+            "units": "person-days",
+            "tooltip": "Adjust food stores",
+            "estimate": {
+              "pre": "Sufficient for",
+              "post": "days"
+            }
+          },
+          "water": {
+            "name": "Fresh Water",
+            "units": "person-days",
+            "tooltip": "Adjust water stores",
+            "estimate": {
+              "pre": "Sufficient for",
+              "post": "days"
+            }
+          },
+          "rum": {
+            "name": "Rum",
+            "units": "person-days",
+            "tooltip": "Adjust rum stores",
+            "estimate": {
+              "pre": "Sufficient for",
+              "post": "days"
+            }
+          }
+        }
+      }
+    },
     "watches": {
       "first": "First Watch",
       "middle": "Middle Watch",

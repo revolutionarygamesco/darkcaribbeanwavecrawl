@@ -1,0 +1,19 @@
+<div>
+  <div class="page left">
+    <table class="ledger">
+      <caption>{{localize 'revolutionary-darkcaribbean.ledger-panel.stock.title'}}</caption>
+      {{> ledger-row resource=silver }}
+    </table>
+  </div>
+  <div class="page right">
+    <table class="ledger">
+      <caption>{{localize 'revolutionary-darkcaribbean.ledger-panel.provisions.title'}}</caption>
+      {{> ledger-row resource=food }}
+      {{> ledger-row resource=water }}
+      {{> ledger-row resource=rum }}
+    </table>
+  </div>
+  <button type="button" data-action="close-ledger" title="{{localize 'revolutionary-darkcaribbean.ledger-panel.close'}}">
+    {{localize 'revolutionary-darkcaribbean.ledger-panel.close'}}
+  </button>
+</div>

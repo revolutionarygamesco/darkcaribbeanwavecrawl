@@ -6,6 +6,7 @@ import ringBell from './time/ring-bell.ts'
 
 import DatePanel from './panels/date.ts'
 import displayCrewPanel from './panels/crew.ts'
+import displayLedgerPanel from './panels/ledger.ts'
 
 import generateInsult from './insults/generate.ts'
 
@@ -32,7 +33,8 @@ Hooks.once('init', async () => {
 
   crawl.api = {
     generateInsult,
-    displayCrewPanel
+    displayCrewPanel,
+    displayLedgerPanel
   }
 })
 

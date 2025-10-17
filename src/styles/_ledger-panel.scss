@@ -1,0 +1,61 @@
+#revolutionary-darkcaribbean-ledger {
+  background: transparent url('/modules/limithron-landingpagekit/assets/Book-Green.webp') center;
+  background-size: contain;
+  position: absolute;
+
+  &.minimizing {
+    display: none;
+  }
+
+  .page {
+    position: absolute;
+    top: 50px;
+    width: 260px;
+
+    &.left {
+      left: 150px;
+    }
+
+    &.right {
+      right: 130px;
+    }
+  }
+
+  caption {
+    color: var(--color-dark-1);
+    padding: 0.5em 0;
+  }
+
+  table {
+    background-color: transparent;
+    color: var(--color-dark-1);
+  }
+
+  tbody {
+    border-top: 1px solid var(--color-dark-1);
+  }
+
+  td {
+    font-weight: normal;
+    padding: 0.5em 0;
+  }
+
+  td.amount,
+  td.action {
+    text-align: right;
+
+    button {
+      display: inline;
+    }
+  }
+
+  td.estimate {
+    font-style: italic;
+  }
+
+  button[data-action="close-ledger"] {
+    bottom: 100px;
+    right: 130px;
+    position: absolute;
+  }
+}
