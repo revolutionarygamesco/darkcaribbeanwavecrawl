@@ -326,7 +326,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     const position = input.dataset.positionId
     if (!position) return
 
-    const shares = parseInt((input as HTMLInputElement).value)
+    const shares = parseFloat((input as HTMLInputElement).value)
     if (isNaN(shares)) return
 
     await setShares(position, shares)

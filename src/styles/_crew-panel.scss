@@ -1,5 +1,6 @@
 #revolutionary-darkcaribbean-crew {
   .window-content {
+    align-items: center;
     background: #000 url('/modules/revolutionary-darkcaribbean/artwork/crew.png') no-repeat top center;
     background-size: contain;
     display: flex;
@@ -35,6 +36,7 @@
     &,
     & > div {
       height: 100%;
+      width: 100%;
     }
 
     & > div {
@@ -67,6 +69,7 @@
   }
 
   .crew-positions {
+    max-width: 30rem;
     padding: 2em;
   }
 
