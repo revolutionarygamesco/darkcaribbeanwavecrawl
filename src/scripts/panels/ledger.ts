@@ -9,6 +9,7 @@ import getSilver from '../state/silver/get.ts'
 import getProvisions from '../state/provisions/get.ts'
 import addSilver from '../state/silver/add.ts'
 import addProvisions from '../state/provisions/add.ts'
+import getCrewShares from '../payout/get-crew-shares.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 
@@ -74,8 +75,12 @@ export class LedgerPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   async _prepareContext() {
+    const { accounts, total } = await getCrewShares()
+
     return {
       silver: await LedgerPanel._prepareSilver(),
+      accounts: Object.values(accounts),
+      totalShares: total,
       food: await LedgerPanel._prepareProvision('food'),
       water: await LedgerPanel._prepareProvision('water'),
       rum: await LedgerPanel._prepareProvision('rum')

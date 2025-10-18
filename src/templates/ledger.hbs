@@ -4,6 +4,32 @@
       <caption>{{localize 'revolutionary-darkcaribbean.ledger-panel.stock.title'}}</caption>
       {{> ledger-row resource=silver }}
     </table>
+    <table class="shares">
+      <caption>{{localize 'revolutionary-darkcaribbean.ledger-panel.shares.title'}}</caption>
+      <thead>
+        <tr>
+          <th>{{localize 'revolutionary-darkcaribbean.ledger-panel.shares.columns.name'}}</th>
+          <th class="shares">{{localize 'revolutionary-darkcaribbean.ledger-panel.shares.columns.shares'}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each accounts}}
+          <tr>
+            <td>{{this.holder.name}}</td>
+            <td class="shares">{{this.shares}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Total</td>
+          <td class="shares">{{totalShares}}</td>
+        </tr>
+      </tfoot>
+    </table>
+    <button type="button" data-action="payout" title="{{localize 'revolutionary-darkcaribbean.ledger-panel.payout.button.tooltip'}}">
+      {{localize 'revolutionary-darkcaribbean.ledger-panel.payout.button.text'}}
+    </button>
   </div>
   <div class="page right">
     <table class="ledger">
