@@ -12,7 +12,7 @@ const calculatePayout = async (
   const shares = await getCrewShares(cs)
   const perShare = Math.floor(amount / shares.total)
 
-  const payout: Payout = { accounts: {}, total: 0, remaining: 0 }
+  const payout: Payout = { accounts: {}, total: 0, remaining: 0, perShare }
   for (const account of Object.values(shares.accounts)) {
     const { holder, shares } = account
     payout.accounts[holder.id] = { holder, amount: Math.floor(perShare * shares) }

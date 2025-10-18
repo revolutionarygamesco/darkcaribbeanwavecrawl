@@ -5,6 +5,7 @@ export interface PayoutAccount {
 
 interface Payout {
   accounts: Record<string, PayoutAccount>
+  perShare: number
   total: number
   remaining: number
 }
