@@ -50,7 +50,8 @@
   }
 
   td.estimate {
-    font-style: italic;
+    font-size: 75%;
+    padding: 0 0 1em 0;
   }
 
   button[data-action="close-ledger"] {
@@ -58,4 +59,8 @@
     right: 130px;
     position: absolute;
   }
+}
+
+.dialog-content .note {
+  margin: 0;
 }

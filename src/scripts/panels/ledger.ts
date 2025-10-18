@@ -7,6 +7,8 @@ import localize from '../utilities/localize.ts'
 import getShip from '../state/ship/get.ts'
 import getSilver from '../state/silver/get.ts'
 import getProvisions from '../state/provisions/get.ts'
+import addSilver from '../state/silver/add.ts'
+import addProvisions from '../state/provisions/add.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 
@@ -37,33 +39,37 @@ export class LedgerPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   static async _prepareSilver () {
-    const prefix = `${MODULE_ID}.ledger-panel.stock.`
-    const units = prefix + 'units'
+    const prefix = [MODULE_ID, 'ledger-panel', 'stock'].join('.')
+    const units = prefix + '.units'
     const amount = await getSilver()
 
     return {
-      name: localize(prefix + 'name'),
+      name: localize(prefix + '.name'),
       amount: `${amount} ${localize(units)}`,
       action: 'adjust-silver',
-      tooltip: localize(prefix + 'tooltip')
+      tooltip: localize(prefix + '.tooltip')
     }
   }
 
   static async _prepareProvision (type: Provision) {
-    const prefix = `${MODULE_ID}.ledger-panel.provisions.types.${type}.`
-    const units = prefix + 'units'
+    const prefix = [MODULE_ID, 'ledger-panel', 'provisions', 'types', type].join('.')
+    const units = prefix + '.units'
     const amount = await getProvisions(type)
     const crew = await LedgerPanel._getCrewSize()
     const estimate = crew > 0
-      ? Math.floor(amount / crew)
+      ? [
+          localize(prefix + '.estimate.pre'),
+          Math.floor(amount / crew).toString(),
+          localize(prefix + '.estimate.post')
+        ].join(' ')
       : undefined
 
     return {
-      name: localize(prefix + 'name'),
+      name: localize(prefix + '.name'),
       amount: `${amount} ${localize(units)}`,
       estimate,
-      action: 'adjust-silver',
-      tooltip: localize(prefix + 'tooltip')
+      action: `adjust-${type}`,
+      tooltip: localize(prefix + '.tooltip')
     }
   }
 
@@ -92,7 +98,71 @@ export class LedgerPanel extends HandlebarsApplicationMixin(ApplicationV2) {
 
     switch (button.dataset.action) {
       case 'close-ledger': await this.close(); break
+      case 'adjust-silver': return await this.adjustResource('silver')
+      case 'adjust-food': return await this.adjustResource('food')
+      case 'adjust-water': return await this.adjustResource('water')
+      case 'adjust-rum': return await this.adjustResource('rum')
     }
+  }
+
+  parsAdjustResource (coll: HTMLFormControlsCollection, field: string, fallback: number): number {
+    const input = coll[field as any] as HTMLInputElement
+    const parsed = parseInt(input.value)
+    return isNaN(parsed) ? fallback : parsed
+  }
+
+  async _adjustResource (type: Provision | 'silver', amount: number) {
+    type === 'silver' ? await addSilver(amount) : await addProvisions(type, amount)
+    await this.render({ force: true })
+  }
+
+  async adjustResource (type: Provision | 'silver') {
+    const prefix = [MODULE_ID, 'ledger-panel', 'adjust'].join('.')
+    const name = `adjust-${type}`
+    const title = localize(`${prefix}.types.${type}.title`)
+    const note = type === 'silver' ? '' : `<p class="note">${localize(`${prefix}.types.${type}.note`)}</p>`
+
+    const dialog = new foundry.applications.api.DialogV2({
+      id: `${MODULE_ID}-adjust-resource`,
+      window: { title },
+      content: `
+        <input type="number" id="${name}" name="${name}" value="0" min="0" />
+        ${note}
+      `,
+      buttons: [
+        {
+          action: 'add',
+          label: localize(`${prefix}.actions.add`),
+          callback: async (_event: Event, button: HTMLButtonElement) => {
+            const coll = button.form?.elements
+            if (!coll) return
+
+            const amount = this.parsAdjustResource(coll, name, 0)
+            return await this._adjustResource(type, amount)
+          }
+        },
+        {
+          action: 'sub',
+          label: localize(`${prefix}.actions.sub`),
+          callback: async (_event: Event, button: HTMLButtonElement) => {
+            const coll = button.form?.elements
+            if (!coll) return
+
+            const amount = this.parsAdjustResource(coll, name, 0) * -1
+            return await this._adjustResource(type, amount)
+          }
+        },
+        {
+          action: 'cancel',
+          label: localize(`${prefix}.actions.cancel`),
+          callback: async () => {
+            await dialog.close()
+          }
+        }
+      ]
+    })
+
+    await dialog.render(true)
   }
 }
 

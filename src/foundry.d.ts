@@ -1,9 +1,11 @@
 declare class ApplicationV2 {
   render: (options: boolean) => Promise<ApplicationV2>
+  close: (options?: any) => Promise<ApplicationV2>
 }
 
 declare class DialogV2 extends ApplicationV2 {
   constructor(options?: any)
+  close: (options?: any) => Promise<DialogV2>
 }
 
 declare class Handlebars {
@@ -15,7 +17,7 @@ declare class HandlebarsApplication {
   dragDrop?: DragDrop[]
   options: any
   element: HTMLElement
-  render: (options?: boolean) => Promise<HandlebarsApplication>
+  render: (options?: any) => Promise<HandlebarsApplication>
   close(options?: any): Promise<this>
   _onRender(context: any, options: any): Promise<void>
   _onClose(options: any): void

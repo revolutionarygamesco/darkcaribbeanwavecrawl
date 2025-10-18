@@ -159,6 +159,30 @@
             }
           }
         }
+      },
+      "adjust": {
+        "types": {
+          "silver": {
+            "title": "Adjust common stock"
+          },
+          "food": {
+            "title": "Adjust food stores",
+            "note": "Food stores are measured in person-days."
+          },
+          "water": {
+            "title": "Adjust fresh water stores",
+            "note": "Water stores are measured in person-days."
+          },
+          "rum": {
+            "title": "Adjust rum stores",
+            "note": "Rum stores are measured in person-days."
+          }
+        },
+        "actions": {
+          "add": "Add",
+          "sub": "Subtract",
+          "cancel": "Cancel"
+        }
       }
     },
     "watches": {
