@@ -1,26 +1,14 @@
 import type CrawlState from '../../state.ts'
-import initCrawlState from '../../init.ts'
+import setupCrew, { setupState, jack } from '../../../utilities/testing/crew.ts'
 import getAssigned from './get.ts'
 
 describe('getAssigned', () => {
-  let state: CrawlState
-  let originalActors: Map<string, Actor>
-  const jack = 'calico-jack'
+  setupCrew()
 
-  beforeAll(() => {
-    originalActors = game.actors
-  })
+  let state: CrawlState
 
   beforeEach(() => {
-    game.actors = new Map<string, Actor>()
-    game.actors.set(jack, { id: jack } as Actor)
-
-    state = initCrawlState()
-    state.crew.positions.captain = { shares: 1, assigned: [jack] }
-  })
-
-  afterEach(() => {
-    game.actors = originalActors
+    state = setupState()
   })
 
   it('gets the characters assigned to a position from the state', async () => {
