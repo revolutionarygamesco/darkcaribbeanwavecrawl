@@ -18,7 +18,7 @@ export const william = {
 } as unknown as Actor
 
 export const setupActors = (map: Map<string, Actor>, ...ids: string[]) => {
-  for (const id of ids) map.set(id, { id } as Actor)
+  for (const id of ids) map.set(id, { id, system: { silver: 50 } } as Actor)
 }
 
 export const setupState = (): CrawlState => {
