@@ -1,30 +1,15 @@
 import type CrawlState from '../state.ts'
-import initCrawlState from '../init.ts'
+import setupCrew, { setupState, jack, anne, mary } from '../../utilities/testing/crew.ts'
 import getRoster from './get.ts'
 
 describe('getRoster', () => {
+  setupCrew()
+
   let before: CrawlState
-  let originalActors: Map<string, Actor>
-  const jack = 'calico-jack'
-  const anne = 'anne-bonny'
-  const mary = 'mary-read'
   const crew = [jack, anne, mary]
 
-  beforeAll(() => {
-    originalActors = game.actors
-  })
-
   beforeEach(() => {
-    before = initCrawlState()
-    before.crew.positions.captain = { shares: 1, assigned: [jack] }
-    before.crew.positions.gunner = { shares: 1, assigned: [anne, mary] }
-
-    game.actors = new Map<string, Actor>()
-    for (const id of crew) game.actors.set(id, { id } as Actor)
-  })
-
-  afterEach(() => {
-    game.actors = originalActors
+    before = setupState()
   })
 
   it('returns a roster of every character on the members', async () => {
