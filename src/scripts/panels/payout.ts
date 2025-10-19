@@ -5,10 +5,13 @@ class PayoutDialog extends foundry.applications.api.DialogV2 {
   perShareCell?: HTMLTableCellElement
   remainingCell?: HTMLTableCellElement
 
+  getAmount () {
+    return parseInt(this.amount?.value ?? '0') || 0
+  }
+
   _onUpdate = async () => {
     if (!this.amount || !this.perShareCell || !this.remainingCell) return
-    const value = parseInt(this.amount.value) || 0
-    const { perShare, remaining } = await calculatePayout(value)
+    const { perShare, remaining } = await calculatePayout(this.getAmount())
 
     this.perShareCell.textContent = perShare.toString()
     this.remainingCell.textContent = remaining.toString()

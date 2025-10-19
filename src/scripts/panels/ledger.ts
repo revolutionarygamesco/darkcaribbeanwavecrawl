@@ -11,6 +11,7 @@ import getProvisions from '../state/provisions/get.ts'
 import addSilver from '../state/silver/add.ts'
 import addProvisions from '../state/provisions/add.ts'
 import getCrewShares from '../payout/get-crew-shares.ts'
+import payout from '../payout/pay.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 
@@ -200,10 +201,9 @@ export class LedgerPanel extends HandlebarsApplicationMixin(ApplicationV2) {
         {
           action: 'pay',
           label: localize(`${prefix}.actions.pay`),
-          callback: async (_event: Event, button: HTMLButtonElement) => {
-            const coll = button.form?.elements
-            if (!coll) return
-            // TODO: Actually pay out
+          callback: async () => {
+            await payout(dialog.getAmount())
+            await this.render({ force: true })
           }
         },
         {
