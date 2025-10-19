@@ -1,25 +1,10 @@
 import { MODULE_ID } from '../../settings.ts'
-import initCrawlState from '../../state/init.ts'
+import setupCrew, { setupState, jack } from '../../utilities/testing/crew.ts'
 import glossAllPositions from './gloss-all.ts'
 
 describe('glossAllPositions', () => {
-  const before = initCrawlState()
-  let originalActors: Map<string, Actor>
-  const jack = 'calico-jack'
-  before.crew.positions.captain.assigned = [jack]
-
-  beforeAll(() => {
-    originalActors = game.actors
-  })
-
-  beforeEach(() => {
-    game.actors = new Map<string, Actor>()
-    game.actors.set(jack, { id: jack } as Actor)
-  })
-
-  afterEach(() => {
-    game.actors = originalActors
-  })
+  setupCrew()
+  const before = setupState()
 
   it('glosses all positions', async () => {
     const actual = await glossAllPositions(before)
