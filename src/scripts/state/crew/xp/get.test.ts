@@ -1,34 +1,23 @@
 import type CrawlState from '../../state.ts'
-import initCrawlState from '../../init.ts'
+import setupCrew, { setupState, jack } from '../../../utilities/testing/crew.ts'
 import getXP from './get.ts'
 
 describe('getXP', () => {
-  let state: CrawlState
-  let originalActors: Map<string, Actor>
-  const jack = 'calico-jack'
+  setupCrew()
 
-  beforeAll(() => {
-    originalActors = game.actors
-  })
+  let state: CrawlState
 
   beforeEach(() => {
-    state = initCrawlState()
-    state.crew.xp = { [jack]: { quartermaster: 200, captain: 100 } }
-    game.actors = new Map<string, Actor>()
-    game.actors.set(jack, { id: jack } as Actor)
-  })
-
-  afterEach(() => {
-    game.actors = originalActors
+    state = setupState()
   })
 
   it.each(['quartermaster', 'captain'])('returns Jack’s experience as %s (as ID)', async (position) => {
     const actual = await getXP(jack, position, state)
-    expect(actual).toBe(state.crew.xp[jack][position])
+    expect(actual).toBe(state.crew.xp[jack][position] ?? 0)
   })
 
   it.each(['quartermaster', 'captain'])('returns Jack’s experience as %s (as Actor)', async (position) => {
     const actual = await getXP({ id: jack } as Actor, position, state)
-    expect(actual).toBe(state.crew.xp[jack][position])
+    expect(actual).toBe(state.crew.xp[jack][position] ?? 0)
   })
 })
