@@ -1,6 +1,7 @@
 import { MODULE_ID } from '../settings.ts'
 import { Provision } from '../state/state.ts'
 
+import PayoutDialog from './payout.ts'
 import getPanelDimensions from '../utilities/get-dimensions.ts'
 import registerPartials from './register-partials.ts'
 import localize from '../utilities/localize.ts'
@@ -107,6 +108,7 @@ export class LedgerPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       case 'adjust-food': return await this.adjustResource('food')
       case 'adjust-water': return await this.adjustResource('water')
       case 'adjust-rum': return await this.adjustResource('rum')
+      case 'payout': return await this.openPayoutDialog()
     }
   }
 
@@ -155,6 +157,53 @@ export class LedgerPanel extends HandlebarsApplicationMixin(ApplicationV2) {
 
             const amount = this.parsAdjustResource(coll, name, 0) * -1
             return await this._adjustResource(type, amount)
+          }
+        },
+        {
+          action: 'cancel',
+          label: localize(`${prefix}.actions.cancel`),
+          callback: async () => {
+            await dialog.close()
+          }
+        }
+      ]
+    })
+
+    await dialog.render(true)
+  }
+
+  async openPayoutDialog () {
+    const prefix = [MODULE_ID, 'ledger-panel', 'payout', 'dialog'].join('.')
+    const title = localize(`${prefix}.title`)
+    const stock = await getSilver()
+
+    const dialog = new PayoutDialog({
+      id: `${MODULE_ID}-payout`,
+      window: { title },
+      content: `
+        <label for="payout-amount">${localize(prefix + '.amount')}</label>
+        <input type="number" id="payout-amount" name="amount" value="0" min="0" max="${stock}" />
+        <table class="payout-estimation">
+          <tbody>
+            <tr>
+              <th>${localize(prefix + '.estimates.per-share')}</th>
+              <td id="payout-per-share">0</td>
+            </tr>
+            <tr>
+              <th>${localize(prefix + '.estimates.remaining')}</th>
+              <td id="payout-remaining">${stock}</td>
+            </tr>
+          </tbody>
+        </table>
+      `,
+      buttons: [
+        {
+          action: 'pay',
+          label: localize(`${prefix}.actions.pay`),
+          callback: async (_event: Event, button: HTMLButtonElement) => {
+            const coll = button.form?.elements
+            if (!coll) return
+            // TODO: Actually pay out
           }
         },
         {

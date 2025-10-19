@@ -1,9 +1,12 @@
 declare class ApplicationV2 {
   render: (options: boolean) => Promise<ApplicationV2>
   close: (options?: any) => Promise<ApplicationV2>
+  _onRender(context: any, options: any): Promise<void>
+  _onClose(options: any): void
 }
 
 declare class DialogV2 extends ApplicationV2 {
+  element: HTMLElement
   constructor(options?: any)
   close: (options?: any) => Promise<DialogV2>
 }
@@ -12,15 +15,13 @@ declare class Handlebars {
   static registerPartial(id: string, template: string): any
 }
 
-declare class HandlebarsApplication {
+declare class HandlebarsApplication extends ApplicationV2 {
   constructor(options?: any)
   dragDrop?: DragDrop[]
   options: any
   element: HTMLElement
   render: (options?: any) => Promise<HandlebarsApplication>
   close(options?: any): Promise<this>
-  _onRender(context: any, options: any): Promise<void>
-  _onClose(options: any): void
   _prepareTabs: (group: string) => any
 }
 

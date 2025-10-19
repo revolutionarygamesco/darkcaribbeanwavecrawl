@@ -109,3 +109,21 @@
 .dialog-content .note {
   margin: 0;
 }
+
+#revolutionary-darkcaribbean-payout {
+  width: 300px;
+
+  label {
+    margin-bottom: 0.5em;
+  }
+
+  table.payout-estimation {
+    th {
+      text-align: left;
+    }
+
+    td {
+      text-align: right;
+    }
+  }
+}

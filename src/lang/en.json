@@ -139,6 +139,18 @@
         "button": {
           "tooltip": "Pay out shares from common stock",
           "text": "Pay out shares"
+        },
+        "dialog": {
+          "title": "Pay out shares",
+          "amount": "Amount to pay out",
+          "estimates": {
+            "per-share": "Per share",
+            "remaining": "Common stock after"
+          },
+          "actions": {
+            "pay": "Pay",
+            "cancel": "Cancel"
+          }
         }
       },
       "provisions": {
