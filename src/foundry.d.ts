@@ -79,23 +79,24 @@ interface Document {
 
 interface Actor extends Document {
   type: string
-  attributes: {
-    speed?: {
-      value: number
-    },
-    crew?: {
-      max: number,
-      value: number
-    },
-    cargo?: {
-      max: number,
-      value: number
-    }
-  },
   collections: {
     items: Map<string, { type: string, name: string, [key: string]: any }>
   },
   system: {
+    attributes: {
+      speed?: {
+        value: number
+      },
+      crew?: {
+        min: number,
+        max: number,
+        value: number
+      },
+      cargo?: {
+        max: number,
+        value: number
+      }
+    },
     silver?: number
   }
   update(data?: object, operation?: any): Promise<any>
