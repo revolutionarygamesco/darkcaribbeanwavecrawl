@@ -93,4 +93,12 @@ describe('setAssigned', () => {
     expect(actual.crew.positions.quartermaster.assigned).toContain(anne)
     expect(actual.crew.positions['sailing-master'].assigned).not.toContain(anne)
   })
+
+  it('removes you from free crewman if you’re anything else', async () => {
+    const before = initCrawlState()
+    before.crew.positions.crewman = { shares: 1, assigned: [anne] }
+    const actual = await setAssigned('bosun', [anne], before, false)
+    expect(actual.crew.positions.bosun.assigned).toContain(anne)
+    expect(actual.crew.positions.crewman.assigned).not.toContain(anne)
+  })
 })

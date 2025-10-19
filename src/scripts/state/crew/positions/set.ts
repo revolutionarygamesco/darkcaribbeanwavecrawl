@@ -15,6 +15,14 @@ const setAssigned = async (
   let copy = await initPosition(position, 1, previous)
   copy.crew.positions[position].assigned = typeof characters === 'string' ? [characters] : characters
 
+  // You can't be free crewman if you're also anything else
+  const { crewman, ...assignments } = copy.crew.positions
+  const assigned = Object.values(assignments)
+    .flatMap(position => position.assigned)
+  copy.crew.positions.crewman.assigned = copy.crew.positions.crewman.assigned
+    .filter(id => !assigned.includes(id))
+
+  // You can't be both quartermaster and sailing master
   const officers = ['quartermaster', 'sailing-master']
   if (officers.includes(position)) {
     copy = await initPosition('quartermaster', 1, copy)
