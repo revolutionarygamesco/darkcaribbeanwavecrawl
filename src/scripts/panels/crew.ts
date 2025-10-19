@@ -47,15 +47,15 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     },
     ship: {
       template: `./modules/${MODULE_ID}/templates/ship.hbs`,
-      scrollable: ['']
+      scrollable: ['.crew-ship']
     },
     positions: {
       template: `./modules/${MODULE_ID}/templates/positions.hbs`,
-      scrollable: ['']
+      scrollable: ['.crew-positions']
     },
     teams: {
       template: `./modules/${MODULE_ID}/templates/teams.hbs`,
-      scrollable: ['']
+      scrollable: ['.crew-teams']
     }
   }
 
