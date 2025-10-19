@@ -1,37 +1,20 @@
 import type CrawlState from '../state/state.ts'
-import initCrawlState from '../state/init.ts'
+import setupCrew, { setupState, jack, anne, mary } from '../utilities/testing/crew.ts'
 import calculatePayout from './calculate.ts'
 
 describe('calculatePayout', () => {
+  setupCrew()
   let state: CrawlState
-  let originalActors: Map<string, Actor>
-  const jack = 'calico-jack'
-  const anne = 'anne-bonny'
-  const mary = 'mary-read'
-
-  beforeAll(() => {
-    originalActors = game.actors
-  })
 
   beforeEach(() => {
-    game.actors = new Map<string, Actor>()
-    for (const id of [jack, anne, mary]) game.actors.set(id, { id } as Actor)
-
-    state = initCrawlState()
+    state = setupState()
     state.silver.company = 20
-    state.crew.positions.captain = { shares: 2, assigned: [jack] }
-    state.crew.positions.quartermaster = { shares: 1.5, assigned: [anne] }
-    state.crew.positions.gunner = { shares: 1.25, assigned: [anne, mary] }
-  })
-
-  afterEach(() => {
-    game.actors = originalActors
   })
 
   /**
    * Common stock before payout = 20
-   * Total shares = 2 + 1.5 + 1.25 = 4.25
-   * Per share = 15 / 4.75 = 3.16, rounded down to 3
+   * Total shares = 2 + 1.5 + 1 = 4.5
+   * Per share = 15 / 4.5 = 3.333, rounded down to 3
    * Jack gets 3 * 2 = 6
    * Anne gets 3 * 1.5 = 4.5, rounded down to 4
    * Mary gets 3 * 1.25 = 3.75, rounded down to 3
