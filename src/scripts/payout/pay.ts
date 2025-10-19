@@ -13,7 +13,8 @@ const payout = async (
 
   for (const account of Object.values(payout.accounts)) {
     const { holder, amount } = account
-    if (holder?.system?.silver) holder.system.silver += amount
+    const before = holder.system.silver ?? 0
+    await holder.update({ 'system.silver': before + amount })
   }
 
   copy.silver.company = payout.remaining

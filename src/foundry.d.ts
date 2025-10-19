@@ -75,6 +75,7 @@ interface Document {
   img: string
   getFlag<T>(scope: string, key: string): T
   setFlag<T>(scope: string, key: string, value: T): void
+  update(data?: any, operation?: any): Promise<Document | undefined>
 }
 
 interface Actor extends Document {
