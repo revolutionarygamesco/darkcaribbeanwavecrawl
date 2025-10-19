@@ -13,7 +13,8 @@ const initCrawlState = (): CrawlState => ({
       surgeon: { shares: 1.25, assigned: [] },
       ['master-arms']: { shares: 1.25, assigned: [] },
       priest: { shares: 1.25, assigned: [] },
-      sorcerer: { shares: 1.25, assigned: [] }
+      sorcerer: { shares: 1.25, assigned: [] },
+      crewman: { shares: 1, assigned: [] }
     },
     teams: {
       starboard: { officer: 'quartermaster', members: [], onDuty: true },

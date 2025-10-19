@@ -88,6 +88,11 @@
             "title": "Deck Sorcerer",
             "desc": "The deck sorcerer is a practitioner of the arcane arts who uses sorcery to provide the ship with fair winds or other magical aid. He reports to the sailing master.",
             "sans": "Most ships do not have a deck sorcerer, and ships with a deck priest almost never have a deck sorcerer as well."
+          },
+          "crewman": {
+            "title": "Free Crewman",
+            "desc": "All members of the crew have signed the articles of agreement, making them co-owners of the pirate enterprise entitled to a vote and a share of its profits. Crewmen are assigned to either the starboard or larboard watch crew with rotating watches of duties and recreation time.",
+            "sans": "Pirate crews are often small, often smaller than the number of possible positions listed here, so you might not have any free crewmen."
           }
         }
       },
