@@ -185,4 +185,13 @@ declare const foundry: {
   }
 }
 
+declare const ui: {
+  notifications: {
+    error: (message: string | object, options?: any) => any
+    info: (message: string | object, options?: any) => any
+    success: (message: string | object, options?: any) => any
+    warn: (message: string | object, options?: any) => any
+  }
+}
+
 declare function fromUuid(uuid: string): Promise<Document | null>
