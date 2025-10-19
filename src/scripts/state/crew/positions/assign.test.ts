@@ -1,28 +1,19 @@
+import type CrawlState from '../../state.ts'
 import initCrawlState from '../../init.ts'
+import setupCrew, { jack, mary, anne } from '../../../utilities/testing/crew.ts'
 import assign from './assign.ts'
 
 describe('assign', () => {
-  let originalActors: Map<string, Actor>
-  const jack = 'calico-jack'
-  const anne = 'anne-bonny'
-  const mary = 'mary-read'
-  const crew = [jack, anne, mary]
+  setupCrew()
 
-  beforeAll(() => {
-    originalActors = game.actors
-  })
+  let before: CrawlState
 
   beforeEach(() => {
-    game.actors = new Map<string, Actor>()
-    for (const id of crew) game.actors.set(id, { id } as Actor)
-  })
-
-  afterEach(() => {
-    game.actors = originalActors
+    before = initCrawlState()
+    before.ship.actor = 'william'
   })
 
   it('assigns a character to a position in a new state', async () => {
-    const before = initCrawlState()
     const after = await assign('captain', jack, before, false)
     const { assigned, shares } = after.crew.positions.captain
     expect(shares).toBe(2)
@@ -31,7 +22,6 @@ describe('assign', () => {
   })
 
   it('assigns multiple characters to a position in a new state', async () => {
-    const before = initCrawlState()
     const after = await assign('gunner', [anne, mary], before, false)
     const { assigned, shares } = after.crew.positions.gunner
     expect(shares).toBe(1.5)
@@ -40,7 +30,6 @@ describe('assign', () => {
   })
 
   it('assigns additional characters to a position in a new state', async () => {
-    const before = initCrawlState()
     const mid = await assign('gunner', anne, before, false)
     const after = await assign('gunner', mary, mid, false)
     const { assigned, shares } = after.crew.positions.gunner
@@ -50,7 +39,6 @@ describe('assign', () => {
   })
 
   it('removes duplicates', async () => {
-    const before = initCrawlState()
     const mid = await assign('gunner', anne, before, false)
     const after = await assign('gunner', [anne, mary], mid, false)
     const { assigned, shares } = after.crew.positions.gunner

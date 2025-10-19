@@ -1,9 +1,15 @@
+import { MODULE_ID } from '../../../settings.ts'
 import CrawlState, { CrawlTeamOfficer } from '../../state.ts'
 import getCrawlState from '../../get.ts'
+import getShip from '../../ship/get.ts'
+import getRoster from '../get.ts'
+import cloneCrawlState from '../../clone.ts'
 import setCrawlState from '../../set.ts'
 import getOppositeSide from '../teams/opposite.ts'
 import getOppositeOfficer from '../teams/officer/opposite.ts'
 import initPosition from './init.ts'
+import localize from '../../../utilities/localize.ts'
+import notify from '../../../utilities/notify.ts'
 
 const setAssigned = async (
   position: string,
@@ -14,6 +20,34 @@ const setAssigned = async (
   const previous = state ?? await getCrawlState()
   let copy = await initPosition(position, 1, previous)
   copy.crew.positions[position].assigned = typeof characters === 'string' ? [characters] : characters
+
+  if (game.actors) {
+    const ship = await getShip(copy)
+    if (!ship?.system.attributes.crew) {
+      notify('error', localize(`${MODULE_ID}.notifications.ship-before-crew`))
+      return cloneCrawlState(previous)
+    }
+
+    const { min, max } = ship.system.attributes.crew
+    const crewSize = (await getRoster(copy)).length
+
+    if (crewSize < min) {
+      const msg = localize(`${MODULE_ID}.notifications.below-min-crew`)
+        .replaceAll('SHIPNAME', ship.name)
+        .replaceAll('CREWMIN', min.toString())
+        .replaceAll('XMORE', (min - crewSize).toString())
+      notify('warn', msg)
+      await ship.update({ 'system.attributes.crew.value': crewSize })
+    } else if (crewSize > max) {
+      const msg = localize(`${MODULE_ID}.notifications.above-max-crew`)
+        .replaceAll('SHIPNAME', ship.name)
+        .replaceAll('CREWMAX', max.toString())
+      notify('error', msg)
+      return cloneCrawlState(previous)
+    } else {
+      await ship.update({ 'system.attributes.crew.value': crewSize })
+    }
+  }
 
   // You can't be free crewman if you're also anything else
   const { crewman, ...assignments } = copy.crew.positions

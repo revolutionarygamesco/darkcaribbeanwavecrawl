@@ -16,7 +16,8 @@ const unassign = async (
 
   const unassigned = await setAssigned(position, after, previous, save && position === 'crewman')
   if (position === 'crewman') return unassigned
-  return await setAssigned('crewman', ids, unassigned, save)
+  const newCrew = [...new Set([...unassigned.crew.positions.crewman.assigned, ...ids])]
+  return await setAssigned('crewman', newCrew, unassigned, save)
 }
 
 export default unassign

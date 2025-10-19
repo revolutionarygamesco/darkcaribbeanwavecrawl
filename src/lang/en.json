@@ -246,6 +246,11 @@
       "back-step": "Set time back 10 minutes",
       "forward-step": "Advance time 10 minutes",
       "forward-fast": "Advance time 1 hour"
+    },
+    "notifications": {
+      "ship-before-crew": "You need a ship before you can start assigning crew to it.",
+      "below-min-crew": "The SHIPNAME requires a crew of at least CREWMIN. You’ll need XMORE crew before you’ll be ready to set sail.",
+      "above-max-crew": "The SHIPNAME can only accommodate a maximum crew of CREWMAX."
     }
   }
 }

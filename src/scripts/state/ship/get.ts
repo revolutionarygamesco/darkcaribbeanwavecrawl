@@ -5,7 +5,7 @@ const getShip = async (
   state?: CrawlState
 ): Promise<Actor | null> => {
   const id = (state ?? await getCrawlState()).ship.actor
-  if (!id) return null
+  if (!id || !game?.actors) return null
   const actor = game.actors.get(id)
   return actor ?? null
 }
