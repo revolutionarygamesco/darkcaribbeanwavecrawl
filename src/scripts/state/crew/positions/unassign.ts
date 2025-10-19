@@ -13,7 +13,10 @@ const unassign = async (
   const before = (await getAssigned(position, previous)).map(actor => actor.id)
   const ids = typeof characters === 'string' ? [characters] : characters
   const after = before.filter(id => !ids.includes(id))
-  return await setAssigned(position, after, previous, save)
+
+  const unassigned = await setAssigned(position, after, previous, save && position === 'crewman')
+  if (position === 'crewman') return unassigned
+  return await setAssigned('crewman', ids, unassigned, save)
 }
 
 export default unassign
