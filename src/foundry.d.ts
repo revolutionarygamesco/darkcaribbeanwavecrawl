@@ -54,6 +54,12 @@ declare class DragDrop {
   }
 }
 
+declare class FormDataExtended {
+  get<T>(name: string): T | null
+  object: Record<string, any>
+  toObject(): Record<string, any>
+}
+
 declare class TextEditor {
   static getDragEventData(event: DragEvent): any
 }
@@ -143,6 +149,7 @@ declare const game: {
   scenes: Map<string, any>,
   settings: {
     register: (namespace: string, name: string, settings: GameSettings) => void,
+    registerMenu: (namespace: string, name: string, data: any) => void,
     set: <T>(namespace: string, name: string, value: T) => Promise<T>,
     get: <T>(namespace: string, name: string) => T
   },
@@ -174,6 +181,7 @@ declare const foundry: {
     },
     ux: {
       DragDrop: typeof DragDrop,
+      FormDataExtended: typeof FormDataExtended,
       Tabs: typeof Tabs,
       TextEditor: typeof TextEditor
     }

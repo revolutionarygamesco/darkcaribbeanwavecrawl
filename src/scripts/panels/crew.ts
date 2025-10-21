@@ -66,7 +66,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   }
 
-  constructor(options = {}) {
+  constructor (options = {}) {
     super(options)
     this.dragDrop = this.#createDragDropHandlers()
   }
@@ -91,7 +91,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     })
   }
 
-  async _prepareContext() {
+  async _prepareContext () {
     return {
       tabs: this._prepareTabs('primary')
     }
@@ -152,7 +152,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     return context
   }
 
-  async _onRender(context: any, options: any) {
+  async _onRender (context: any, options: any) {
     await super._onRender(context, options)
 
     if (!this.dragDrop) return

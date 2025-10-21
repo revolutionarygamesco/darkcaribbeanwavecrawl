@@ -1,0 +1,39 @@
+#revolutionary-darkcaribbean-crew-config .window-content {
+  div[data-application-part="form"] {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 390px;
+    margin: 0 0 1em 0;
+    overflow: hidden;
+  }
+
+  label {
+    display: block;
+  }
+
+  textarea {
+    width: 100%;
+  }
+
+  .crew-config-doc {
+    padding: 2em;
+    overflow: auto;
+
+    td {
+      vertical-align: top;
+
+      code {
+        background: transparent;
+        border: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  footer {
+    button {
+      padding: 1em;
+      width: 100%;
+    }
+  }
+}

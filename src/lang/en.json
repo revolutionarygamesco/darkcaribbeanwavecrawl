@@ -1,6 +1,40 @@
 {
   "revolutionary-darkcaribbean": {
     "settings": {
+      "crew-config-panel": {
+        "name": "Crew Settings"
+      },
+      "crew-config": {
+        "name": "Crew Settings",
+        "hint": "Set what positions exist on your crew, how many shares each one is paid, and other such details.",
+        "save": "Save Crew Settings",
+        "docs": {
+          "title": "How to Use",
+          "intro": "This setting allows you to specify what roles can be filled on your crew as well as how many shares each one is paid, how many votes they have, if they’re exempt from duty on watch crews, and more. The setting is stored in JavaScript Object Notation (JSON). The keys are the positions available on the ship (see below). Each position can have the following properties:",
+          "variables": {
+            "columns": {
+              "varname": "Key",
+              "notes": "Notes"
+            },
+            "shares": "This sets the number of shares that individuals in this position receive when treasure is shared out. This is the value you’re most likely to change to match your articles.",
+            "max": "This is the maximum number of people who can hold this position at once. The most common values are 1 (when there should only be one person with that position, like captain) or to just skip over having any max value at all (meaning there is no limit on the number of people who can hold it).",
+            "exempt": "If true, then people who hold this position don’t have to belong to either watch crew. This usually reflects a role that takes up all of a crew member’s time, leaving little time for anything else. If their duties can be incorporated into a watch crew, that’s usually preferred.",
+            "exclusive": "If true, then people who hold this position can’t hold any others on the crew.",
+            "required": "If true, then part of the check to see if the ship is ready to set sail includes making sure that you have at least one person in this position.",
+            "votes": "This is the number of votes that a person gets. You’d be on safe ground just assigning 1 to every position. Some crews might give the captain 2 votes, and if you’ve opted into more historically-grounded options, there may be members of the crew with 0, but such inequality can be a source of conflict that could ultimately cost your crew dearly."
+          },
+          "positions": {
+            "title": "All Possible Positions",
+            "intro": "The following is a list of all the positions that your crew could include. Adding other positions beyond this will require, at a minimum, adding new entries to the localization files for this module, so unless you know what you’re doing you might want to stick to what’s already here. We tried to make this as extensive as we could.",
+            "historical": "Two of these roles are only available if you’ve opted in to include historical content (marked by the H/O column in the table below). See the journal entry for Dark Caribbean Wave Crawl: Historical Content for more information.",
+            "columns": {
+              "id": "Key",
+              "name": "Position",
+              "historical": "H/O"
+            }
+          }
+        }
+      },
       "historical": {
         "name": "Include historical content",
         "hint": "Do not activate without a frank and open discussion with everyone at the table about including these elements. See the journal entry for Dark Caribbean Wave Crawl: Historical Content for more information."
@@ -36,63 +70,103 @@
         "glossary": {
           "captain": {
             "title": "Captain",
-            "desc": "The captain must be a skilled and dependable seaman and a bold and decisive leader. He’s responsible for choosing prey, how to engage a target, how to pursue it, how to escape authorities, and how to deal with an attack. He’s elected by popular vote and can be replaced the same way. His authority is unquestionable only during action.",
-            "sans": "The captain is a necessary role on your ship. Without a captain, you’re not ready to set sail."
+            "desc": "Under normal circumstances, the captain is co-equal with the quartermaster, but in action his control is absolute and unquestioned. The captain is responsible for hunting prey and leading attacks. It’s the captain’s name that the crew will come to be known and feared by, but that legend is an asset created and owned collectively by the crew, not the captain himself.",
+            "sans": "A ship isn’t ready to sail without a captain."
           },
           "quartermaster": {
             "title": "Quartermaster",
-            "desc": "The quartermaster has equal authority to the captain except during action. He’s elected by the crew to represent their interests and check the captain’s power. He takes command when the captain is absent, administers the articles, keeps order, settles conflicts, maintains the ledgers, and dispenses food, water, and rum to each member of the crew.",
-            "sans": "The quartermaster is a necessary role on your ship. Without a quartermaster, you’re not ready to set sail."
+            "desc": "Under normal circumstances, the quartermaster is co-equal with the captain. He is elected by the crew to represent their interests and check the captain’s power. He’s in charge of the company’s finances, assets, and resources, for enforcing the articles of agreement, and paying out shares. He runs auctions for those items that are not easily divided and is responsible for discipline and mediating disputes among the crew.",
+            "sans": "A ship isn’t ready to sail without a quartermaster."
           },
-          "sailing-master": {
+          "master": {
             "title": "Sailing Master",
-            "desc": "The sailing master oversees the navigation and sailing of the ship. He would have to be literate in order to read charts and was usually the most educated member of the crew.",
-            "sans": "The sailing master is a necessary role on your ship. Without a sailing master, you’re not ready to set sail."
+            "desc": "The sailing master — often just “master” — is one of the leading officers on a pirate ship, leading one of the watch crews and even taking command when the captain or quartermaster are unavailable. He takes primary responsibility for actually sailing the ship, including navigation, maintaining logs on the ship’s position, speed, ocean depth, winds, etc., as well as maintaining the sails, rigging, and general seaworthiness of the vessel.",
+            "sans": "A ship isn’t ready to sail without a sailing master."
           },
           "bosun": {
             "title": "Bosun",
-            "desc": "The bosun (or boatswain) supervises supplies and deck activities, including handling sails and weighing and dropping anchor. He inspects the ship every morning and reports its condition to the captain, but usually reports to the quartermaster. On ships that have a bosun, he takes responsibility for disciple, often making him the most feared member of the crew.",
-            "sans": "The quartermaster can fulfill the bosun’s duties if there is no designated bosun."
+            "desc": "The boatswain or bosun is a minor officer responsible for the rigging and cordage aboard the vessel. They oversee shift changes at the end of each watch. Discipline often falls to the bosun, making him the most feared man on the crew. The bosun’s badge of office is a silver whistle worn around the neck. He reports to the quartermaster.",
+            "sans": "On a ship without a bosun the quartermaster assumes these duties."
           },
           "gunner": {
             "title": "Master Gunner",
-            "desc": "The Master Gunner is responsible for all of the firearms aboard the ship, from personal arms and cannons. He picks and runs the gunnery crew and is the only member of the crew besides the captain and the quartermaster to carry a key to the ship’s powder magazine. He also picks and leads hunting parties, when called for. The master gunner reports to the quartermaster.",
-            "sans": "A ship might be able to get by without a master gunner if the entire crew (and the bosun and/or quartermaster in particular) are conscientious about their firearms."
+            "desc": "The master gunner is a petty officer responsible for the cannons aboard the ship. Gunners required extensive education, including arithmetic, geometry, the names of every piece of ordnance and their parts, and how to detect the flaws and qualities of a gun. The master gunner is the only member of the crew besides the captain and quartermaster entrusted with a key to the powder magazine.",
+            "sans": "On a ship without a master gunner, the quartermaster assumes these duties. Such a ship may struggle to keep its cannons in proper fighting condition or bring them to bear with full effectiveness in a fight."
           },
           "carpenter": {
-            "title": "Carpenter",
-            "desc": "The master carpenter is responsible for all of the woodworking aboard the ship, most importantly repairs to the hull, masts, and other wooden parts of the ship. He reports to the bosun (or quartermaster if the ship has no bosun).",
-            "sans": "A ship without a carpenter is at risk of taking on a great deal of bilge from untreated leaks and will have a more difficult time repairing damage taken."
-          },
-          "cook": {
-            "title": "Cook",
-            "desc": "In addition to preparing meals, the cook is responsible for the food, water, and rum aboard the ship. He is the only member of the crew trusted to light a fire below decks. He reports to the bosun (or quartermaster if the ship has no bosun).",
-            "sans": "A ship without a cook will be faced with a potentially terrible fate: the bosun’s cooking."
+            "title": "Master Carpenter",
+            "desc": "The master carpenter is responsible for repairs to the hull, masts, and other wooden parts of the ship, including keeping leaks to an acceptable minimum. During battle, they are usually below deck to plug holes from cannon balls. The master carpenter is responsible for ship upgrades and modifications and directs careening.",
+            "sans": "A crew without a carpenter will be challenged to repair damage to their ship."
           },
           "surgeon": {
             "title": "Surgeon",
-            "desc": "The surgeon serves as the ship’s barber, doctor, and medic, though it’s a blessed ship that has a surgeon with actual medical experience. He reports to the quartermaster.",
-            "sans": "A ship without a surgeon will have to make do with the cook or carpenter if a member of the crew is in need of medical attention."
-          },
-          "master-arms": {
-            "title": "Master at Arms",
-            "desc": "The Master at Arms is responsible for training crew in hand-to-hand combat and leading boarding parties. He reports to the quartermaster.",
-            "sans": "Most ships do not have a dedicated master at arms, in which case these duties fall to the quartermaster."
+            "desc": "Doctors at this time follow a theory of medicine based on miasmas and humors, but few pirate ship’s surgeons have any formal medical training. They serve as barber, dentist, and field medic, and often receive higher pay and better accommodations for their skills. They’re responsible for the maintenance of the tools of their trade and are expected to keep their medicine chest well-stocked.",
+            "sans": "Crew members in need of medical aid on a ship without a surgeon will have to make do with what the cook or the carpenter can provide."
           },
           "priest": {
             "title": "Deck Priest",
-            "desc": "The deck priest is a holy man who calls upon Providence (or some other Power) to aid the ship with fair winds or other divine help. He reports to the sailing master.",
-            "sans": "Most ships do not have a deck priest, and ships with a deck sorcerer almost never have a deck priest as well."
+            "desc": "Deck priests are holy men, priests, ascetics, holy men, and prophets who can work miracles in the name of their god. They can spark religious disputes among the crew, but their ability to summon favorable winds for the ship is undeniable.",
+            "sans": "Most ships do not have a deck priest, and it’s nearly unprecedented for a ship to have more than one, or a deck priest and a deck sorcerer aboard the same ship."
           },
           "sorcerer": {
             "title": "Deck Sorcerer",
-            "desc": "The deck sorcerer is a practitioner of the arcane arts who uses sorcery to provide the ship with fair winds or other magical aid. He reports to the sailing master.",
-            "sans": "Most ships do not have a deck sorcerer, and ships with a deck priest almost never have a deck sorcerer as well."
+            "desc": "Deck sorcerers are magicians, shamans, necromancers, warlocks, and witches who can command arcane powers. Many crews may consider them cursed or bad luck, but their ability to summon favorable winds for the ship is undeniable.",
+            "sans": "Most ships do not have a deck sorcerer, and it’s unheard of for a ship to have more than one, or a deck sorcerer and a deck priest aboard the same ship."
           },
-          "crewman": {
-            "title": "Free Crewman",
-            "desc": "All members of the crew have signed the articles of agreement, making them co-owners of the pirate enterprise entitled to a vote and a share of its profits. Crewmen are assigned to either the starboard or larboard watch crew with rotating watches of duties and recreation time.",
-            "sans": "Pirate crews are often small, often smaller than the number of possible positions listed here, so you might not have any free crewmen."
+          "mate": {
+            "title": "Sailing Mate",
+            "desc": "The first mate isn’t the second in command (that would be the quartermaster), but the sailing master’s chief assistant. Other mates (on crews that have multiple mates) are ranked (second mate, third mate, etc.). They take on responsibility for sailing tasks under the sailing master’s direction, such as navigation, raising or lowering sails, tending to the rigging, and so on.",
+            "sans": "The sailing master may disagree, but sailing mates are not strictly necessary."
+          },
+          "cooper": {
+            "title": "Cooper",
+            "desc": "Barrels are used to hold fresh water, rum, food, tobacco, and a wide range of trade goods, so the ability to repair them when damaged and make new ones as needed is important on a pirate ship — important enough to exempt coopers from duty on a watch crew.",
+            "sans": "A ship without a cooper should take good care of the barrels they come across, as they’ll have trouble replacing them."
+          },
+          "armorer": {
+            "title": "Armorer",
+            "desc": "The smith or armorer is primarily responsible for repairing small arms like pistols, muskets, and swords, but also provides all of the metalwork needed for a ship, from nails to anchors. Ironwork would normally be done on land with a makeshift forge.",
+            "sans": "The tropical environment of the Caribbean creates perfect conditions for rust, so a ship without an armorer will struggle to keep its weapons in good working order."
+          },
+          "musician": {
+            "title": "Musician",
+            "desc": "Pirate crews usually have musicians playing around the clock (though some get Sunday off). Favorite instruments include the fiddle, jaw harp, pipes, drums, and trumpets. They help keep tempo on the occasional march inland and even contribute to battle by “vaporing,” creating as much noise as possible to intimidate the enemy into surrender.",
+            "sans": "A pirate ship without a musician is an unusually somber place. Morale may suffer."
+          },
+          "sailmaker": {
+            "title": "Sailmaker",
+            "desc": "The sails of a pirate ship frequently take damage, so sailmakers who could mend them are a common part of pirate crews. Making and repairing sails with large needles is a time-consuming task, so they are exempted from duty on watch crews.",
+            "sans": "A ship without sailmakers will still need to mend torn sails or make new ones, they’ll just have to make do with whatever work the crew can accomplish on their own."
+          },
+          "cook": {
+            "title": "Cook",
+            "desc": "Cooking is seen as drudgery by pirates, so the role of ship’s cook tends to fall to members of the crew who’ve sustained some serious injury that prevents them from serving in some other capacity. The ship’s cook is responsible not only for preparing food, but also maintaining the food stores and the tools of their trade. The cook may be the only member of the crew trusted to light a fire within the hold.",
+            "sans": "On ships without a designated cook, each member of the crew would be responsible for preparing his own meals, either in pairs or for their mess."
+          },
+          "crew": {
+            "title": "Crewman",
+            "desc": "A member of the crew who’s signed the articles but doesn’t have any other role is a free crewman. These are the sailors and fighters who form the pirate company. They’re co-owners of the enterprise and able to vote on matters of import, including deposing the captain or quartermaster and who will replace them.",
+            "sans": "While pirates always want bigger crews so they can overwhelm their enemies, they’re usually small groups, so you could end up with every member of your crew in some more specialized role."
+          },
+          "land": {
+            "title": "Landsman",
+            "desc": "Landsmen are typically hired for their fighting ability but have never been to sea before. Due to their inexperience, they are counted as something less than a full member of the crew.",
+            "sans": "Experienced sailors who are also good fighters are always a better use of the limited space and resources on a pirate ship."
+          },
+          "child": {
+            "title": "Cabin Boy",
+            "desc": "Cabin boys between 7 and 14 years of age are much more common on merchant and navy vessels than pirate vessels, though not unheard of. They are usually employed as assistants to the captain or other officers. They usually perform menial labor like cooking, cleaning, and fetching. During battle, they serve as powder monkeys.",
+            "sans": "Most pirate ships do not have cabin boys."
+          },
+          "forced": {
+            "title": "Forced Labor",
+            "desc": "Press-ganged captives might be used for general labor or for specialized knowledge and skills like navigation, medicine, or metallurgy.",
+            "sans": "Forced labor is never necessary. Some pirate crews expressly forbid the practice."
+          },
+          "slave": {
+            "title": "Slave",
+            "desc": "Pirates often seize guineamen and other slave ships. Sometimes they enlist new members from among the slaves, liberating them and giving them a chance to sign the articles as free crewmen, but more often greed wins out and they participate in the slave trade directly. Such crews aren’t above keeping some of the slaves for themselves.",
+            "sans": "No one has ever needed a slave. If you decide otherwise, damnation will take you as it takes all in the Dark Caribbean, but your bloody and excruciating end in particular will be a cause of great rejoicing."
           }
         }
       },
