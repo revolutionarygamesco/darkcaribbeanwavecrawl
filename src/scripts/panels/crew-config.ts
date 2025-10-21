@@ -1,5 +1,6 @@
 import { MODULE_ID, MODULE_SETTINGS } from '../settings.ts'
 import getPanelDimensions from '../utilities/get-dimensions.ts'
+import getCrewConfig from '../state/crew-config/get.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 
@@ -36,8 +37,7 @@ class CrewConfigPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   async _prepareContext () {
-    const raw = game.settings.get<string>(MODULE_ID, MODULE_SETTINGS.CREW_CONFIG)
-    const json = JSON.stringify(JSON.parse(raw), null, 2)
+    const json = JSON.stringify(getCrewConfig(), null, 2)
 
     return {
       json,

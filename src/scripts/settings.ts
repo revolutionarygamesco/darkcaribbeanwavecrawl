@@ -13,7 +13,7 @@ export const MODULE_SETTINGS = {
 
 export const DEFAULT_CREW = {
   captain: {
-    shares: 1,
+    shares: 2,
     max: 1,
     exempt: true,
     exclusive: true,
