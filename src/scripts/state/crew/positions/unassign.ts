@@ -14,10 +14,10 @@ const unassign = async (
   const ids = typeof characters === 'string' ? [characters] : characters
   const after = before.filter(id => !ids.includes(id))
 
-  const unassigned = await setAssigned(position, after, previous, save && position === 'crewman')
-  if (position === 'crewman') return unassigned
-  const newCrew = [...new Set([...unassigned.crew.positions.crewman.assigned, ...ids])]
-  return await setAssigned('crewman', newCrew, unassigned, save)
+  const unassigned = await setAssigned(position, after, previous, save && position === 'crew')
+  if (position === 'crew') return unassigned
+  const newCrew = [...new Set([...unassigned.crew.positions.crew.assigned, ...ids])]
+  return await setAssigned('crew', newCrew, unassigned, save)
 }
 
 export default unassign

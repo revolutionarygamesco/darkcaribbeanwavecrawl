@@ -16,14 +16,14 @@ describe('gainXP', () => {
 
     expect(after.crew.xp[jack].captain).toBe(4)
     expect(after.crew.xp[jack].quartermaster).toBe(200)
-    expect(after.crew.xp[jack].crewman).toBe(10)
+    expect(after.crew.xp[jack].crew).toBe(10)
 
     expect(after.crew.xp[anne].captain).toBe(0)
     expect(after.crew.xp[anne].quartermaster).toBe(4)
-    expect(after.crew.xp[anne].crewman).toBe(1000)
+    expect(after.crew.xp[anne].crew).toBe(1000)
 
     expect(after.crew.xp[mary].captain).toBe(0)
     expect(after.crew.xp[mary].quartermaster).toBe(0)
-    expect(after.crew.xp[mary].crewman).toBe(1004)
+    expect(after.crew.xp[mary].crew).toBe(1004)
   })
 })

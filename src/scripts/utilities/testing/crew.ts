@@ -26,11 +26,11 @@ export const setupState = (): CrawlState => {
   state.ship.actor = 'william'
   state.crew.positions.captain = { shares: 2, assigned: [jack] }
   state.crew.positions.quartermaster = { shares: 1.5, assigned: [anne] }
-  state.crew.positions.crewman = { shares: 1, assigned: [mary] }
+  state.crew.positions.crew = { shares: 1, assigned: [mary] }
   state.crew.xp = {
-    [jack]: { quartermaster: 200, crewman: 10 },
-    [anne]: { captain: 0, crewman: 1000 },
-    [mary]: { captain: 0, quartermaster: 0, crewman: 1000 }
+    [jack]: { quartermaster: 200, crew: 10 },
+    [anne]: { captain: 0, crew: 1000 },
+    [mary]: { captain: 0, quartermaster: 0, crew: 1000 }
   }
   return state
 }
