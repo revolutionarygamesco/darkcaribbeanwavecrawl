@@ -91,18 +91,21 @@ export const DEFAULT_CREW = {
   cooper: {
     shares: 1,
     exempt: true,
+    exclusive: true,
     required: false,
     votes: 1
   },
   armorer: {
     shares: 1,
     exempt: false,
+    exclusive: false,
     required: false,
     votes: 1
   },
   musician: {
     shares: 1,
     exempt: false,
+    exclusive: false,
     required: false,
     votes: 1
   },

@@ -1,10 +1,10 @@
 export interface PositionConfig {
-  shares: number
+  shares?: number
   max?: number
-  exempt: boolean
-  exclusive: boolean
-  required: boolean
-  votes: number
+  exempt?: boolean
+  exclusive?: boolean
+  required?: boolean
+  votes?: number
 }
 
 interface CrewConfig {
