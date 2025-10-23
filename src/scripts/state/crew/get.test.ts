@@ -20,8 +20,8 @@ describe('getRoster', () => {
   })
 
   it('removes duplicates from multiple positions', async () => {
-    before.crew.positions.quartermaster = { shares: 1, assigned: [anne] }
-    before.crew.positions['sailing-master'] = { shares: 1, assigned: [mary] }
+    before.crew.positions.quartermaster = [anne]
+    before.crew.positions.master = [mary]
     const actual = await getRoster(before)
     const ids = actual.map(actor => actor.id)
     expect(actual).toHaveLength(3)

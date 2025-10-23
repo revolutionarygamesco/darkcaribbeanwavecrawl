@@ -19,8 +19,8 @@ const setOfficer = async (
 
   let thisCrew = copy.crew.teams[side].members
   let thatCrew = copy.crew.teams[otherTeam].members
-  const thisOfficers = copy.crew.positions[officer].assigned
-  const thatOfficers = copy.crew.positions[otherOfficer].assigned
+  const thisOfficers = copy.crew.positions[officer]
+  const thatOfficers = copy.crew.positions[otherOfficer]
 
   // Switch this team's officer and the other team's officer
   copy.crew.teams[side].officer = officer

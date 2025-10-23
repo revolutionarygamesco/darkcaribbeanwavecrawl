@@ -7,25 +7,6 @@ describe('initCrawlState', () => {
     expect(state.timestamp).toBe(-8029350000)
   })
 
-  it.each([
-    ['captain', 2],
-    ['quartermaster', 2],
-    ['sailing-master', 1.5],
-    ['bosun', 1.5],
-    ['gunner', 1.5],
-    ['carpenter', 1.25],
-    ['cook', 1.25],
-    ['surgeon', 1.25],
-    ['master-arms', 1.25],
-    ['priest', 1.25],
-    ['sorcerer', 1.25],
-    ['crewman', 1]
-  ])('initializes the %s’s role with %d shares and no one assigned', (position: string, expected: number) => {
-    const { shares, assigned } = state.crew.positions[position]
-    expect(shares).toBe(expected)
-    expect(assigned).toHaveLength(0)
-  })
-
   it('starts both teams empty', () => {
     expect(state.crew.teams.starboard.members).toHaveLength(0)
     expect(state.crew.teams.larboard.members).toHaveLength(0)
@@ -33,7 +14,7 @@ describe('initCrawlState', () => {
 
   it('default starboard to quartermaster, larboard to sailing master', () => {
     expect(state.crew.teams.starboard.officer).toBe('quartermaster')
-    expect(state.crew.teams.larboard.officer).toBe('sailing-master')
+    expect(state.crew.teams.larboard.officer).toBe('master')
   })
 
   it('starts xp as an empty record', () => {

@@ -1,16 +1,6 @@
 <section class="tab crew-positions" data-tab="positions" data-group="crew-tabs">
   {{#each positions}}
   <section class="position droppable" data-position-id="{{@key}}" data-drag="true">
-    <fieldset class="shares">
-      <label for="{{@key}}-shares">{{localize 'revolutionary-darkcaribbean.crew-panel.positions.shares'}}</label>
-      <input
-        id="{{@key}}-shares"
-        type="number"
-        min="0"
-        value="{{this.shares}}"
-        data-position-id="{{@key}}"
-        class="shares" />
-    </fieldset>
     <details>
       <summary>{{this.title}}</summary>
       <p>{{{this.description}}}</p>

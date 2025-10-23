@@ -15,7 +15,6 @@ import removeLookout from '../state/crew/teams/lookout/remove.ts'
 import removeFromTeam from '../state/crew/teams/members/remove.ts'
 import assign from '../state/crew/positions/assign.ts'
 import unassign from '../state/crew/positions/unassign.ts'
-import setShares from '../state/crew/positions/shares/set.ts'
 import glossAllPositions from './helpers/gloss-all.ts'
 import mapIdsToActors from '../utilities/map-ids-to-actors.ts'
 import registerPartials from './register-partials.ts'
@@ -128,7 +127,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   async _prepareTeam (side: CrawlTeamSide) {
     const state = await getCrawlState()
     const team = state.crew.teams[side]
-    const officerIDs = state.crew.positions[team.officer].assigned
+    const officerIDs = state.crew.positions[team.officer]
     const named: string[] = [...officerIDs, team.helm, team.lookout]
       .filter((id: string | undefined): id is string => id !== undefined)
 
@@ -283,7 +282,6 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     const input = target.closest('input, select') as HTMLElement
     if (!input) return
 
-    if (input.classList.contains('shares')) return this._changeShares(input)
     if (input.classList.contains('team-officer')) return this._switchOfficer(input)
   }
 
@@ -322,23 +320,12 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     await this.render()
   }
 
-  async _changeShares (input: HTMLElement) {
-    const position = input.dataset.positionId
-    if (!position) return
-
-    const shares = parseFloat((input as HTMLInputElement).value)
-    if (isNaN(shares)) return
-
-    await setShares(position, shares)
-    await this.render()
-  }
-
   async _switchOfficer (input: HTMLElement) {
     const team = input.dataset.team
     if (!CrewPanel.isCrawlTeamSide(team)) return
 
     const officer = (input as HTMLSelectElement).value
-    if (officer !== 'quartermaster' && officer !== 'sailing-master') return
+    if (officer !== 'quartermaster' && officer !== 'master') return
 
     await setOfficer(team, officer)
     await this.render()

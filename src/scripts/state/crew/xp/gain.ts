@@ -10,7 +10,7 @@ const gainXP = async (
   const copy = await getCopy(state)
 
   for (const position in copy.crew.positions) {
-    for (const id of copy.crew.positions[position]?.assigned ?? []) {
+    for (const id of copy.crew.positions[position] ?? []) {
       if (!copy.crew.xp[id][position]) copy.crew.xp[id][position] = 0
       copy.crew.xp[id][position] += hours
     }

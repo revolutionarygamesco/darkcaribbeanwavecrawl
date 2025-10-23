@@ -20,7 +20,7 @@ const getCrewShares = async (
 
   for (const holder of crew) {
     const records = Object.keys(cs.crew.positions)
-      .map(id => ({ id, assigned: cs.crew.positions[id].assigned }) as PositionRecord)
+      .map(id => ({ id, assigned: cs.crew.positions[id] }) as PositionRecord)
       .filter(record => record.assigned.includes(holder.id))
       .map(record => config[record.id as keyof CrewConfig]?.shares ?? 0)
     const shares = records.length > 0 ? Math.max(...records) : 0

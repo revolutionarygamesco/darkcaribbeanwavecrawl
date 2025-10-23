@@ -18,8 +18,8 @@ const setAssigned = async (
   save: boolean = true
 ): Promise<CrawlState> => {
   const previous = state ?? await getCrawlState()
-  let copy = await initPosition(position, 1, previous)
-  copy.crew.positions[position].assigned = typeof characters === 'string' ? [characters] : characters
+  let copy = await initPosition(position, previous)
+  copy.crew.positions[position] = typeof characters === 'string' ? [characters] : characters
 
   if (game.actors) {
     const ship = await getShip(copy)
@@ -50,21 +50,21 @@ const setAssigned = async (
   }
 
   // You can't be free crewman if you're also anything else
-  const { crewman, ...assignments } = copy.crew.positions
+  const { crew, ...assignments } = copy.crew.positions
   const assigned = Object.values(assignments)
-    .flatMap(position => position.assigned)
-  copy.crew.positions.crewman.assigned = copy.crew.positions.crewman.assigned
+    .flatMap(position => position)
+  copy.crew.positions.crew = copy.crew.positions.crew
     .filter(id => !assigned.includes(id))
 
   // You can't be both quartermaster and sailing master
-  const officers = ['quartermaster', 'sailing-master']
+  const officers = ['quartermaster', 'master']
   if (officers.includes(position)) {
-    copy = await initPosition('quartermaster', 1, copy)
-    copy = await initPosition('sailing-master', 1, copy)
+    copy = await initPosition('quartermaster', copy)
+    copy = await initPosition('master', copy)
 
-    const { assigned } = copy.crew.positions[position]
+    const assigned = copy.crew.positions[position]
     const other = getOppositeOfficer(position as CrawlTeamOfficer)
-    copy.crew.positions[other].assigned = (copy.crew.positions[other].assigned ?? [])
+    copy.crew.positions[other] = (copy.crew.positions[other] ?? [])
       .filter(id => !assigned.includes(id))
 
     const team = copy.crew.teams.starboard.officer === position ? 'starboard' : 'larboard'

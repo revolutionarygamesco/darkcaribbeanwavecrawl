@@ -9,8 +9,8 @@ const getRoster = async (
   const { positions } = (state ?? await getCrawlState()).crew
 
   for (const position in positions) {
-    if (!positions[position]?.assigned) continue
-    ids = [...new Set([...ids, ...positions[position].assigned])]
+    if (!positions[position]) continue
+    ids = [...new Set([...ids, ...positions[position]])]
   }
 
   return mapIdsToActors(ids)

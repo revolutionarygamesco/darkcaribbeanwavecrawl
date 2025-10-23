@@ -20,7 +20,7 @@ describe('setHelm', () => {
 
   it('won’t allow the other team’s officer to take the helm', async () => {
     const before = initCrawlState()
-    before.crew.positions.quartermaster = { shares: 1, assigned: [anne] }
+    before.crew.positions.quartermaster = [anne]
     before.crew.teams.larboard = { officer: 'quartermaster', members: [anne], onDuty: true }
     const after = await setHelm('starboard', anne, before, false)
     expect(after.crew.teams.starboard.helm).toBeUndefined()

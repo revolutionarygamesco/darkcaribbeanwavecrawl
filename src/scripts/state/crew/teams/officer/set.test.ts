@@ -17,16 +17,16 @@ describe('setOfficer', () => {
     const before = initCrawlState()
     const after = await setOfficer('starboard', 'quartermaster', before, false)
     expect(after.crew.teams.starboard.officer).toBe('quartermaster')
-    expect(after.crew.teams.larboard.officer).toBe('sailing-master')
+    expect(after.crew.teams.larboard.officer).toBe('master')
     expect(after).not.toBe(before)
   })
 
   it('moves members to new teams', async () => {
     const before = initCrawlState()
-    before.crew.positions.quartermaster = { shares: 1, assigned: [anne] }
-    before.crew.positions['sailing-master'] = { shares: 1, assigned: [mary] }
+    before.crew.positions.quartermaster = [anne]
+    before.crew.positions.master = [mary]
     setupTeam(before, 'starboard', 'quartermaster', anne)
-    setupTeam(before, 'larboard', 'sailing-master', mary)
+    setupTeam(before, 'larboard', 'master', mary)
 
     const after = await setOfficer('larboard', 'quartermaster', before, false)
 

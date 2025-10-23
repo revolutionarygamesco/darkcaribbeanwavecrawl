@@ -1,6 +1,6 @@
 export type Position = string
 export type ActorID = string
-export type CrawlTeamOfficer = 'quartermaster' | 'sailing-master'
+export type CrawlTeamOfficer = 'quartermaster' | 'master'
 export type CrawlTeamSide = 'starboard' | 'larboard'
 
 export interface CrawlTeam {
@@ -11,12 +11,9 @@ export interface CrawlTeam {
   onDuty: boolean
 }
 
-export interface PositionData {
+export interface GlossedPositionData {
+  id: string
   assigned: ActorID[]
-  shares: number
-}
-
-export interface GlossedPositionData extends PositionData {
   title: string
   description: string
   sans: string
@@ -24,7 +21,7 @@ export interface GlossedPositionData extends PositionData {
 }
 
 export interface CrawlCrew {
-  positions: Record<Position, PositionData>
+  positions: Record<Position, ActorID[]>
   teams: Record<CrawlTeamSide, CrawlTeam>
   xp: Record<ActorID, Record<Position, number>>
 }

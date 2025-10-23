@@ -15,15 +15,15 @@ describe('gainXP', () => {
     const after = await gainXP(4, before, false)
 
     expect(after.crew.xp[jack].captain).toBe(4)
-    expect(after.crew.xp[jack].quartermaster).toBe(200)
+    expect(after.crew.xp[jack].gunner).toBe(0)
     expect(after.crew.xp[jack].crew).toBe(10)
 
     expect(after.crew.xp[anne].captain).toBe(0)
-    expect(after.crew.xp[anne].quartermaster).toBe(4)
+    expect(after.crew.xp[anne].gunner).toBe(204)
     expect(after.crew.xp[anne].crew).toBe(1000)
 
     expect(after.crew.xp[mary].captain).toBe(0)
-    expect(after.crew.xp[mary].quartermaster).toBe(0)
+    expect(after.crew.xp[mary].gunner).toBe(0)
     expect(after.crew.xp[mary].crew).toBe(1004)
   })
 })

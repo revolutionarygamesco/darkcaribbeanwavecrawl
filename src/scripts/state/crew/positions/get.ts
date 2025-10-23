@@ -7,9 +7,8 @@ const getAssigned = async (
   state?: CrawlState
 ): Promise<Actor[]> => {
   const cs = state ?? await getCrawlState()
-  const pos = cs.crew.positions[position]
-  const ids = pos && pos.assigned ? pos.assigned : []
-  return mapIdsToActors(ids)
+  if (!(position in cs.crew.positions)) return []
+  return mapIdsToActors(cs.crew.positions[position])
 }
 
 export default getAssigned

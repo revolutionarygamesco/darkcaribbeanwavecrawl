@@ -24,13 +24,15 @@ export const setupActors = (map: Map<string, Actor>, ...ids: string[]) => {
 export const setupState = (): CrawlState => {
   const state = initCrawlState()
   state.ship.actor = 'william'
-  state.crew.positions.captain = { shares: 2, assigned: [jack] }
-  state.crew.positions.quartermaster = { shares: 1.5, assigned: [anne] }
-  state.crew.positions.crew = { shares: 1, assigned: [mary] }
+  state.crew.positions = {
+    captain: [jack],
+    gunner: [anne],
+    crew: [mary]
+  }
   state.crew.xp = {
-    [jack]: { quartermaster: 200, crew: 10 },
-    [anne]: { captain: 0, crew: 1000 },
-    [mary]: { captain: 0, quartermaster: 0, crew: 1000 }
+    [jack]: { gunner: 0, crew: 10 },
+    [anne]: { captain: 0, gunner: 200, crew: 1000 },
+    [mary]: { captain: 0, gunner: 0, crew: 1000 }
   }
   return state
 }
