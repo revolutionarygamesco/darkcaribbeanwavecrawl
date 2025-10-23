@@ -8,7 +8,7 @@
         {{localize 'revolutionary-darkcaribbean.crew-panel.positions.glossary.quartermaster.title'}}
       </option>
       <option value="sailing-master"{{#unless team.isQuartermaster}} selected{{/unless}}>
-        {{localize 'revolutionary-darkcaribbean.crew-panel.positions.glossary.sailing-master.title'}}
+        {{localize 'revolutionary-darkcaribbean.crew-panel.positions.glossary.master.title'}}
       </option>
     </select>
     {{#if team.officers}}
@@ -19,11 +19,7 @@
     </table>
     {{else}}
     <p class="null">
-      {{#if team.isQuartermaster}}
-        {{{localize 'revolutionary-darkcaribbean.crew-panel.teams.officer.null.quartermaster'}}}
-      {{else}}
-        {{{localize 'revolutionary-darkcaribbean.crew-panel.teams.officer.null.sailing-master'}}}
-      {{/if}}
+      {{{localize 'revolutionary-darkcaribbean.crew-panel.teams.officer.null' officer=team.officerName}}}
     </p>
     {{/if}}
   </section>

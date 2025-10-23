@@ -140,7 +140,7 @@ declare const Hooks: {
 
 declare const game: {
   i18n: {
-    localize: (key: string) => string
+    localize: (key: string, options?: Record<string, any>) => string
   },
   actors: Map<string, Actor>
   modules: Map<string, Module>

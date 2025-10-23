@@ -177,10 +177,7 @@
         },
         "officer": {
           "heading": "Officer",
-          "null": {
-            "quartermaster": "This watch crew is commanded by the quartermaster. You can assign crew members to this role on the <strong>Positions</strong> tab.",
-            "sailing-master": "This watch crew is commanded by the sailing master. You can assign crew members to this role on the <strong>Positions</strong> tab."
-          }
+          "null": "This watch crew is commanded by the {officer}. You can assign crew members to this role on the <strong>Positions</strong> tab."
         },
         "helm": {
           "heading": "Helm",
@@ -204,7 +201,7 @@
       "stock": {
         "title": "Common Stock",
         "name": "Silver",
-        "units": "pieces of eight",
+        "units": "{amount} pieces of eight",
         "tooltip": "Adjust common stock"
       },
       "shares": {
@@ -234,33 +231,20 @@
       },
       "provisions": {
         "title": "Provisions",
+        "units": "{amount} person-days",
+        "estimate": "Sufficient for {days} days",
         "types": {
           "food": {
             "name": "Vittles",
-            "units": "person-days",
-            "tooltip": "Adjust food stores",
-            "estimate": {
-              "pre": "Sufficient for",
-              "post": "days"
-            }
+            "tooltip": "Adjust food stores"
           },
           "water": {
             "name": "Fresh Water",
-            "units": "person-days",
-            "tooltip": "Adjust water stores",
-            "estimate": {
-              "pre": "Sufficient for",
-              "post": "days"
-            }
+            "tooltip": "Adjust water stores"
           },
           "rum": {
             "name": "Rum",
-            "units": "person-days",
-            "tooltip": "Adjust rum stores",
-            "estimate": {
-              "pre": "Sufficient for",
-              "post": "days"
-            }
+            "tooltip": "Adjust rum stores"
           }
         }
       },
@@ -323,8 +307,8 @@
     },
     "notifications": {
       "ship-before-crew": "You need a ship before you can start assigning crew to it.",
-      "below-min-crew": "The SHIPNAME requires a crew of at least CREWMIN. You’ll need XMORE crew before you’ll be ready to set sail.",
-      "above-max-crew": "The SHIPNAME can only accommodate a maximum crew of CREWMAX."
+      "below-min-crew": "The {ship} requires a crew of at least {min}. You’ll need {more} crew before you’ll be ready to set sail.",
+      "above-max-crew": "The {ship} can only accommodate a maximum crew of {max}."
     }
   }
 }

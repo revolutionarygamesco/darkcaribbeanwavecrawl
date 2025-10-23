@@ -32,16 +32,11 @@ const setAssigned = async (
     const crewSize = (await getRoster(copy)).length
 
     if (crewSize < min) {
-      const msg = localize(`${MODULE_ID}.notifications.below-min-crew`)
-        .replaceAll('SHIPNAME', ship.name)
-        .replaceAll('CREWMIN', min.toString())
-        .replaceAll('XMORE', (min - crewSize).toString())
+      const msg = localize(`${MODULE_ID}.notifications.below-min-crew`, { ship: ship.name, min, more: min - crewSize })
       notify('warn', msg)
       await ship.update({ 'system.attributes.crew.value': crewSize })
     } else if (crewSize > max) {
-      const msg = localize(`${MODULE_ID}.notifications.above-max-crew`)
-        .replaceAll('SHIPNAME', ship.name)
-        .replaceAll('CREWMAX', max.toString())
+      const msg = localize(`${MODULE_ID}.notifications.above-max-crew`, { ship: ship.name, max })
       notify('error', msg)
       return cloneCrawlState(previous)
     } else {

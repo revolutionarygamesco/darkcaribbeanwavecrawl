@@ -43,12 +43,11 @@ export class LedgerPanel extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static async _prepareSilver () {
     const prefix = [MODULE_ID, 'ledger-panel', 'stock'].join('.')
-    const units = prefix + '.units'
-    const amount = await getSilver()
 
     return {
       name: localize(prefix + '.name'),
-      amount: `${amount} ${localize(units)}`,
+      amount: (await getSilver()).toLocaleString(),
+      units: prefix + '.units',
       action: 'adjust-silver',
       tooltip: localize(prefix + '.tooltip')
     }
@@ -56,20 +55,14 @@ export class LedgerPanel extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static async _prepareProvision (type: Provision) {
     const prefix = [MODULE_ID, 'ledger-panel', 'provisions', 'types', type].join('.')
-    const units = prefix + '.units'
     const amount = await getProvisions(type)
     const crew = await LedgerPanel._getCrewSize()
-    const estimate = crew > 0
-      ? [
-          localize(prefix + '.estimate.pre'),
-          Math.floor(amount / crew).toString(),
-          localize(prefix + '.estimate.post')
-        ].join(' ')
-      : undefined
+    const estimate = crew > 0 ? Math.floor(amount / crew).toLocaleString() : undefined
 
     return {
       name: localize(prefix + '.name'),
-      amount: `${amount} ${localize(units)}`,
+      units: `${MODULE_ID}.ledger-panel.provisions.units`,
+      amount: amount.toLocaleString(),
       estimate,
       action: `adjust-${type}`,
       tooltip: localize(prefix + '.tooltip')

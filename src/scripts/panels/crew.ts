@@ -135,6 +135,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       side,
       name: `${MODULE_ID}.crew-panel.teams.sides.${side}`,
       isQuartermaster: team.officer === 'quartermaster',
+      officerName: team.officer === 'quartermaster' ? 'quartermaster' : 'sailing master',
       officers: mapIdsToActors(officerIDs),
       helm: team.helm ? game.actors.get(team.helm) : undefined,
       lookout: team.lookout ? game.actors.get(team.lookout) : undefined,

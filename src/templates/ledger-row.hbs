@@ -1,17 +1,19 @@
 <tbody>
   <tr>
     <td>{{resource.name}}</td>
-    <td class="amount">{{resource.amount}}</td>
+    <td class="amount">
+      {{localize resource.units amount=resource.amount}}
+    </td>
     <td class="action">
       <button type="button" data-action="{{resource.action}}" title="{{localize resource.tooltip}}">
         <i class="fa-solid fa-feather-pointed"></i>
       </button>
     </td>
   </tr>
-  {{#if resource.estimate}}
+  {{#if resource.days}}
   <tr>
     <td colspan="3" class="estimate">
-      {{resource.estimate}}
+      {{localize 'revolutionary-darkcaribbean.ledger-panel.provisions.estimate' days=resource.days}}
     </td>
   </tr>
   {{/if}}
