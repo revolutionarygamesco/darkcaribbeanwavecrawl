@@ -8,7 +8,7 @@ const assign = async (
   characters: string | string[],
   state?: CrawlState,
   save: boolean = true
-): Promise<CrawlState> => {
+): Promise<CrawlState | null> => {
   const previous = state ?? await getCrawlState()
   const before = (await getAssigned(position, previous)).map(actor => actor.id)
   const ids = typeof characters === 'string' ? [characters] : characters
