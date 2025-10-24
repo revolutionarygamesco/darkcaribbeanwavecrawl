@@ -1,10 +1,15 @@
+import { MODULE_ID } from '../../../settings.ts'
 import type CrawlState from '../../state.ts'
 import getCopy from '../../get-copy.ts'
 import getAssigned from './get.ts'
 import getPositionConfig from '../../crew-config/get-position.ts'
+import getShip from '../../ship/get.ts'
+import getRoster from '../get.ts'
 import setAssigned from './set.ts'
 import getOppositeSide from '../teams/opposite.ts'
 import removeTeamMember from '../teams/remove.ts'
+import localize from '../../../utilities/localize.ts'
+import notify from '../../../utilities/notify.ts'
 
 const assign = async (
   position: string,
@@ -25,7 +30,30 @@ const assign = async (
   const after = [...new Set([...before, ...ids])]
 
   // Enforce maximum on positions
-  if (max && after.length > max) return null
+  if (max && after.length > max) {
+    const id = [MODULE_ID, 'notifications', max === 1 ? 'position-max-singular' : 'position-max-plural'].join('.')
+    await notify('error', localize(id))
+    return null
+  }
+
+  // Check crew size
+  const ship = await getShip(candidate)
+  if (ship?.system.attributes.crew) {
+    const { max, min } = ship.system.attributes.crew
+    const roster = await getRoster(candidate)
+    if (roster.length > max) {
+      const msg = localize(`${MODULE_ID}.notifications.above-max-crew`, { ship: ship.name, max })
+      await notify('error', msg)
+      return null
+    } else if (roster.length < min) {
+      const msg = localize(`${MODULE_ID}.notifications.below-min-crew`, { ship: ship.name, more: min - roster.length, min })
+      await notify('warn', msg)
+    }
+  } else {
+    const msg = localize(`${MODULE_ID}.notifications.ship-before-crew`)
+    await notify('error', msg)
+    return null
+  }
 
   // When assigning to exclusive position, resign any other positions
   if (exclusive) {

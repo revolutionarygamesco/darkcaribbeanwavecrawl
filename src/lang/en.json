@@ -308,7 +308,9 @@
     "notifications": {
       "ship-before-crew": "You need a ship before you can start assigning crew to it.",
       "below-min-crew": "The {ship} requires a crew of at least {min}. You’ll need {more} crew before you’ll be ready to set sail.",
-      "above-max-crew": "The {ship} can only accommodate a maximum crew of {max}."
+      "above-max-crew": "The {ship} can only accommodate a maximum crew of {max}.",
+      "position-max-singular": "Only one person can be {position}.",
+      "position-max-plural": "Only {max} people can be {position}."
     }
   }
 }
