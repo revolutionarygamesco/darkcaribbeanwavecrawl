@@ -1,5 +1,5 @@
 import initCrawlState from '../../init.ts'
-import setupCrew, { jack, anne, mary } from '../../../utilities/testing/crew.ts'
+import setupCrew, { setupState, william, jack, anne, mary } from '../../../utilities/testing/crew.ts'
 import setAssigned from './set.ts'
 
 describe('setAssigned', () => {
@@ -17,5 +17,10 @@ describe('setAssigned', () => {
     expect(after?.crew.positions[position]).toHaveLength(arr.length)
     expect(after?.crew.positions[position]).toEqual(arr)
     expect(after).not.toBe(before)
+  })
+
+  it('sets the ship crew size', async () => {
+    await setAssigned('crew', [], setupState(), false)
+    expect(william.system.attributes.crew?.value).toBe(2)
   })
 })

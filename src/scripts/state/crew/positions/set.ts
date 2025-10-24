@@ -2,6 +2,8 @@ import CrawlState from '../../state.ts'
 import getCrawlState from '../../get.ts'
 import setCrawlState from '../../set.ts'
 import initPosition from './init.ts'
+import getRoster from '../get.ts'
+import getShip from '../../ship/get.ts'
 import checkMax from './checks/max.ts'
 import checkExclusivity from './checks/exclusive.ts'
 import checkCrew from './checks/crew.ts'
@@ -20,6 +22,10 @@ const setAssigned = async (
   for (const check of checks) {
     if (!(await check(candidate))) return null
   }
+
+  const roster = await getRoster(candidate)
+  const ship = await getShip(candidate)
+  if (ship) await ship.update({ 'system.attributes.crew.value': roster.length })
 
   return save ? await setCrawlState(candidate) : candidate
 }
