@@ -5,6 +5,7 @@ import cloneCrawlState from '../../../clone.ts'
 import setCrawlState from '../../../set.ts'
 import getActorId from '../../../../utilities/actor-id.ts'
 import removeTeamMember from '../remove.ts'
+import warnExempt from '../warn-exempt.ts'
 
 const setHelm = async (
   side: CrawlTeamSide,
@@ -14,6 +15,7 @@ const setHelm = async (
 ): Promise<CrawlState> => {
   const previous = state ?? await getCrawlState()
   const id = getActorId(helm)
+  await warnExempt([helm], previous)
   const opposite = getOppositeSide(side)
   const { officer } = previous.crew.teams[opposite]
   if ((previous.crew.positions[officer] ?? []).includes(id)) return previous
