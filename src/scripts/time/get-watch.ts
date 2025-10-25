@@ -1,6 +1,7 @@
+import type Watch from '../schedule/watch.ts'
 import hourMinuteToTime from '../utilities/hour-minute-to-time.ts'
 
-const getWatch = (hour: number, minute: number): string => {
+const getWatch = (hour: number, minute: number): Watch => {
   const time = hourMinuteToTime(hour, minute)
   if (time === 0) return 'first'
   if (time <= 400) return 'middle'

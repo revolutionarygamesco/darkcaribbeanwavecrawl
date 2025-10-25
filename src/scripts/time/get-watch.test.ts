@@ -1,3 +1,4 @@
+import type Watch from '../schedule/watch.ts'
 import getWatch from './get-watch.ts'
 
 export const formatTime = (h: number, m: number): string => {
@@ -33,7 +34,7 @@ describe('getWatch', () => {
     ['first', formatTime(21, minutes[21]), 21, minutes[21]],
     ['first', formatTime(22, minutes[22]), 22, minutes[22]],
     ['first', formatTime(23, minutes[23]), 23, minutes[23]],
-  ] as [string, string, number, number][])('returns %s for %s', (expected, _, h, m) => {
+  ] as [Watch, string, number, number][])('returns %s for %s', (expected, _, h, m) => {
     expect(getWatch(h, m)).toBe(expected)
   })
 
@@ -45,7 +46,7 @@ describe('getWatch', () => {
     ['afternoon', 16],
     ['first dog', 18],
     ['second dog', 20]
-  ] as [string, number][])('returns %s at the end of the watch', (expected, h) => {
+  ] as [Watch, number][])('returns %s at the end of the watch', (expected, h) => {
     expect(getWatch(h, 0)).toBe(expected)
   })
 })

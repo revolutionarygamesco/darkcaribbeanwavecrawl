@@ -1,7 +1,9 @@
+import type Watch from './watch.ts'
+
 export interface ScheduleItem {
   hour: number
-  end: string
-  start: string
+  end: Watch
+  start: Watch
 }
 
 const schedule: ScheduleItem[] = [
