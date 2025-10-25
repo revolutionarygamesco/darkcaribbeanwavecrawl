@@ -1,9 +1,5 @@
-const ids: Record<string, Record<string, string>> = {
-  adventure: {
-    abs: 'Compendium.revolutionary-darkcaribbean.dark-caribbean-wave-crawl.Adventure.A1K2pnA8uEuA7pGe',
-    compendium: 'revolutionary-darkcaribbean.dark-caribbean-wave-crawl',
-    rel: 'A1K2pnA8uEuA7pGe'
-  },
+const ids = {
+  adventure: 'Compendium.revolutionary-darkcaribbean.dark-caribbean-wave-crawl.Adventure.A1K2pnA8uEuA7pGe',
   scenes: {
     map: '3JvJSgDc5iwQjKye'
   },
@@ -18,6 +14,43 @@ const ids: Record<string, Record<string, string>> = {
   },
   chapter: {
     text: 'WXFZxdYUbR0VTWSz'
+  },
+  xp: {
+    captain: {
+      able: 'Compendium.world.specialty-crew-features.Item.VAVPHZRhpzHK47k0',
+      seasoned: 'Compendium.world.specialty-crew-features.Item.qIDzhMBpsOj2x7UQ',
+      veteran: 'Compendium.world.specialty-crew-features.Item.FDAvj52MTQHcmXJ1'
+    },
+    quartermaster: {
+      able: 'Compendium.world.specialty-crew-features.Item.zgr3VjW4JL8ds3lH',
+      seasoned: 'Compendium.world.specialty-crew-features.Item.8HQmjLGK9IXa4USA',
+      veteran: 'Compendium.world.specialty-crew-features.Item.jPcTVszKSH9MCsjr'
+    },
+    master: {
+      able: 'Compendium.world.specialty-crew-features.Item.SbtVCRRnTJCGKOE3',
+      seasoned: 'Compendium.world.specialty-crew-features.Item.2njdh0JMcC5yauBz',
+      veteran: 'Compendium.world.specialty-crew-features.Item.VAMFWdKEumOrG4pJ'
+    },
+    gunner: {
+      able: 'Compendium.world.specialty-crew-features.Item.VAMFWdKEumOrG4pJ',
+      seasoned: 'Compendium.world.specialty-crew-features.Item.HonnsI0iu9cXIes8',
+      veteran: 'Compendium.world.specialty-crew-features.Item.HonnsI0iu9cXIes8'
+    },
+    carpenter: {
+      able: 'Compendium.world.specialty-crew-features.Item.FUJnji27FyLmq4Ua',
+      seasoned: 'Compendium.world.specialty-crew-features.Item.91R1aVA3YNp400md',
+      veteran: 'Compendium.world.specialty-crew-features.Item.yFjKg7zAchQDJLI0'
+    },
+    priest: {
+      able: 'Compendium.world.specialty-crew-features.Item.yFjKg7zAchQDJLI0',
+      seasoned: 'Compendium.world.specialty-crew-features.Item.pnj4ADA5JKytSvjh',
+      veteran: 'Compendium.world.specialty-crew-features.Item.l7yi44m6OCRfbipb'
+    },
+    sorcerer: {
+      able: 'Compendium.world.specialty-crew-features.Item.dMwQ52uGtFKdosfj',
+      seasoned: 'Compendium.world.specialty-crew-features.Item.kkunZ6u7DX8u0vl9',
+      veteran: 'Compendium.world.specialty-crew-features.Item.79vcFLHaU9ADn8eF'
+    }
   }
 }
 
