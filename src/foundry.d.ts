@@ -80,9 +80,12 @@ interface Document {
   id: string
   name: string
   img: string
+  toObject(source?: boolean): any
   getFlag<T>(scope: string, key: string): T
   setFlag<T>(scope: string, key: string, value: T): void
   update(data?: any, operation?: any): Promise<Document | undefined>
+  createEmbeddedDocuments(type: string, data?: any, operation?: any): Promise<Document>
+  deleteEmbeddedDocuments(type: string, ids: string[], operation?: any): Promise<Document>
 }
 
 interface Actor extends Document {
