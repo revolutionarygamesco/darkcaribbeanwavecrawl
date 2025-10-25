@@ -307,8 +307,8 @@
     },
     "notifications": {
       "ship-before-crew": "You need a ship before you can start assigning crew to it.",
-      "below-min-crew": "The {ship} requires a crew of at least {min}. You’ll need {more} crew before you’ll be ready to set sail.",
-      "above-max-crew": "The {ship} can only accommodate a maximum crew of {max}.",
+      "below-min-crew": "{ship} requires a crew of at least {min}. You’ll need {more} more crew before you’ll be ready to set sail.",
+      "above-max-crew": "{ship} can only accommodate a maximum crew of {max}.",
       "position-max-singular": "Only one person can be {position}.",
       "position-max-plural": "Only {max} people can be {position}.",
       "exempt": "As {position}, {name} is exempt from watch duty and does not need to be assigned to either watch crew."

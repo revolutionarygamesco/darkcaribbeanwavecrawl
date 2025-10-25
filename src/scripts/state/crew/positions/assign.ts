@@ -40,13 +40,14 @@ const assign = async (
   const ship = await getShip(candidate)
   if (ship?.system.attributes.crew) {
     const { max, min } = ship.system.attributes.crew
-    const roster = await getRoster(candidate)
-    if (roster.length > max) {
+    const roster = (await getRoster(candidate)).map(actor => actor.id)
+    const crewSize = [...new Set([...roster, ...after])].length
+    if (crewSize > max) {
       const msg = localize(`${MODULE_ID}.notifications.above-max-crew`, { ship: ship.name, max })
       await notify('error', msg)
       return null
-    } else if (roster.length < min) {
-      const msg = localize(`${MODULE_ID}.notifications.below-min-crew`, { ship: ship.name, more: min - roster.length, min })
+    } else if (crewSize < min) {
+      const msg = localize(`${MODULE_ID}.notifications.below-min-crew`, { ship: ship.name, more: min - crewSize, min: min })
       await notify('warn', msg)
     }
   } else {

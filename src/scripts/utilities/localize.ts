@@ -1,6 +1,6 @@
 const localize = (
   key: string,
   options?: Record<string, any>
-) => game?.i18n?.localize?.(key, options) ?? key
+) => game?.i18n?.format?.(key, options) ?? key
 
 export default localize
