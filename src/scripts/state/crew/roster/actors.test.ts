@@ -1,8 +1,8 @@
-import type CrawlState from '../state.ts'
-import setupCrew, { setupState, jack, anne, mary } from '../../utilities/testing/crew.ts'
-import getRoster from './get.ts'
+import type CrawlState from '../../state.ts'
+import setupCrew, { setupState, jack, anne, mary } from '../../../utilities/testing/crew.ts'
+import getRosterActors from './actors.ts'
 
-describe('getRoster', () => {
+describe('getRosterActors', () => {
   setupCrew()
 
   let before: CrawlState
@@ -13,7 +13,7 @@ describe('getRoster', () => {
   })
 
   it('returns a roster of every character on the members', async () => {
-    const actual = await getRoster(before)
+    const actual = await getRosterActors(before)
     const ids = actual.map(actor => actor.id)
     expect(actual).toHaveLength(3)
     for (const id of crew) expect(ids).toContain(id)
@@ -22,7 +22,7 @@ describe('getRoster', () => {
   it('removes duplicates from multiple positions', async () => {
     before.crew.positions.quartermaster = [anne]
     before.crew.positions.master = [mary]
-    const actual = await getRoster(before)
+    const actual = await getRosterActors(before)
     const ids = actual.map(actor => actor.id)
     expect(actual).toHaveLength(3)
     for (const id of crew) expect(ids).toContain(id)

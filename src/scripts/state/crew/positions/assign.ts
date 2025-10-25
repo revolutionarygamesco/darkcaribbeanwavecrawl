@@ -4,7 +4,7 @@ import getCopy from '../../get-copy.ts'
 import getAssigned from './get.ts'
 import getPositionConfig from '../../crew-config/get-position.ts'
 import getShip from '../../ship/get.ts'
-import getRoster from '../get.ts'
+import getRosterActors from '../roster/actors.ts'
 import setAssigned from './set.ts'
 import getOppositeSide from '../teams/opposite.ts'
 import removeTeamMember from '../teams/remove.ts'
@@ -40,7 +40,7 @@ const assign = async (
   const ship = await getShip(candidate)
   if (ship?.system.attributes.crew) {
     const { max, min } = ship.system.attributes.crew
-    const roster = (await getRoster(candidate)).map(actor => actor.id)
+    const roster = (await getRosterActors(candidate)).map(actor => actor.id)
     const crewSize = [...new Set([...roster, ...after])].length
     if (crewSize > max) {
       const msg = localize(`${MODULE_ID}.notifications.above-max-crew`, { ship: ship.name, max })

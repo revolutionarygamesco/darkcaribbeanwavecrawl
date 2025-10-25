@@ -1,12 +1,12 @@
 import type CrawlState from '../../state.ts'
 import setCrawlState from '../../set.ts'
-import getRoster from '../../crew/get.ts'
+import getRosterActors from '../../crew/roster/actors.ts'
 import getCopy from '../../get-copy.ts'
 
 export const fetchCrewSilver = async (
   state?: CrawlState
 ): Promise<Record<string, number>> => {
-  const roster = await getRoster(state)
+  const roster = await getRosterActors(state)
   const ledger: Record<string, number> = {}
   for (const actor of roster) {
     ledger[actor.id] = actor.system.silver ?? 0

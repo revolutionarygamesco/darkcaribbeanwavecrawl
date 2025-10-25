@@ -3,7 +3,7 @@ import type CrawlState from '../state/state.ts'
 import type SharesRecord from './shares-record.ts'
 import getCrewConfig from '../state/crew-config/get.ts'
 import getCrawlState from '../state/get.ts'
-import getRoster from '../state/crew/get.ts'
+import getRosterActors from '../state/crew/roster/actors.ts'
 
 interface PositionRecord {
   id: string
@@ -15,7 +15,7 @@ const getCrewShares = async (
 ): Promise<SharesRecord> => {
   const config = getCrewConfig()
   const cs = state ?? await getCrawlState()
-  const crew = await getRoster(cs)
+  const crew = await getRosterActors(cs)
   const record: SharesRecord = { accounts: {}, total: 0 }
 
   for (const holder of crew) {
