@@ -1,5 +1,5 @@
 import type CrawlState from '../../state.ts'
-import getRosterActors from '../roster/actors.ts'
+import getRosterCount from '../roster/count.ts'
 import setupCrew, { setupState, jack, anne, mary } from '../../../utilities/testing/crew.ts'
 import unassign from './unassign.ts'
 
@@ -45,9 +45,9 @@ describe('unassign', () => {
 
   it('removes character from crew entirely if removed from free crewman', async () => {
     const after = await unassign('crew', mary, before, false)
-    const roster = await getRosterActors(after!)
+    const count = await getRosterCount(after!)
     expect(after?.crew.positions.crew).toHaveLength(0)
-    expect(roster).toHaveLength(2)
+    expect(count).toBe(2)
     expect(after).not.toBe(before)
   })
 })
