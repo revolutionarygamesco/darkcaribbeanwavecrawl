@@ -11,6 +11,13 @@ export interface CrawlTeam {
   onDuty: boolean
 }
 
+export interface ActorListing {
+  id: string
+  name: string
+  img: string
+  link: string
+}
+
 export interface GlossedPositionData {
   id: string
   assigned: ActorID[]
