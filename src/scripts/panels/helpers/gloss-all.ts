@@ -7,7 +7,7 @@ const glossAllPositions = async (
 ): Promise<Record<string, GlossedPositionData>> => {
   const { positions } = (state ?? await getCrawlState()).crew
   const glossary: Record<string, GlossedPositionData> = {}
-  for (const key in positions) glossary[key] = glossPosition(key, positions[key])
+  for (const key in positions) glossary[key] = await glossPosition(key, positions[key])
   return glossary
 }
 

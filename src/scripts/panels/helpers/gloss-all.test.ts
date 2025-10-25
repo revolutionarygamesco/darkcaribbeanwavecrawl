@@ -10,7 +10,7 @@ describe('glossAllPositions', () => {
     const actual = await glossAllPositions(before)
     const { assigned, actors, title, description, sans } = actual.captain
     expect(assigned).toEqual([jack])
-    expect(actors).toEqual([game.actors.get(jack)])
+    expect(actors[0].id).toBe(jack)
     expect(title).toBe(`${MODULE_ID}.crew-panel.positions.glossary.captain.title`)
     expect(description).toBe(`${MODULE_ID}.crew-panel.positions.glossary.captain.desc`)
     expect(sans).toBe(`${MODULE_ID}.crew-panel.positions.glossary.captain.sans`)

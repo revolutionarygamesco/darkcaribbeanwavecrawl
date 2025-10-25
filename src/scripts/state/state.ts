@@ -24,7 +24,7 @@ export interface GlossedPositionData {
   title: string
   description: string
   sans: string
-  actors: Actor[]
+  actors: ActorListing[]
 }
 
 export interface CrawlCrew {

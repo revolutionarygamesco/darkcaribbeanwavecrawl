@@ -1,7 +1,8 @@
 import { MODULE_ID } from '../settings.ts'
-import { CrawlTeamSide } from '../state/state.ts'
+import {ActorListing, CrawlTeamSide} from '../state/state.ts'
 
 import addToTeam from '../state/crew/teams/members/add.ts'
+import enrichActor from '../utilities/enrich-actor.ts'
 import getCrawlState from '../state/get.ts'
 import getPanelDimensions from '../utilities/get-dimensions.ts'
 import getShip from '../state/ship/get.ts'
@@ -18,6 +19,7 @@ import unassign from '../state/crew/positions/unassign.ts'
 import glossAllPositions from './helpers/gloss-all.ts'
 import mapIdsToActors from '../utilities/map-ids-to-actors.ts'
 import registerPartials from './register-partials.ts'
+import actorToListing from '../utilities/actor-to-listing.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 const dropSelector = '.droppable'
@@ -113,7 +115,7 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
 
     context.ship = {
       image: ship.img,
-      name: ship.name
+      name: await enrichActor(ship)
     }
 
     return context
@@ -127,19 +129,30 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   async _prepareTeam (side: CrawlTeamSide) {
     const state = await getCrawlState()
     const team = state.crew.teams[side]
+
     const officerIDs = state.crew.positions[team.officer]
+    const officerActors = mapIdsToActors(officerIDs)
+    const officers: ActorListing[] = []
+    for (const actor of officerActors) officers.push(await actorToListing(actor))
+
+    const helm = team.helm ? game.actors.get(team.helm) : undefined
+    const lookout = team.lookout ? game.actors.get(team.lookout) : undefined
+
     const named: string[] = [...officerIDs, team.helm, team.lookout]
       .filter((id: string | undefined): id is string => id !== undefined)
+    const namedActors = mapIdsToActors(team.members.filter(id => !named.includes(id)))
+    const others: ActorListing[] = []
+    for (const actor of namedActors) others.push(await actorToListing(actor))
 
     return {
       side,
       name: `${MODULE_ID}.crew-panel.teams.sides.${side}`,
       isQuartermaster: team.officer === 'quartermaster',
       officerName: team.officer === 'quartermaster' ? 'quartermaster' : 'sailing master',
-      officers: mapIdsToActors(officerIDs),
-      helm: team.helm ? game.actors.get(team.helm) : undefined,
-      lookout: team.lookout ? game.actors.get(team.lookout) : undefined,
-      others: mapIdsToActors(team.members.filter(id => !named.includes(id)))
+      officers,
+      helm: helm ? await actorToListing(helm) : undefined,
+      lookout: lookout ? await actorToListing(lookout) : undefined,
+      others
     }
   }
 
