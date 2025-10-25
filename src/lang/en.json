@@ -321,6 +321,9 @@
       "position-max-singular": "Only one person can be {position}.",
       "position-max-plural": "Only {max} people can be {position}.",
       "exempt": "As {position}, {name} is exempt from watch duty and does not need to be assigned to either watch crew."
+    },
+    "messages": {
+      "provisions-out": "We’ve run out of {provisions}."
     }
   }
 }
