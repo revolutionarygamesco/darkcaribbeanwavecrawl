@@ -323,7 +323,8 @@
       "exempt": "As {position}, {name} is exempt from watch duty and does not need to be assigned to either watch crew."
     },
     "messages": {
-      "provisions-out": "We’ve run out of {provisions}."
+      "provisions-out": "We’ve run out of {provisions}.",
+      "level-up": "With {hours} hours of experience as position}, you are now {feature}."
     }
   }
 }
