@@ -1,10 +1,10 @@
 import { MODULE_ID } from '../settings.ts'
 
 const partials = [
-  'listing',
-  'team',
   'crew-tab',
-  'ledger-row'
+  'ledger-row',
+  'listing',
+  'team'
 ]
 
 const getFilename = (partial: string): string => {

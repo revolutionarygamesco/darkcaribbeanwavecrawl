@@ -61,6 +61,7 @@ declare class FormDataExtended {
 }
 
 declare class TextEditor {
+  static enrichHTML(content: string, options?: any): Promise<string>
   static getDragEventData(event: DragEvent): any
 }
 
@@ -85,6 +86,7 @@ interface Document {
 }
 
 interface Actor extends Document {
+  _id: string
   type: string
   collections: {
     items: Map<string, { type: string, name: string, [key: string]: any }>

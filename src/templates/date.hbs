@@ -6,21 +6,39 @@
 
   {{#if isGM}}
   <nav>
-    <button type="button" data-action="adjust-time" data-minutes="-60" title="{{localize 'revolutionary-darkcaribbean.date-panel-controls.back-fast'}}">
+    <button type="button" data-action="adjust-time" data-minutes="-60" title="{{localize 'revolutionary-darkcaribbean.date-panel.controls.back-fast'}}">
       <i class="fa-solid fa-backward-fast"></i>
     </button>
-    <button type="button" data-action="adjust-time" data-minutes="-10" title="{{localize 'revolutionary-darkcaribbean.date-panel-controls.back-step'}}">
+    <button type="button" data-action="adjust-time" data-minutes="-10" title="{{localize 'revolutionary-darkcaribbean.date-panel.controls.back-step'}}">
       <i class="fa-solid fa-backward-step"></i>
     </button>
-    <button type="button" data-action="set-time" title="{{localize 'revolutionary-darkcaribbean.date-panel-controls.set'}}">
+    <button type="button" data-action="set-time" title="{{localize 'revolutionary-darkcaribbean.date-panel.controls.set'}}">
       <i class="fa-solid fa-clock"></i>
     </button>
-    <button type="button" data-action="adjust-time" data-minutes="10" title="{{localize 'revolutionary-darkcaribbean.date-panel-controls.forward-step'}}">
+    <button type="button" data-action="adjust-time" data-minutes="10" title="{{localize 'revolutionary-darkcaribbean.date-panel.controls.forward-step'}}">
       <i class="fa-solid fa-forward-step"></i>
     </button>
-    <button type="button" data-action="adjust-time" data-minutes="60" title="{{localize 'revolutionary-darkcaribbean.date-panel-controls.forward-fast'}}">
+    <button type="button" data-action="adjust-time" data-minutes="60" title="{{localize 'revolutionary-darkcaribbean.date-panel.controls.forward-fast'}}">
       <i class="fa-solid fa-forward-fast"></i>
     </button>
   </nav>
   {{/if}}
+
+  <table class="crew">
+    <caption>{{crew.name}}</caption>
+    <tbody>
+      <tr>
+        <th>{{localize 'revolutionary-darkcaribbean.date-panel.crew.officer'}}</th>
+        <td>{{{crew.officer}}}</td>
+      </tr>
+      <tr>
+        <th>{{localize 'revolutionary-darkcaribbean.date-panel.crew.helm'}}</th>
+        <td>{{{crew.helm}}}</td>
+      </tr>
+      <tr>
+        <th>{{localize 'revolutionary-darkcaribbean.date-panel.crew.lookout'}}</th>
+        <td>{{{crew.lookout}}}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

@@ -3,6 +3,7 @@
   box-shadow: 0 0 10px #000;
   height: auto;
   opacity: 0.25;
+  overflow: hidden;
   padding: 1em;
   position: absolute;
   transition: opacity 250ms ease-in-out;
@@ -34,6 +35,31 @@
     button {
       border: 0;
       display: inline-block;
+    }
+  }
+
+  table.crew {
+    caption,
+    th {
+      text-align: left;
+    }
+
+    caption {
+      padding-bottom: 0.25em;
+    }
+
+    th,
+    td {
+      padding: 0;
+    }
+
+    th {
+      font-weight: normal;
+      padding-right: 0.5em;
+    }
+
+    tbody tr:nth-child(2n) {
+      background-color: transparent;
     }
   }
 }

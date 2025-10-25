@@ -51,6 +51,21 @@
     "and": "and",
     "Chapter": "Chapter",
     "ships-bell": "Ship’s Bell",
+    "date-panel": {
+      "controls": {
+        "back-fast": "Set time back 1 hour",
+        "back-step": "Set time back 10 minutes",
+        "forward-step": "Advance time 10 minutes",
+        "forward-fast": "Advance time 1 hour"
+      },
+      "crew": {
+        "starboard": "On Duty: Starboard Crew",
+        "larboard": "On Duty: Larboard Crew",
+        "officer": "Officer",
+        "helm": "Helm",
+        "lookout": "Lookout"
+      }
+    },
     "crew-panel": {
       "tabs": {
         "ship": "Ship",
@@ -298,12 +313,6 @@
       "day": "day",
       "dusk": "dusk",
       "night": "night"
-    },
-    "date-panel-controls": {
-      "back-fast": "Set time back 1 hour",
-      "back-step": "Set time back 10 minutes",
-      "forward-step": "Advance time 10 minutes",
-      "forward-fast": "Advance time 1 hour"
     },
     "notifications": {
       "ship-before-crew": "You need a ship before you can start assigning crew to it.",

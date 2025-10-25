@@ -4,7 +4,7 @@ import Stopwatch from './time/stopwatch.ts'
 import getDate from './time/get-date.ts'
 import ringBell from './time/ring-bell.ts'
 
-import DatePanel from './panels/date.ts'
+import displayDatePanel from './panels/date.ts'
 import CrewConfigPanel from './panels/crew-config.ts'
 import displayCrewPanel from './panels/crew.ts'
 import displayLedgerPanel from './panels/ledger.ts'
@@ -50,9 +50,7 @@ Hooks.once('init', async () => {
 Hooks.once('ready', async () => {
   await watch.start()
   watch.handlePause(game.paused)
-
-  const datePanel = new DatePanel()
-  await datePanel.render(true)
+  await displayDatePanel()
 })
 
 Hooks.on('pauseGame', (paused: boolean) => {

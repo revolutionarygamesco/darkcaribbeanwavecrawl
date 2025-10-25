@@ -5,12 +5,15 @@ import getWatch from '../time/get-watch.ts'
 import getBells from '../time/get-bells.ts'
 import getLunarPhase, { lunarIcons } from '../time/get-phase.ts'
 import getDayNight from '../time/get-day-night.ts'
+import getCrawlState from '../state/get.ts'
 import describeNauticalTime from '../time/nautical-time.ts'
 import setTime, { SetTimeOptions } from '../time/set.ts'
+import registerPartials from './register-partials.ts'
+import localize from '../utilities/localize.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 
-export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2) {
+export class DatePanel extends HandlebarsApplicationMixin(ApplicationV2) {
   private lunarSVGIcons: Map<string, string> = new Map()
   private _adjustHandler: ((event: Event) => Promise<void>) | null = null
   private updateHookId: number | null = null
@@ -144,6 +147,36 @@ export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2)
     return await this._fetchSVG(url, phase)
   }
 
+  async _prepareCrew (): Promise<Record<string, string>> {
+    const state = await getCrawlState()
+    const side = state.crew.teams.starboard.onDuty ? 'starboard' : 'larboard'
+    const name = localize([MODULE_ID, 'date-panel', 'crew', side].join('.'))
+    const team = state.crew.teams[side]
+
+    const actors: Record<string, Actor | undefined> = {
+      officer: game.actors.get(state.crew.positions[team.officer][0]),
+      helm: team.helm ? game.actors.get(team.helm) : undefined,
+      lookout: team.lookout ? game.actors.get(team.lookout) : undefined
+    }
+
+    const links: Record<string, string | undefined> = {
+      officer: actors.officer ? `@UUID[Actor.${actors.officer._id}]{${actors.officer.name}}` : undefined,
+      helm: actors.helm ? `@UUID[Actor.${actors.helm._id}]{${actors.helm.name}}` : undefined,
+      lookout: actors.lookout ? `@UUID[Actor.${actors.lookout._id}]{${actors.lookout.name}}` : undefined
+    }
+
+    const enrich = foundry.applications.ux.TextEditor
+      ? foundry.applications.ux.TextEditor.enrichHTML
+      : undefined
+
+    return {
+      name,
+      officer: links.officer && enrich ? await enrich(links.officer) : '&mdash;',
+      helm: links.helm && enrich ? await enrich(links.helm) : '&mdash;',
+      lookout: links.lookout && enrich ? await enrich(links.lookout) : '&mdash;'
+    }
+  }
+
   async _adjustTime (event: Event) {
     const target = event.target as HTMLElement
     const set = target.closest('button[data-action="set-time"]') as HTMLElement
@@ -169,6 +202,8 @@ export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2)
     const exact = date.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit', timeZone: 'UTC' })
     const lunar = await this._prepareLunarPhase(date)
 
+    const crew = await this._prepareCrew()
+
     return {
       date: date.toLocaleDateString(undefined, {
         year: 'numeric',
@@ -179,7 +214,8 @@ export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2)
       time,
       lunar,
       watch: describeNauticalTime(watch, bells),
-      isGM: game.user.isGM
+      isGM: game.user.isGM,
+      crew
     }
   }
 
@@ -202,3 +238,11 @@ export default class DatePanel extends HandlebarsApplicationMixin(ApplicationV2)
     return super.close(options)
   }
 }
+
+const displayDatePanel = async (): Promise<void> => {
+  await registerPartials()
+  const panel = new DatePanel()
+  await panel.render(true)
+}
+
+export default displayDatePanel
