@@ -1,5 +1,6 @@
 import type CrawlState from '../state/state.ts'
 import Watch, { isDogWatch } from './watch.ts'
+import consume from './consume.ts'
 import gainXP from '../state/crew/xp/gain.ts'
 import saveCrawlState from '../state/save.ts'
 import setCrawlState from '../state/set.ts'
@@ -15,6 +16,7 @@ const changeWatch = async (
   let after = await updateState(before)
   after = await gainXP(xp, after, false)
   after = await switchTeams(after, false)
+  if (end === 'first dog') after = await consume(after)
 
   if (save) {
     await setCrawlState(after)

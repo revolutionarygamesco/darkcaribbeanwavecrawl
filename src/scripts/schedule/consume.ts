@@ -6,6 +6,15 @@ import addProvisions from '../state/provisions/add.ts'
 import oxford from '../utilities/oxford.ts'
 import localize from '../utilities/localize.ts'
 
+const getQuartermaster = (state: CrawlState): { actor?: string, alias?: string } => {
+  const speakerPath = [MODULE_ID, 'crew-panel', 'positions', 'glossary', 'quartermaster', 'title']
+  const { quartermaster } = state.crew.positions
+  const actor = quartermaster.length > 1 ? quartermaster[0] : undefined
+  return actor
+    ? { actor }
+    : { alias: localize(speakerPath.join('.')) }
+}
+
 const consume = async (
   state?: CrawlState,
   amount?: Record<Provision, number>
@@ -23,11 +32,9 @@ const consume = async (
   const all: Provision[] = ['food', 'water', 'rum']
   const out = all.filter(type => copy.provisions[type] === 0)
   if (foundry?.documents?.ChatMessage && out.length > 0) {
-    const speakerPath = [MODULE_ID, 'crew-panel', 'positions', 'glossary', 'quartermaster', 'title']
     const contentPath = [MODULE_ID, 'messages', 'provisions-out']
-
     await foundry.documents.ChatMessage.create({
-      speaker: { alias: game.i18n.localize(speakerPath.join('.')) },
+      speaker: getQuartermaster(copy),
       content: localize(contentPath.join('.'), { provisions: oxford(...out) })
     })
   }

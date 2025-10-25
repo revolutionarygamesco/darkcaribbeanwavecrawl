@@ -3,6 +3,7 @@ import getDate from './get-date.ts'
 import getWatch from './get-watch.ts'
 import getBells from './get-bells.ts'
 import describeNauticalTime from './nautical-time.ts'
+import localize from '../utilities/localize.ts'
 
 export const shouldBellRing = (minutes: number): boolean => {
   return minutes === 0 || minutes === 30
@@ -25,7 +26,7 @@ const ringBell = async (): Promise<void> => {
   })
 
   await foundry.documents.ChatMessage.create({
-    speaker: { alias: game.i18n.localize(`${MODULE_ID}.ships-bell`) },
+    speaker: { alias: localize(`${MODULE_ID}.ships-bell`) },
     content
   })
 }
