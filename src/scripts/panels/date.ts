@@ -1,5 +1,6 @@
 import { MODULE_ID } from '../settings.ts'
 
+import enrichActor from '../utilities/enrich-actor.ts'
 import getDate from '../time/get-date.ts'
 import getWatch from '../time/get-watch.ts'
 import getBells from '../time/get-bells.ts'
@@ -159,21 +160,11 @@ export class DatePanel extends HandlebarsApplicationMixin(ApplicationV2) {
       lookout: team.lookout ? game.actors.get(team.lookout) : undefined
     }
 
-    const links: Record<string, string | undefined> = {
-      officer: actors.officer ? `@UUID[Actor.${actors.officer._id}]{${actors.officer.name}}` : undefined,
-      helm: actors.helm ? `@UUID[Actor.${actors.helm._id}]{${actors.helm.name}}` : undefined,
-      lookout: actors.lookout ? `@UUID[Actor.${actors.lookout._id}]{${actors.lookout.name}}` : undefined
-    }
-
-    const enrich = foundry.applications.ux.TextEditor
-      ? foundry.applications.ux.TextEditor.enrichHTML
-      : undefined
-
     return {
       name,
-      officer: links.officer && enrich ? await enrich(links.officer) : '&mdash;',
-      helm: links.helm && enrich ? await enrich(links.helm) : '&mdash;',
-      lookout: links.lookout && enrich ? await enrich(links.lookout) : '&mdash;'
+      officer: actors.officer ? await enrichActor(actors.officer) : '&mdash;',
+      helm: actors.helm ? await enrichActor(actors.helm) : '&mdash;',
+      lookout: actors.lookout ? await enrichActor(actors.lookout) : '&mdash;'
     }
   }
 
