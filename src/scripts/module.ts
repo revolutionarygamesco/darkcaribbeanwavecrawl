@@ -3,6 +3,8 @@ import { MODULE_ID, MODULE_SETTINGS, DEFAULT_CREW } from './settings'
 import Stopwatch from './time/stopwatch.ts'
 import getDate from './time/get-date.ts'
 import ringBell from './time/ring-bell.ts'
+import saveCrawlState from './state/save.ts'
+import raiseXP from './xp/raise.ts'
 
 import displayDatePanel from './panels/date.ts'
 import CrewConfigPanel from './panels/crew-config.ts'
@@ -63,4 +65,8 @@ Hooks.on('updateWorldTime', async (worldTime, delta) => {
   const then = getDate(previously).toLocaleDateString(undefined, { weekday: 'long', hour: 'numeric', minute: '2-digit', timeZone: 'UTC' })
   console.log(`World time changed from ${then} to ${now}`)
   await ringBell()
+})
+
+Hooks.on('createItem', async (document: Document) => {
+  await saveCrawlState(await raiseXP(document))
 })
