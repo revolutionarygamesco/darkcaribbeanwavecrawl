@@ -350,10 +350,11 @@ export class CrewPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 }
 
-const displayCrewPanel = async (): Promise<void> => {
+const displayCrewPanel = async (): Promise<CrewPanel> => {
   await registerPartials()
   const panel = new CrewPanel()
   await panel.render(true)
+  return panel
 }
 
 export default displayCrewPanel

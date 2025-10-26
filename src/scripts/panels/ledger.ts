@@ -213,10 +213,11 @@ export class LedgerPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 }
 
-const displayLedgerPanel = async (): Promise<void> => {
+const displayLedgerPanel = async (): Promise<LedgerPanel> => {
   await registerPartials()
   const panel = new LedgerPanel()
   await panel.render(true)
+  return panel
 }
 
 export default displayLedgerPanel
