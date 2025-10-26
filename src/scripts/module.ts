@@ -1,7 +1,6 @@
 import { MODULE_ID, MODULE_SETTINGS, DEFAULT_CREW } from './settings'
 
 import Stopwatch from './time/stopwatch.ts'
-import getDate from './time/get-date.ts'
 import ringBell from './time/ring-bell.ts'
 import advanceTime from './schedule/advance.ts'
 
@@ -67,8 +66,8 @@ Hooks.on('pauseGame', (paused: boolean) => {
 })
 
 Hooks.on('updateWorldTime', async (worldTime, delta) => {
-  const now = getDate(worldTime)
-  const then = getDate(worldTime - delta)
+  const now = new Date(game.time.worldTime)
+  const then = new Date(worldTime - delta)
 
   if (delta > 0) {
     // Advance time from then to now

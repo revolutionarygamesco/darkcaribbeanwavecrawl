@@ -1,10 +1,4 @@
-import getDate from './get-date.ts'
 import setDate from './set-date.ts'
-
-jest.mock('./get-date.ts', () => ({
-  __esModule: true,
-  default: jest.fn()
-}))
 
 describe('setDate', () => {
   const before = new Date(Date.UTC(2025, 9, 12, 15, 25))
@@ -23,8 +17,7 @@ describe('setDate', () => {
 
     (globalThis as any).game = { time }
 
-    time.worldTime = before.getTime();
-    (getDate as jest.Mock).mockReturnValue(before)
+    time.worldTime = before.getTime()
   })
 
   afterEach(() => {

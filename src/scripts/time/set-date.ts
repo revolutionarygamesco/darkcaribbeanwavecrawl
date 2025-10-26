@@ -1,5 +1,3 @@
-import getDate from './get-date.ts'
-
 const setDate = async (str: string): Promise<void> => {
   const timestamp = Date.parse(str)
   const parsed = isNaN(timestamp) ? null : new Date(timestamp)
@@ -9,7 +7,7 @@ const setDate = async (str: string): Promise<void> => {
   const month = parsed.getUTCMonth()
   const day = parsed.getUTCDate()
 
-  const before = getDate()
+  const before = new Date(game.time.worldTime)
   const hour = before.getUTCHours()
   const minute = before.getUTCMinutes()
 

@@ -1,7 +1,6 @@
 import { MODULE_ID } from '../settings.ts'
 
 import enrichActor from '../utilities/enrich-actor.ts'
-import getDate from '../time/get-date.ts'
 import getWatch from '../time/get-watch.ts'
 import getBells from '../time/get-bells.ts'
 import getLunarPhase, { lunarIcons } from '../time/get-phase.ts'
@@ -46,7 +45,7 @@ export class DatePanel extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   async openSetTimeDialog () {
-    const curr = getDate()
+    const curr = new Date(game.time.worldTime)
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
     const years: string[] = []
@@ -176,13 +175,13 @@ export class DatePanel extends HandlebarsApplicationMixin(ApplicationV2) {
     const button = target.closest('button[data-action="adjust-time"]') as HTMLElement
     if (!button) return
 
-    const request = parseInt(button.dataset.minutes ?? '0') * 60
+    const request = parseInt(button.dataset.minutes ?? '0') * 60 * 1000
     await game.time.advance(request)
     await this.render()
   }
 
   async _prepareContext () {
-    const date = getDate()
+    const date = new Date(game.time.worldTime)
     const hour = date.getUTCHours()
     const minutes = date.getUTCMinutes()
     const watch = getWatch(hour, minutes)

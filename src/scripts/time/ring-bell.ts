@@ -1,5 +1,4 @@
 import { MODULE_ID } from '../settings.ts'
-import getDate from './get-date.ts'
 import getWatch from './get-watch.ts'
 import getBells from './get-bells.ts'
 import describeNauticalTime from './nautical-time.ts'
@@ -10,7 +9,7 @@ export const shouldBellRing = (minutes: number): boolean => {
 }
 
 const ringBell = async (): Promise<void> => {
-  const now = getDate()
+  const now = new Date(game.time.worldTime)
   const hour = now.getUTCHours()
   const minutes = now.getUTCMinutes()
   if (!shouldBellRing(minutes)) return

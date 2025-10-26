@@ -1,5 +1,3 @@
-import getDate from './get-date.ts'
-
 export interface SetTimeOptions {
   year: number
   month: number
@@ -10,16 +8,17 @@ export interface SetTimeOptions {
 
 const setTime = async (
   options: Partial<SetTimeOptions>,
-  baseline: Date = getDate(),
+  baseline?: Date,
   save: boolean = true
 ): Promise<Date> => {
-  const year = options.year === undefined ? baseline.getUTCFullYear() : options.year
-  const month = options.month === undefined ? baseline.getUTCMonth() : options.month
-  const date = options.date === undefined ? baseline.getUTCDate() : options.date
-  const hour = options.hour === undefined ? baseline.getUTCHours() : options.hour
-  const minute = options.minute === undefined ? baseline.getUTCMinutes() : options.minute
+  const base = baseline ?? new Date(game.time.worldTime ?? 0)
+  const year = options.year === undefined ? base.getUTCFullYear() : options.year
+  const month = options.month === undefined ? base.getUTCMonth() : options.month
+  const date = options.date === undefined ? base.getUTCDate() : options.date
+  const hour = options.hour === undefined ? base.getUTCHours() : options.hour
+  const minute = options.minute === undefined ? base.getUTCMinutes() : options.minute
   const d = new Date(Date.UTC(year, month, date, hour, minute, 0, 0))
-  if (save) await game.time.set(Math.floor(d.getTime() / 1000))
+  if (save) await game.time.set(d.getTime())
   return d
 }
 

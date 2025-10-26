@@ -20,6 +20,6 @@ export default class Stopwatch {
   }
 
   private async increment () {
-    await game.time.advance(this.intervalSeconds)
+    await game.time.advance(this.intervalSeconds * 1000)
   }
 }
