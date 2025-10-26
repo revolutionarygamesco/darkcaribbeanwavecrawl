@@ -132,7 +132,7 @@ interface Scene {
   updateEmbeddedDocuments: (type: string, docs: Array<Record<string, any>>) => Promise<void>
 }
 
-interface Token {
+interface Token extends Document {
   actorId: string
   id: string
   x: number
