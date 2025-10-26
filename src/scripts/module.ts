@@ -5,6 +5,7 @@ import getDate from './time/get-date.ts'
 import ringBell from './time/ring-bell.ts'
 import saveCrawlState from './state/save.ts'
 import raiseXP from './xp/raise.ts'
+import removeLowerLevelFeatures from './xp/remove-lower.ts'
 
 import displayDatePanel from './panels/date.ts'
 import CrewConfigPanel from './panels/crew-config.ts'
@@ -68,5 +69,6 @@ Hooks.on('updateWorldTime', async (worldTime, delta) => {
 })
 
 Hooks.on('createItem', async (document: Document) => {
+  await removeLowerLevelFeatures(document)
   await saveCrawlState(await raiseXP(document))
 })

@@ -1,6 +1,6 @@
 import type CrawlState from '../state/state.ts'
 import getCopy from '../state/get-copy.ts'
-import identifySailingXPFeature from '../schedule/identify-feature.ts'
+import identifySailingXPFeature from './identify-feature.ts'
 import getXP from '../state/crew/xp/get.ts'
 import setXP from '../state/crew/xp/set.ts'
 

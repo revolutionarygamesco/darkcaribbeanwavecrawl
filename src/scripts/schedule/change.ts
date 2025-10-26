@@ -4,7 +4,7 @@ import consume from './consume.ts'
 import gainXP from '../state/crew/xp/gain.ts'
 import saveCrawlState from '../state/save.ts'
 import setCrawlState from '../state/set.ts'
-import setFeatures from './set-features.ts'
+import evalFeatures from '../xp/features/evaluate.ts'
 import switchTeams from '../state/crew/teams/switch.ts'
 import updateState from '../state/update.ts'
 
@@ -18,7 +18,7 @@ const changeWatch = async (
   after = await gainXP(xp, after, false)
   after = await switchTeams(after, false)
   if (end === 'first dog') after = await consume(after)
-  await setFeatures(after)
+  await evalFeatures(after)
 
   if (save) {
     await setCrawlState(after)

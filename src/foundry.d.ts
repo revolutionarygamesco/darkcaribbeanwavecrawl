@@ -94,7 +94,7 @@ interface Document {
 interface Actor extends Document {
   _id: string
   collections: {
-    items: Map<string, { type: string, name: string, [key: string]: any }>
+    items: Map<string, Document>
   },
   system?: {
     attributes: {
