@@ -21,6 +21,6 @@ describe('setAssigned', () => {
 
   it('sets the ship crew size', async () => {
     await setAssigned('crew', [], setupState(), false)
-    expect(william.system.attributes.crew?.value).toBe(2)
+    expect(william.system?.attributes.crew?.value).toBe(2)
   })
 })

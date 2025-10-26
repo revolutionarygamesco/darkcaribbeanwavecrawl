@@ -80,6 +80,9 @@ interface Document {
   id: string
   name: string
   img: string
+  type: string
+  system?: Record<string, any>
+  parent?: Document
   toObject(source?: boolean): any
   getFlag<T>(scope: string, key: string): T
   setFlag<T>(scope: string, key: string, value: T): void
@@ -90,24 +93,24 @@ interface Document {
 
 interface Actor extends Document {
   _id: string
-  type: string
   collections: {
     items: Map<string, { type: string, name: string, [key: string]: any }>
   },
-  system: {
+  system?: {
     attributes: {
       speed?: {
         value: number
-      },
+      }
       crew?: {
-        min: number,
-        max: number,
-        value: number
-      },
-      cargo?: {
-        max: number,
+        min: number
+        max: number
         value: number
       }
+      cargo?: {
+        max: number
+        value: number
+      }
+      featureType?: string
     },
     silver?: number
   }

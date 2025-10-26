@@ -9,7 +9,7 @@ export const fetchCrewSilver = async (
   const roster = await getRosterActors(state)
   const ledger: Record<string, number> = {}
   for (const actor of roster) {
-    ledger[actor.id] = actor.system.silver ?? 0
+    ledger[actor.id] = actor.system?.silver ?? 0
   }
   return ledger
 }

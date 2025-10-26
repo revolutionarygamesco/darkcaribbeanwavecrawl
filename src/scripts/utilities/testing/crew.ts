@@ -12,7 +12,7 @@ export const william = {
   system: { attributes: { crew: { min: 3, max: 10, value: 0 } } },
   update: jest.fn().mockImplementation(async function(this: any, data: any) {
     if (data['system.attributes.crew.value'] !== undefined) {
-      william.system.attributes.crew!.value = data['system.attributes.crew.value']
+      william.system!.attributes.crew!.value = data['system.attributes.crew.value']
     }
   })
 } as unknown as Actor

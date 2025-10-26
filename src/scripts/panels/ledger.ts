@@ -38,7 +38,7 @@ export class LedgerPanel extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static async _getCrewSize () {
     const ship = await getShip()
-    return ship?.system.attributes?.crew?.value ?? -1
+    return ship?.system?.attributes?.crew?.value ?? -1
   }
 
   static async _prepareSilver () {

@@ -4,7 +4,7 @@ import getRosterCount from '../../roster/count.ts'
 
 const checkCrew = async (state: CrawlState): Promise<boolean> => {
   const ship = await getShip(state)
-  const max = ship?.system.attributes.crew?.max
+  const max = ship?.system?.attributes.crew?.max
   if (!max) return false
 
   const count = await getRosterCount(state)
