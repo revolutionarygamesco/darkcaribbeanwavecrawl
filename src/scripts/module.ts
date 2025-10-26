@@ -6,6 +6,9 @@ import ringBell from './time/ring-bell.ts'
 import advanceTime from './schedule/advance.ts'
 
 import saveCrawlState from './state/save.ts'
+import loadCrawlState from './state/load.ts'
+import getEarliestCrawlState from './state/get-earliest-crawl-state.ts'
+import rewind from './state/rewind.ts'
 import raiseXP from './xp/raise.ts'
 import removeLowerLevelFeatures from './xp/remove-lower.ts'
 
@@ -64,8 +67,27 @@ Hooks.on('pauseGame', (paused: boolean) => {
 })
 
 Hooks.on('updateWorldTime', async (worldTime, delta) => {
-  const previously = worldTime - delta
-  await advanceTime(getDate(previously), getDate(worldTime))
+  const now = getDate(worldTime)
+  const then = getDate(worldTime - delta)
+
+  if (delta > 0) {
+    // Advance time from then to now
+    await advanceTime(then, now)
+  } else {
+    // Rewind time from then to now
+    const limit = (await getEarliestCrawlState()).timestamp
+    if (now.getTime() < limit) {
+      // If you're trying to rewind past the limit, reset to limit.
+      // This will trigger the hook again with a new worldTime
+      await game.time.set(Math.round(limit / 1000))
+    } else {
+      // Rewind through the stack and load from the appropriate state
+      const state = await rewind(now)
+      await loadCrawlState(state)
+    }
+  }
+
+  // Either way, update date panel and maybe ring the bell
   await ringBell()
   if (datePanel) await datePanel.render(true)
 })
