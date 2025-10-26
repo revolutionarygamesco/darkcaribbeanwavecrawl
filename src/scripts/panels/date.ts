@@ -230,10 +230,11 @@ export class DatePanel extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 }
 
-const displayDatePanel = async (): Promise<void> => {
+const displayDatePanel = async (): Promise<DatePanel> => {
   await registerPartials()
   const panel = new DatePanel()
   await panel.render(true)
+  return panel
 }
 
 export default displayDatePanel

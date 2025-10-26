@@ -3,11 +3,13 @@ import { MODULE_ID, MODULE_SETTINGS, DEFAULT_CREW } from './settings'
 import Stopwatch from './time/stopwatch.ts'
 import getDate from './time/get-date.ts'
 import ringBell from './time/ring-bell.ts'
+import advanceTime from './schedule/advance.ts'
+
 import saveCrawlState from './state/save.ts'
 import raiseXP from './xp/raise.ts'
 import removeLowerLevelFeatures from './xp/remove-lower.ts'
 
-import displayDatePanel from './panels/date.ts'
+import displayDatePanel, { DatePanel } from './panels/date.ts'
 import CrewConfigPanel from './panels/crew-config.ts'
 import displayCrewPanel from './panels/crew.ts'
 import displayLedgerPanel from './panels/ledger.ts'
@@ -15,6 +17,7 @@ import displayLedgerPanel from './panels/ledger.ts'
 import generateInsult from './insults/generate.ts'
 
 const watch = new Stopwatch()
+let datePanel: DatePanel
 
 const initSetting = (setting: string, type: any, defaultValue?: any, config: boolean = true) => {
   game.settings.register(MODULE_ID, setting, {
@@ -53,7 +56,7 @@ Hooks.once('init', async () => {
 Hooks.once('ready', async () => {
   await watch.start()
   watch.handlePause(game.paused)
-  await displayDatePanel()
+  datePanel = await displayDatePanel()
 })
 
 Hooks.on('pauseGame', (paused: boolean) => {
@@ -62,10 +65,9 @@ Hooks.on('pauseGame', (paused: boolean) => {
 
 Hooks.on('updateWorldTime', async (worldTime, delta) => {
   const previously = worldTime - delta
-  const now = getDate(worldTime).toLocaleDateString(undefined, { weekday: 'long', hour: 'numeric', minute: '2-digit', timeZone: 'UTC' })
-  const then = getDate(previously).toLocaleDateString(undefined, { weekday: 'long', hour: 'numeric', minute: '2-digit', timeZone: 'UTC' })
-  console.log(`World time changed from ${then} to ${now}`)
+  await advanceTime(getDate(previously), getDate(worldTime))
   await ringBell()
+  if (datePanel) await datePanel.render(true)
 })
 
 Hooks.on('createItem', async (document: Document) => {
