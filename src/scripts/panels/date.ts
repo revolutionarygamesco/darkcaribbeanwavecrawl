@@ -10,6 +10,9 @@ import describeNauticalTime from '../time/nautical-time.ts'
 import setTime, { SetTimeOptions } from '../time/set.ts'
 import registerPartials from './register-partials.ts'
 import localize from '../utilities/localize.ts'
+import updateState from '../state/update.ts'
+import setCrawlState from '../state/set.ts'
+import saveCrawlState from '../state/save.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 
@@ -115,7 +118,8 @@ export class DatePanel extends HandlebarsApplicationMixin(ApplicationV2) {
               minute: this.parseSetTimeSelect(coll, 'minute', curr.getUTCMinutes())
             }
 
-            await setTime(options, curr)
+            await setTime(options, curr, true, true)
+            await saveCrawlState(await setCrawlState(await updateState(await getCrawlState())))
           }
         }
       ]
