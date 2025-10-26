@@ -34,7 +34,7 @@ const advanceTime = async (
     }).filter(item => item.date.getTime() >= a.getTime() && item.date.getTime() < b.getTime())
 
     for (const item of items) {
-      state = await changeWatch(item.end, state, false)
+      state = await changeWatch(item.end, state, save)
     }
   }
 

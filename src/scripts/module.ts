@@ -20,6 +20,7 @@ import generateInsult from './insults/generate.ts'
 
 const watch = new Stopwatch()
 let datePanel: DatePanel
+let resettingTimeToLimit: boolean = false
 
 const initSetting = (setting: string, type: any, defaultValue?: any, config: boolean = true) => {
   game.settings.register(MODULE_ID, setting, {
@@ -69,26 +70,23 @@ Hooks.on('updateWorldTime', async (worldTime, delta) => {
   const now = new Date(game.time.worldTime)
   const then = new Date(worldTime - delta)
 
-  if (delta > 0) {
-    // Advance time from then to now
+  if (delta > 0 && !resettingTimeToLimit) {
     await advanceTime(then, now)
   } else {
-    // Rewind time from then to now
-    const limit = (await getEarliestCrawlState()).timestamp
-    if (now.getTime() < limit) {
-      // If you're trying to rewind past the limit, reset to limit.
-      // This will trigger the hook again with a new worldTime
-      await game.time.set(Math.round(limit / 1000))
+    const earliest = await getEarliestCrawlState()
+    const limit = earliest?.timestamp
+    if (limit && now.getTime() < limit) {
+      resettingTimeToLimit = true
+      await game.time.set(limit)
     } else {
-      // Rewind through the stack and load from the appropriate state
       const state = await rewind(now)
       await loadCrawlState(state)
     }
   }
 
-  // Either way, update date panel and maybe ring the bell
   await ringBell()
-  if (datePanel) await datePanel.render(true)
+  if (datePanel && !resettingTimeToLimit) await datePanel.render(true)
+  resettingTimeToLimit = false
 })
 
 Hooks.on('createItem', async (document: Document) => {
