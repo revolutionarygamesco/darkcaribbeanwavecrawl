@@ -6,7 +6,8 @@ import initCrawlState from './init.ts'
 const getSavedCrawlStates = async (): Promise<CrawlState[]> => {
   const adventure = await getAdventure()
   if (!adventure) return [initCrawlState()]
-  return adventure.getFlag(MODULE_ID, SAVE_STATE) ?? [initCrawlState()]
+  const stack = adventure.getFlag(MODULE_ID, SAVE_STATE) as CrawlState[]
+  return stack && stack.length > 0 ? stack : [initCrawlState()]
 }
 
 export default getSavedCrawlStates

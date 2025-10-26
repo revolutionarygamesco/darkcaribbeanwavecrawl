@@ -14,7 +14,7 @@ const saveCrawlState = async (
   const history = stack ?? await getSavedCrawlStates()
   const present = latest.timestamp
   const cutoff = present - limit
-  const kept = history.filter(state => state.timestamp <= cutoff)
+  const kept = history.filter(state => state.timestamp >= cutoff)
   const saved = [...kept, latest]
   return save ? await setSavedCrawlStates(saved) : saved
 }
