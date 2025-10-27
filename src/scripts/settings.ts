@@ -1,6 +1,7 @@
 export const MODULE_ID = 'revolutionary-darkcaribbean'
 export const CRAWL_STATE = 'crawl-state'
 export const SAVE_STATE = 'saved-crawl-states'
+export const SKIP_NEXT_ADVANCE = 'skip-next-time-advance'
 
 export const MODULE_SETTINGS = {
   CREW_CONFIG: 'crew-config',

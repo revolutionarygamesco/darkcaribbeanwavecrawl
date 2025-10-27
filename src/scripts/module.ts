@@ -1,4 +1,4 @@
-import { MODULE_ID, MODULE_SETTINGS, DEFAULT_CREW } from './settings'
+import {MODULE_ID, MODULE_SETTINGS, DEFAULT_CREW, SKIP_NEXT_ADVANCE} from './settings'
 
 import Stopwatch from './time/stopwatch.ts'
 import ringBell from './time/ring-bell.ts'
@@ -17,6 +17,7 @@ import displayCrewPanel from './panels/crew.ts'
 import displayLedgerPanel from './panels/ledger.ts'
 
 import generateInsult from './insults/generate.ts'
+import getAdventure from './state/get-adventure.ts'
 
 const watch = new Stopwatch()
 let datePanel: DatePanel
@@ -69,8 +70,11 @@ Hooks.on('pauseGame', (paused: boolean) => {
 Hooks.on('updateWorldTime', async (worldTime, delta) => {
   const now = new Date(game.time.worldTime)
   const then = new Date(worldTime - delta)
+  const adventure = await getAdventure()
+  const skipAdvanceFlag = adventure?.getFlag(MODULE_ID, SKIP_NEXT_ADVANCE) ?? false
+  const skipAdvance = skipAdvanceFlag || resettingTimeToLimit
 
-  if (delta > 0 && !resettingTimeToLimit) {
+  if (delta > 0 && !skipAdvance) {
     await advanceTime(then, now)
   } else {
     const earliest = await getEarliestCrawlState()
@@ -87,6 +91,7 @@ Hooks.on('updateWorldTime', async (worldTime, delta) => {
   await ringBell()
   if (datePanel && !resettingTimeToLimit) await datePanel.render(true)
   resettingTimeToLimit = false
+  if (adventure && skipAdvanceFlag) await adventure.setFlag(MODULE_ID, SKIP_NEXT_ADVANCE, false)
 })
 
 Hooks.on('createItem', async (document: Document) => {

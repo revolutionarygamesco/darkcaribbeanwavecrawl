@@ -1,6 +1,7 @@
-import { MODULE_ID } from '../settings.ts'
+import { MODULE_ID, SKIP_NEXT_ADVANCE } from '../settings.ts'
 
 import enrichActor from '../utilities/enrich-actor.ts'
+import getAdventure from '../state/get-adventure.ts'
 import getWatch from '../time/get-watch.ts'
 import getBells from '../time/get-bells.ts'
 import getLunarPhase, { lunarIcons } from '../time/get-phase.ts'
@@ -117,6 +118,9 @@ export class DatePanel extends HandlebarsApplicationMixin(ApplicationV2) {
               hour: this.parseSetTimeSelect(coll, 'hour', curr.getUTCHours()),
               minute: this.parseSetTimeSelect(coll, 'minute', curr.getUTCMinutes())
             }
+
+            const adventure = await getAdventure()
+            if (adventure) adventure.setFlag(MODULE_ID, SKIP_NEXT_ADVANCE, true)
 
             await setTime(options, curr, true, true)
             await saveCrawlState(await setCrawlState(await updateState(await getCrawlState())))
