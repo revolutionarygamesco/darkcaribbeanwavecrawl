@@ -4,6 +4,7 @@ import enrichActor from '../utilities/enrich-actor.ts'
 import getAdventure from '../state/get-adventure.ts'
 import getWatch from '../time/get-watch.ts'
 import getBells from '../time/get-bells.ts'
+import getEarliestCrawlState from '../state/get-earliest-crawl-state.ts'
 import getLunarPhase, { lunarIcons } from '../time/get-phase.ts'
 import getDayNight from '../time/get-day-night.ts'
 import getCrawlState from '../state/get.ts'
@@ -201,6 +202,10 @@ export class DatePanel extends HandlebarsApplicationMixin(ApplicationV2) {
     const lunar = await this._prepareLunarPhase(date)
 
     const crew = await this._prepareCrew()
+    const earliest = await getEarliestCrawlState()
+    const limit = earliest?.timestamp
+    const disableBackStep = limit ? (date.getTime() - (10 * 60 * 1000)) < limit : true
+    const disableBackFast = limit ? (date.getTime() - (60 * 60 * 1000)) < limit : true
 
     return {
       date: date.toLocaleDateString(undefined, {
@@ -213,7 +218,9 @@ export class DatePanel extends HandlebarsApplicationMixin(ApplicationV2) {
       lunar,
       watch: describeNauticalTime(watch, bells),
       isGM: game.user.isGM,
-      crew
+      crew,
+      disableBackStep,
+      disableBackFast
     }
   }
 
