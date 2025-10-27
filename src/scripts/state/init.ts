@@ -27,6 +27,7 @@ const initCrawlState = (): CrawlState => ({
     },
     xp: {}
   },
+  exploits: {},
   provisions: {
     food: 0,
     water: 0,

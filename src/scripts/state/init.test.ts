@@ -21,6 +21,10 @@ describe('initCrawlState', () => {
     expect(state.crew.xp).toEqual({})
   })
 
+  it('starts exploits as an empty record', () => {
+    expect(state.exploits).toEqual({})
+  })
+
   it('starts all provisions at zero', () => {
     const { food, water, rum } = state.provisions
     const provisions = [food, water, rum]

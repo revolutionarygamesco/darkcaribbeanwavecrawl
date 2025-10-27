@@ -3,6 +3,11 @@ export type ActorID = string
 export type CrawlTeamOfficer = 'quartermaster' | 'master'
 export type CrawlTeamSide = 'starboard' | 'larboard'
 
+export interface Exploit {
+  history: string
+  legend: string[]
+}
+
 export interface CrawlTeam {
   officer: CrawlTeamOfficer
   helm?: string
@@ -64,6 +69,7 @@ export interface CrawlShip {
 
 interface CrawlState {
   crew: CrawlCrew
+  exploits: Record<string, Exploit[]>
   provisions: CrawlProvisions
   silver: CrawlSilver
   ship: CrawlShip
