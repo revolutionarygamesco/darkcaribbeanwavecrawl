@@ -1,9 +1,9 @@
 import { MODULE_ID } from '../settings.ts'
 
 const partials = [
-  'crew-tab',
   'ledger-row',
   'listing',
+  'tab',
   'team'
 ]
 

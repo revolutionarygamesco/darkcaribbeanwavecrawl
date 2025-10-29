@@ -1,5 +1,5 @@
 import { MODULE_ID } from '../settings.ts'
-import {ActorListing, CrawlTeamSide} from '../state/state.ts'
+import { ActorListing, CrawlTeamSide } from '../state/state.ts'
 
 import addToTeam from '../state/crew/teams/members/add.ts'
 import enrichActor from '../utilities/enrich-actor.ts'

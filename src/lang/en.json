@@ -288,6 +288,38 @@
         }
       }
     },
+    "exploits-panel": {
+      "window": {
+        "title": {
+          "named": "The Exploits of {name}",
+          "anon": "Exploits"
+        }
+      },
+      "tabs": {
+        "history": "History",
+        "legend": "Legend"
+      },
+      "history": {
+        "title": {
+          "named": "A True History of the Deeds of Captain {name}",
+          "anon": "A True History of a Pirate Captain"
+        },
+        "nil": {
+          "named": "Captain {name} has not yet accomplished any deeds worthy of note.",
+          "anon": "An unnamed and unsung captain who has yet to accomplish anything worthy of note."
+        }
+      },
+      "legend": {
+        "title": {
+          "named": "The Legend of Captain {name}",
+          "anon": "The Legend of a Pirate Captain"
+        },
+        "nil": {
+          "named": "Who?",
+          "anon": "Who?"
+        }
+      }
+    },
     "watches": {
       "first": "First Watch",
       "middle": "Middle Watch",
