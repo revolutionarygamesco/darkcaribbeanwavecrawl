@@ -51,6 +51,9 @@ const ids = {
       seasoned: 'Compendium.world.specialty-crew-features.Item.kkunZ6u7DX8u0vl9',
       veteran: 'Compendium.world.specialty-crew-features.Item.79vcFLHaU9ADn8eF'
     }
+  },
+  tables: {
+    legend: 'g7FjVluAYhx9JGPi'
   }
 }
 

@@ -318,7 +318,11 @@
         "nil": {
           "named": "Who?",
           "anon": "Who?"
-        }
+        },
+        "alter": {
+          "tooltip": "The legend grows…"
+        },
+        "development": "How it developed…"
       },
       "dialogs": {
         "add-exploit": {
@@ -327,6 +331,14 @@
           "placeholder": "Captain Henry Morgan raided Old Panama City and left it in ruins.",
           "buttons": {
             "add": "Add",
+            "cancel": "Cancel"
+          }
+        },
+        "alter-exploit": {
+          "title": "The Legend Grows",
+          "suggestion": "Here’s one way that the legend could change: {suggestion}",
+          "buttons": {
+            "change": "Change",
             "cancel": "Cancel"
           }
         }

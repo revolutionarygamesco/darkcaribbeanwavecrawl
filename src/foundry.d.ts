@@ -121,6 +121,10 @@ interface Adventure extends Document {
   flags: any
 }
 
+interface RollTable {
+  draw(options?: any): Promise<any>
+}
+
 interface Module {
   api: Record<string, Function>
 }
@@ -156,6 +160,7 @@ declare const game: {
   packs: Map<string, any>
   paused: boolean,
   scenes: Map<string, any>,
+  tables: Map<string, RollTable>,
   settings: {
     register: (namespace: string, name: string, settings: GameSettings) => void,
     registerMenu: (namespace: string, name: string, data: any) => void,
