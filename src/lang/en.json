@@ -293,7 +293,8 @@
         "title": {
           "named": "The Exploits of {name}",
           "anon": "Exploits"
-        }
+        },
+        "add": "Add New Exploit"
       },
       "tabs": {
         "history": "History",
@@ -317,6 +318,17 @@
         "nil": {
           "named": "Who?",
           "anon": "Who?"
+        }
+      },
+      "dialogs": {
+        "add-exploit": {
+          "title": "Add New Exploit",
+          "note": "Only something even grander or more daring than your last exploit ({latest}) will do.",
+          "placeholder": "Captain Henry Morgan raided Old Panama City and left it in ruins.",
+          "buttons": {
+            "add": "Add",
+            "cancel": "Cancel"
+          }
         }
       }
     },
