@@ -44,7 +44,7 @@ const initCrawlState = (): CrawlState => ({
       x: 2750, y: 1083, rotation: 30
     }
   },
-  timestamp: -8029350000,
+  timestamp: -8029350000000,
   chapter: 1,
   winds: 2,
   haunt: 1

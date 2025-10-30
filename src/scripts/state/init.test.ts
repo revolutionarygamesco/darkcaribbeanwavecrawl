@@ -4,7 +4,7 @@ describe('initCrawlState', () => {
   const state = initCrawlState()
 
   it('starts at noon on 24 July 1715', () => {
-    expect(state.timestamp).toBe(-8029350000)
+    expect(state.timestamp).toBe(-8029350000000)
   })
 
   it('starts both teams empty', () => {

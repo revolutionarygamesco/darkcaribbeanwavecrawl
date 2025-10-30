@@ -1,17 +1,15 @@
 import { MODULE_ID } from '../settings.ts'
 import { Provision } from '../state/state.ts'
 
-import PayoutDialog from './payout.ts'
 import getPanelDimensions from '../utilities/get-dimensions.ts'
 import registerPartials from './register-partials.ts'
 import localize from '../utilities/localize.ts'
 import getShip from '../state/ship/get.ts'
 import getSilver from '../state/silver/get.ts'
 import getProvisions from '../state/provisions/get.ts'
-import addSilver from '../state/silver/add.ts'
-import addProvisions from '../state/provisions/add.ts'
 import getCrewShares from '../payout/get-crew-shares.ts'
-import payout from '../payout/pay.ts'
+import openPayoutDialog from './dialogs/payout.ts'
+import openAdjustResourceDialog from './dialogs/adjust-resource.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 
@@ -95,121 +93,16 @@ export class LedgerPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     const target = event.target as HTMLElement
     const button = target.closest('button') as HTMLElement
     if (!button) return
+    const rerender = async () => { await this.render({ force: true }) }
 
     switch (button.dataset.action) {
       case 'close-ledger': await this.close(); break
-      case 'adjust-silver': return await this.adjustResource('silver')
-      case 'adjust-food': return await this.adjustResource('food')
-      case 'adjust-water': return await this.adjustResource('water')
-      case 'adjust-rum': return await this.adjustResource('rum')
-      case 'payout': return await this.openPayoutDialog()
+      case 'adjust-silver': return await openAdjustResourceDialog('silver', rerender)
+      case 'adjust-food': return await openAdjustResourceDialog('food', rerender)
+      case 'adjust-water': return await openAdjustResourceDialog('water', rerender)
+      case 'adjust-rum': return await openAdjustResourceDialog('rum', rerender)
+      case 'payout': return await openPayoutDialog(rerender)
     }
-  }
-
-  parsAdjustResource (coll: HTMLFormControlsCollection, field: string, fallback: number): number {
-    const input = coll[field as any] as HTMLInputElement
-    const parsed = parseInt(input.value)
-    return isNaN(parsed) ? fallback : parsed
-  }
-
-  async _adjustResource (type: Provision | 'silver', amount: number) {
-    type === 'silver' ? await addSilver(amount) : await addProvisions(type, amount)
-    await this.render({ force: true })
-  }
-
-  async adjustResource (type: Provision | 'silver') {
-    const prefix = [MODULE_ID, 'ledger-panel', 'adjust'].join('.')
-    const name = `adjust-${type}`
-    const title = localize(`${prefix}.types.${type}.title`)
-    const note = type === 'silver' ? '' : `<p class="note">${localize(`${prefix}.types.${type}.note`)}</p>`
-
-    const dialog = new foundry.applications.api.DialogV2({
-      id: `${MODULE_ID}-adjust-resource`,
-      window: { title },
-      content: `
-        <input type="number" id="${name}" name="${name}" value="0" min="0" />
-        ${note}
-      `,
-      buttons: [
-        {
-          action: 'add',
-          label: localize(`${prefix}.actions.add`),
-          callback: async (_event: Event, button: HTMLButtonElement) => {
-            const coll = button.form?.elements
-            if (!coll) return
-
-            const amount = this.parsAdjustResource(coll, name, 0)
-            return await this._adjustResource(type, amount)
-          }
-        },
-        {
-          action: 'sub',
-          label: localize(`${prefix}.actions.sub`),
-          callback: async (_event: Event, button: HTMLButtonElement) => {
-            const coll = button.form?.elements
-            if (!coll) return
-
-            const amount = this.parsAdjustResource(coll, name, 0) * -1
-            return await this._adjustResource(type, amount)
-          }
-        },
-        {
-          action: 'cancel',
-          label: localize(`${prefix}.actions.cancel`),
-          callback: async () => {
-            await dialog.close()
-          }
-        }
-      ]
-    })
-
-    await dialog.render(true)
-  }
-
-  async openPayoutDialog () {
-    const prefix = [MODULE_ID, 'ledger-panel', 'payout', 'dialog'].join('.')
-    const title = localize(`${prefix}.title`)
-    const stock = await getSilver()
-
-    const dialog = new PayoutDialog({
-      id: `${MODULE_ID}-payout`,
-      window: { title },
-      content: `
-        <label for="payout-amount">${localize(prefix + '.amount')}</label>
-        <input type="number" id="payout-amount" name="amount" value="0" min="0" max="${stock}" />
-        <table class="payout-estimation">
-          <tbody>
-            <tr>
-              <th>${localize(prefix + '.estimates.per-share')}</th>
-              <td id="payout-per-share">0</td>
-            </tr>
-            <tr>
-              <th>${localize(prefix + '.estimates.remaining')}</th>
-              <td id="payout-remaining">${stock}</td>
-            </tr>
-          </tbody>
-        </table>
-      `,
-      buttons: [
-        {
-          action: 'pay',
-          label: localize(`${prefix}.actions.pay`),
-          callback: async () => {
-            await payout(dialog.getAmount())
-            await this.render({ force: true })
-          }
-        },
-        {
-          action: 'cancel',
-          label: localize(`${prefix}.actions.cancel`),
-          callback: async () => {
-            await dialog.close()
-          }
-        }
-      ]
-    })
-
-    await dialog.render(true)
   }
 }
 

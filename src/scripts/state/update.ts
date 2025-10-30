@@ -5,7 +5,7 @@ import { fetchCrewSilver } from './silver/crew/update.ts'
 
 const updateState = async (state?: CrawlState): Promise<CrawlState> => {
   const copy = await getCopy(state)
-  copy.timestamp = game?.time?.worldTime ?? -8029350000
+  copy.timestamp = game?.time?.worldTime ?? -8029350000000
 
   const position = await getShipPosition()
   if (position) copy.ship.position = position

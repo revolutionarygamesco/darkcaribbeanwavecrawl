@@ -1,7 +1,6 @@
-import { MODULE_ID, SKIP_NEXT_ADVANCE } from '../settings.ts'
+import { MODULE_ID } from '../settings.ts'
 
 import enrichActor from '../utilities/enrich-actor.ts'
-import getAdventure from '../state/get-adventure.ts'
 import getWatch from '../time/get-watch.ts'
 import getBells from '../time/get-bells.ts'
 import getEarliestCrawlState from '../state/get-earliest-crawl-state.ts'
@@ -9,12 +8,9 @@ import getLunarPhase, { lunarIcons } from '../time/get-phase.ts'
 import getDayNight from '../time/get-day-night.ts'
 import getCrawlState from '../state/get.ts'
 import describeNauticalTime from '../time/nautical-time.ts'
-import setTime, { SetTimeOptions } from '../time/set.ts'
+import openSetTimeDialog from './dialogs/set-time.ts'
 import registerPartials from './register-partials.ts'
 import localize from '../utilities/localize.ts'
-import updateState from '../state/update.ts'
-import setCrawlState from '../state/set.ts'
-import saveCrawlState from '../state/save.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 
@@ -41,96 +37,6 @@ export class DatePanel extends HandlebarsApplicationMixin(ApplicationV2) {
     date: {
       template: `./modules/${MODULE_ID}/templates/date.hbs`
     }
-  }
-
-  parseSetTimeSelect (coll: HTMLFormControlsCollection, field: string, fallback: number): number {
-    const select = coll[field as any] as HTMLSelectElement
-    const parsed = parseInt(select.value)
-    return isNaN(parsed) ? fallback : parsed
-  }
-
-  async openSetTimeDialog () {
-    const curr = new Date(game.time.worldTime)
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-
-    const years: string[] = []
-    for (let year = 1600; year < 1800; year++) {
-      const option = curr.getUTCFullYear() === year
-        ? `<option selected>${year}</option>`
-        : `<option>${year}</option>`
-      years.push(option)
-    }
-
-    const months: string[] = []
-    for (let month = 0; month < 12; month++) {
-      const option = curr.getUTCMonth() === month
-        ? `<option value="${month}" selected>${monthNames[month]}</option>`
-        : `<option value="${month}">${monthNames[month]}</option>`
-      months.push(option)
-    }
-
-    const days: string[] = []
-    for (let day = 1; day < 32; day++) {
-      const option = curr.getUTCDate() === day
-        ? `<option selected>${day}</option>`
-        : `<option>${day}</option>`
-      days.push(option)
-    }
-
-    const hours: string[] = []
-    for (let hour = 0; hour < 24; hour++) {
-      const option = curr.getUTCHours() === hour
-        ? `<option selected>${hour}</option>`
-        : `<option>${hour}</option>`
-      hours.push(option)
-    }
-
-    const minutes: string[] = []
-    for (let minute = 0; minute < 60; minute++) {
-      const option = curr.getUTCMinutes() === minute
-        ? `<option selected>${minute}</option>`
-        : `<option>${minute}</option>`
-      minutes.push(option)
-    }
-
-    const dialog = new foundry.applications.api.DialogV2({
-      id: `${MODULE_ID}-set-time`,
-      window: { title: 'Set the date' },
-      content: `
-      <label for="set-time-year">Year</label><select id="set-time-year" name="year">${years.join('')}</select>
-      <label for="set-time-month">Month</label><select id="set-time-month" name="month">${months.join('')}</select>
-      <label for="set-time-date">Day</label><select id="set-time-date" name="date">${days.join('')}</select>
-      <label for="set-time-hour">Hour</label><select id="set-time-hour" name="hour">${hours.join('')}</select>
-      <label for="set-time-minute">Minute</label><select id="set-time-minute" name="minute">${minutes.join('')}</select>
-      `,
-      buttons: [
-        {
-          action: 'set',
-          label: 'Set Time',
-          default: true,
-          callback: async (_event: Event, button: HTMLButtonElement) => {
-            const coll = button.form?.elements
-            if (!coll) return
-
-            const options: SetTimeOptions = {
-              year: this.parseSetTimeSelect(coll, 'year', curr.getUTCFullYear()),
-              month: this.parseSetTimeSelect(coll, 'month', curr.getUTCMonth()),
-              date: this.parseSetTimeSelect(coll, 'date', curr.getUTCDate()),
-              hour: this.parseSetTimeSelect(coll, 'hour', curr.getUTCHours()),
-              minute: this.parseSetTimeSelect(coll, 'minute', curr.getUTCMinutes())
-            }
-
-            const adventure = await getAdventure()
-            if (adventure) adventure.setFlag(MODULE_ID, SKIP_NEXT_ADVANCE, true)
-
-            await setTime(options, curr, true, true)
-            await saveCrawlState(await setCrawlState(await updateState(await getCrawlState())))
-          }
-        }
-      ]
-    })
-
-    await dialog.render(true)
   }
 
   async _fetchSVG (url: string, alt: string): Promise<string> {
@@ -179,7 +85,7 @@ export class DatePanel extends HandlebarsApplicationMixin(ApplicationV2) {
   async _adjustTime (event: Event) {
     const target = event.target as HTMLElement
     const set = target.closest('button[data-action="set-time"]') as HTMLElement
-    if (set) return await this.openSetTimeDialog()
+    if (set) return await openSetTimeDialog(async () => { await this.render({ force: true }) })
 
     const button = target.closest('button[data-action="adjust-time"]') as HTMLElement
     if (!button) return
