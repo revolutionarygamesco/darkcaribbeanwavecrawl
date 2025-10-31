@@ -60,6 +60,14 @@ declare class FormDataExtended {
   toObject(): Record<string, any>
 }
 
+declare class Roll {
+  constructor(formula?: string, data?: object, options?: any)
+  result: string
+  total: number
+  evaluate(options?: any): Promise<Roll>
+  toMessage(messageData?: object, options?: any): Promise<any>
+}
+
 declare class TextEditor {
   static enrichHTML(content: string, options?: any): Promise<string>
   static getDragEventData(event: DragEvent): any
@@ -173,6 +181,7 @@ declare const game: {
     advance(delta: number, options?: object): Promise<number>
   },
   user: {
+    id: string
     isGM: boolean
   },
   users: Map<string, any>
@@ -203,6 +212,9 @@ declare const foundry: {
   audio: {
     AudioHelper: AudioHelper
   },
+  dice: {
+    Roll: typeof Roll
+  }
   documents: {
     ChatMessage: ChatMessage
   }

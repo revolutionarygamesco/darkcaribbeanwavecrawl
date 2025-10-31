@@ -344,6 +344,13 @@
         }
       }
     },
+    "jolly-roger": {
+      "speaker": "Jolly Roger",
+      "unrecognized": "The ship recognizes the black flag of a pirate ship, but nothing of your reputation.",
+      "recognized": "The crew of the ship recognizes your flag. They have heard the following tale:",
+      "reaction": "<strong>DR {DR} crew skill:</strong> On failure, roll on {table}.",
+      "reaction-table-name": "Jolly Roger Reactions"
+    },
     "watches": {
       "first": "First Watch",
       "middle": "Middle Watch",

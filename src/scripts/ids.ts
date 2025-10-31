@@ -53,7 +53,8 @@ const ids = {
     }
   },
   tables: {
-    legend: 'g7FjVluAYhx9JGPi'
+    legend: 'g7FjVluAYhx9JGPi',
+    jollyRogerReactions: 'yEIbWKrrjbG9rKaX'
   }
 }
 
