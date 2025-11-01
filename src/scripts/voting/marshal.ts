@@ -1,13 +1,6 @@
+import { VotingSize, VotingChoice, VotingMarshallingZone } from './types.ts'
 import getRosterActors from '../state/crew/roster/actors.ts'
 import ids from '../ids.ts'
-
-type VotingSize = 'large' | 'medium' | 'small'
-type VotingChoice = 'yea' | 'undecided' | 'nay'
-
-interface VotingMarshallingZone {
-  columns: [number, number]
-  rows: [number, number]
-}
 
 const sRows: [number, number] = [7, 18]
 const mRows: [number, number] = [14, 33]
