@@ -122,6 +122,7 @@ interface Actor extends Document {
     },
     silver?: number
   }
+  getTokenDocument(data?: object, options?: object): Promise<Token>
   update(data?: object, operation?: any): Promise<any>
 }
 
@@ -137,7 +138,8 @@ interface Module {
   api: Record<string, Function>
 }
 
-interface Scene {
+interface Scene extends Document {
+  active: Scene,
   tokens: {
     find: (callback: (t: Token) => boolean) => Token | undefined
   },
@@ -216,7 +218,8 @@ declare const foundry: {
     Roll: typeof Roll
   }
   documents: {
-    ChatMessage: ChatMessage
+    ChatMessage: ChatMessage,
+    Scene: Scene
   }
 }
 

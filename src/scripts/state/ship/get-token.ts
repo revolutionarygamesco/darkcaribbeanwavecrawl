@@ -8,7 +8,7 @@ const getShipToken = async (
   const id = (state ?? await getCrawlState()).ship.actor
   if (!id) return null
 
-  const scene = game.scenes.get(ids.scenes.map)
+  const scene = game.scenes.get(ids.map)
   if (!scene) return null
 
   const token = scene.tokens.find((t: Token) => t.actorId === id)

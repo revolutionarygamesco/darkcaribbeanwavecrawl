@@ -1,8 +1,6 @@
 const ids = {
   adventure: 'Compendium.revolutionary-darkcaribbean.dark-caribbean-wave-crawl.Adventure.A1K2pnA8uEuA7pGe',
-  scenes: {
-    map: '3JvJSgDc5iwQjKye'
-  },
+  map: '3JvJSgDc5iwQjKye',
   haunt: {
     normal: 'PnhdnvyA7xh4kFVu',
     bloody: 'ccWf6Xm5vE5W1UaT',
@@ -14,6 +12,29 @@ const ids = {
   },
   chapter: {
     text: 'WXFZxdYUbR0VTWSz'
+  },
+  voting: {
+    small: {
+      scene: 'CpmPFdVJaR0m6quI',
+      prop: '6W0SPv8eBRzhNqGv',
+      yea: 'vfzobLVJlj8t7bby',
+      undecided: 'dJVq3mbWANqQLBDl',
+      nay: '4rjZihzocz2w0pQ2'
+    },
+    medium: {
+      scene: 'b1TEqvjiFBVjZvBM',
+      prop: '6W0SPv8eBRzhNqGv',
+      yea: 'vfzobLVJlj8t7bby',
+      undecided: 'dJVq3mbWANqQLBDl',
+      nay: '4rjZihzocz2w0pQ2'
+    },
+    large: {
+      scene: '7GCEAGZ9bJiDndhO',
+      prop: '6W0SPv8eBRzhNqGv',
+      yea: '5bihhBSu59Rql9Sw',
+      undecided: 'dJVq3mbWANqQLBDl',
+      nay: '4rjZihzocz2w0pQ2'
+    }
   },
   xp: {
     captain: {
