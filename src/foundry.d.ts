@@ -91,6 +91,7 @@ interface Document {
   type: string
   system?: Record<string, any>
   parent?: Document
+  parentCollection?: string
   toObject(source?: boolean): any
   getFlag<T>(scope: string, key: string): T
   setFlag<T>(scope: string, key: string, value: T): void
@@ -142,12 +143,12 @@ interface Module {
   api: Record<string, Function>
 }
 
+interface Region extends Document {}
+
 interface Scene extends Document {
   active: Scene,
   drawings: Map<string, Drawing>,
-  tokens: {
-    find: (callback: (t: Token) => boolean) => Token | undefined
-  },
+  tokens: Map<string, Token>,
   updateEmbeddedDocuments: (type: string, docs: Array<Record<string, any>>) => Promise<void>
   activate(): Promise<Scene>
   view(): Promise<Scene>
@@ -159,6 +160,7 @@ interface Token extends Document {
   x: number
   y: number
   rotation: number
+  regions: Set<Region>
 }
 
 declare const Hooks: {
@@ -194,10 +196,6 @@ declare const game: {
     isGM: boolean
   },
   users: Map<string, any>
-}
-
-declare const canvas: {
-  scene: Scene
 }
 
 declare const foundry: {

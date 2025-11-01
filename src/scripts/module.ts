@@ -17,10 +17,14 @@ import displayCrewPanel from './panels/crew.ts'
 import displayLedgerPanel from './panels/ledger.ts'
 import displayExploitsPanel from './panels/exploits.ts'
 import raiseJollyRoger from './jolly-roger.ts'
+
 import callVote from './voting/call.ts'
 
 import generateInsult from './insults/generate.ts'
 import getAdventure from './state/get-adventure.ts'
+
+import ids from './ids.ts'
+import countVotes from './voting/count.ts'
 
 const watch = new Stopwatch()
 let datePanel: DatePanel
@@ -103,4 +107,15 @@ Hooks.on('updateWorldTime', async (worldTime, delta) => {
 Hooks.on('createItem', async (document: Document) => {
   await removeLowerLevelFeatures(document)
   await saveCrawlState(await raiseXP(document))
+})
+
+Hooks.on('moveToken', async (document: Document) => {
+  const votingScenes = [
+    ids.voting.small.scene,
+    ids.voting.medium.scene,
+    ids.voting.large.scene
+  ]
+
+  const pid = document.parent?.id
+  if (pid && votingScenes.includes(pid)) await countVotes(pid)
 })

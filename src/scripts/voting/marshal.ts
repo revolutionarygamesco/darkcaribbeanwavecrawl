@@ -2,6 +2,7 @@ import { VotingSize, VotingChoice, VotingMarshallingZone } from './types.ts'
 import getRosterActors from '../state/crew/roster/actors.ts'
 import findScene from './find-scene.ts'
 import findSize from './find-size.ts'
+import countVotes from './count.ts'
 
 const sRows: [number, number] = [7, 18]
 const mRows: [number, number] = [14, 33]
@@ -46,7 +47,7 @@ const marshalVoters = async (
     if (x > columns[1]) { x = columns[0]; y++ }
     if (y > rows[1]) break
 
-    const pos = { x: x * scale, y: y * scale }
+    const pos = { x: x * scale, y: y * scale, rotation: 0 }
 
     let token = votingScene.tokens.find((t: Token) => t.actorId === voter.id)
     if (token) { await token.update(pos); x++; continue }
@@ -55,6 +56,8 @@ const marshalVoters = async (
     await votingScene.createEmbeddedDocuments('Token', [token])
     x++
   }
+
+  await countVotes(votingScene.id)
 }
 
 export default marshalVoters
