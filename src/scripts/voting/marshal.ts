@@ -1,6 +1,7 @@
 import { VotingSize, VotingChoice, VotingMarshallingZone } from './types.ts'
 import getRosterActors from '../state/crew/roster/actors.ts'
-import ids from '../ids.ts'
+import findScene from './find-scene.ts'
+import findSize from './find-size.ts'
 
 const sRows: [number, number] = [7, 18]
 const mRows: [number, number] = [14, 33]
@@ -25,16 +26,6 @@ const grids: Record<VotingSize, Record<VotingChoice, VotingMarshallingZone>> = {
   }
 }
 
-const findSize = (id: string, crewSize?: number): VotingSize => {
-  if (ids.voting.large.scene === id) return 'large'
-  if (ids.voting.medium.scene === id) return 'medium'
-  if (ids.voting.small.scene === id) return 'small'
-
-  if (crewSize && crewSize > 150) return 'large'
-  if (crewSize && crewSize > 50) return 'medium'
-  return 'small'
-}
-
 const marshalVoters = async (
   area: VotingChoice = 'undecided',
   actors?: Actor[],
@@ -42,7 +33,7 @@ const marshalVoters = async (
 ): Promise<void> => {
   const voters = actors ?? await getRosterActors()
   const sceneId = scene ?? foundry.documents.Scene.active.id
-  const size = findSize(sceneId, voters.length)
+  const size = findScene(sceneId) ?? findSize(voters.length)
   const scale = scales[size]
 
   const votingScene = game.scenes.get(sceneId)
