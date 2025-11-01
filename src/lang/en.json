@@ -351,6 +351,14 @@
       "reaction": "<strong>DR {DR} crew skill:</strong> On failure, roll on {table}.",
       "reaction-table-name": "Jolly Roger Reactions"
     },
+    "call-vote": {
+      "title": "Call for a Vote",
+      "label": "What is the proposition to be voted upon?",
+      "buttons": {
+        "start": "Open Voting",
+        "cancel": "Cancel"
+      }
+    },
     "watches": {
       "first": "First Watch",
       "middle": "Middle Watch",

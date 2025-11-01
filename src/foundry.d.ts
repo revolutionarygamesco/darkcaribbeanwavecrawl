@@ -130,6 +130,10 @@ interface Adventure extends Document {
   flags: any
 }
 
+interface Drawing extends Document {
+  text?: string
+}
+
 interface RollTable {
   draw(options?: any): Promise<any>
 }
@@ -140,10 +144,13 @@ interface Module {
 
 interface Scene extends Document {
   active: Scene,
+  drawings: Map<string, Drawing>,
   tokens: {
     find: (callback: (t: Token) => boolean) => Token | undefined
   },
   updateEmbeddedDocuments: (type: string, docs: Array<Record<string, any>>) => Promise<void>
+  activate(): Promise<Scene>
+  view(): Promise<Scene>
 }
 
 interface Token extends Document {
