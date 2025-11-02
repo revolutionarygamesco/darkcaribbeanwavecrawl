@@ -1,8 +1,51 @@
-import { Provision } from '../../state/state.ts'
 import { MODULE_ID } from '../../settings.ts'
+
+import CrawlState, { Provision } from '../../state/state.ts'
 import localize from '../../utilities/localize.ts'
 import addSilver from '../../state/silver/add.ts'
-import addProvisions from '../../state/provisions/add.ts'
+import addProvisions from '../../provisions/add.ts'
+import checkCargoSpace from '../../provisions/cargo/check.ts'
+import getCopy from '../../state/get-copy.ts'
+import getCrawlState from '../../state/get.ts'
+import setCrawlState from '../../state/set.ts'
+import saveCrawlState from '../../state/save.ts'
+import storeProvisions from '../../provisions/cargo/store.ts'
+import openConfirmDialog from './confirm.ts'
+import getShip from '../../state/ship/get.ts'
+
+const openWarning = async (
+  state: CrawlState,
+  message: string
+): Promise<void> => {
+  const path = [MODULE_ID, 'confirm', message]
+  const ship = await getShip(state)
+  const title = localize([...path, 'title'].join('.'))
+  const body = localize([...path, 'body'].join('.'), { ship: ship?.name ?? 'the ship' })
+  await openConfirmDialog(title, body)
+}
+
+const addProvision = async (
+  provision: Provision,
+  amount: number
+): Promise<void> => {
+  const state = await getCrawlState()
+  const stores = await addProvisions(provision, amount, state)
+  const { will, could } = await checkCargoSpace(stores)
+
+  if (will) {
+    const copy = await getCopy(state)
+    copy.provisions.food = stores.food
+    copy.provisions.water = stores.water
+    copy.provisions.rum = stores.rum
+    await setCrawlState(copy)
+    await saveCrawlState(copy)
+    await storeProvisions(copy)
+  } else if (could) {
+    await openWarning(state, 'provisions-jettison')
+  } else {
+    await openWarning(state, 'provisions-never')
+  }
+}
 
 const parseResource = (
   coll: HTMLFormControlsCollection,
@@ -19,7 +62,7 @@ const adjustResource = async (
   amount: number,
   onComplete?: () => Promise<void>
 ): Promise<void> => {
-  type === 'silver' ? await addSilver(amount) : await addProvisions(type, amount)
+  type === 'silver' ? await addSilver(amount) : await addProvision(type, amount)
   if (onComplete) await onComplete()
 }
 
