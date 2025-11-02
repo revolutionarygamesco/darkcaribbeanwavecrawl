@@ -359,6 +359,19 @@
         "cancel": "Cancel"
       }
     },
+    "confirm": {
+      "provisions-jettison": {
+        "title": "A Hard Choice",
+        "body": "That’s more than {ship} can hold at the moment, though it could all fit if you were willing to jettison some of your cargo."
+      },
+      "provisions-never": {
+        "title": "Drink Up, Me Hearties!",
+        "body": "That’s more than {ship} could ever hold, even if you cleared out all your other cargo and carried nothing but provisions."
+      },
+      "buttons": {
+        "ok": "Aye"
+      }
+    },
     "watches": {
       "first": "First Watch",
       "middle": "Middle Watch",
