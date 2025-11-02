@@ -16,6 +16,7 @@ import CrewConfigPanel from './panels/crew-config.ts'
 import displayCrewPanel from './panels/crew.ts'
 import displayLedgerPanel from './panels/ledger.ts'
 import displayExploitsPanel from './panels/exploits.ts'
+import checkJettisonedProvisions from './provisions/cargo/jettison.ts'
 import raiseJollyRoger from './jolly-roger.ts'
 
 import callVote from './voting/call.ts'
@@ -105,6 +106,10 @@ Hooks.on('updateWorldTime', async (worldTime, delta) => {
 Hooks.on('createItem', async (document: Document) => {
   await removeLowerLevelFeatures(document)
   await saveCrawlState(await raiseXP(document))
+})
+
+Hooks.on('deleteItem', async (document: Document) => {
+  await checkJettisonedProvisions(document)
 })
 
 Hooks.on('moveToken', async (document: Document, movement: TokenMovementData) => {
