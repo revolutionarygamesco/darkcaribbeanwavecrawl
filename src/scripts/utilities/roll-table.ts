@@ -17,7 +17,7 @@ const rollTable = async (
   if (!drawn || !drawn.results || !Array.isArray(drawn.results) || drawn.results < 1) return null
   const name = drawn.results[0].name
   const description = drawn.results[0].description
-  if (!name || !description) return null
+  if (name === undefined || description === undefined) return null
   return { name, description }
 }
 

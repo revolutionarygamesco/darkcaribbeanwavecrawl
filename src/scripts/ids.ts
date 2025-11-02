@@ -75,7 +75,9 @@ const ids = {
   },
   tables: {
     legend: 'g7FjVluAYhx9JGPi',
-    jollyRogerReactions: 'yEIbWKrrjbG9rKaX'
+    jollyRogerReactions: 'yEIbWKrrjbG9rKaX',
+    insultingAdjectives: '17kvrcktA2pqFE8H',
+    insultingNouns: 'mDqQ2IkX7cikehFC'
   }
 }
 

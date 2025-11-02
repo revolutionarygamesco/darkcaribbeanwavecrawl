@@ -22,7 +22,7 @@ import raiseJollyRoger from './jolly-roger.ts'
 import callVote from './voting/call.ts'
 import checkVote from './voting/check.ts'
 
-import generateInsult from './insults/generate.ts'
+import generateInsult from './insult.ts'
 import getAdventure from './state/get-adventure.ts'
 
 const watch = new Stopwatch()
