@@ -1,4 +1,4 @@
-import {MODULE_ID, MODULE_SETTINGS, DEFAULT_CREW, SKIP_NEXT_ADVANCE} from './settings'
+import { MODULE_ID, MODULE_SETTINGS, DEFAULT_CREW, SKIP_NEXT_ADVANCE } from './settings'
 
 import Stopwatch from './time/stopwatch.ts'
 import ringBell from './time/ring-bell.ts'
@@ -19,12 +19,10 @@ import displayExploitsPanel from './panels/exploits.ts'
 import raiseJollyRoger from './jolly-roger.ts'
 
 import callVote from './voting/call.ts'
+import checkVote from './voting/check.ts'
 
 import generateInsult from './insults/generate.ts'
 import getAdventure from './state/get-adventure.ts'
-
-import ids from './ids.ts'
-import countVotes from './voting/count.ts'
 
 const watch = new Stopwatch()
 let datePanel: DatePanel
@@ -109,13 +107,6 @@ Hooks.on('createItem', async (document: Document) => {
   await saveCrawlState(await raiseXP(document))
 })
 
-Hooks.on('moveToken', async (document: Document) => {
-  const votingScenes = [
-    ids.voting.small.scene,
-    ids.voting.medium.scene,
-    ids.voting.large.scene
-  ]
-
-  const pid = document.parent?.id
-  if (pid && votingScenes.includes(pid)) await countVotes(pid)
+Hooks.on('moveToken', async (document: Document, movement: TokenMovementData) => {
+  await checkVote(document, movement)
 })

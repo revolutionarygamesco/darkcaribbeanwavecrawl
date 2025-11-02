@@ -84,6 +84,24 @@ interface GameSettings {
   default: any
 }
 
+interface ElevatedPoint {
+  elevation: number
+  x: number
+  y: number
+}
+
+interface TokenPosition extends ElevatedPoint {
+  shape: any
+  height: number
+  width: number
+}
+
+interface TokenMovementData {
+  origin: TokenPosition
+  destination: TokenPosition
+  [key: string]: any
+}
+
 interface Document {
   id: string
   name: string
@@ -143,11 +161,14 @@ interface Module {
   api: Record<string, Function>
 }
 
-interface Region extends Document {}
+interface Region extends Document {
+  testPoint(point: { elevation: number, x: number, y: number }): boolean
+}
 
 interface Scene extends Document {
   active: Scene,
   drawings: Map<string, Drawing>,
+  regions: Map<string, Region>,
   tokens: Map<string, Token>,
   updateEmbeddedDocuments: (type: string, docs: Array<Record<string, any>>) => Promise<void>
   activate(): Promise<Scene>
