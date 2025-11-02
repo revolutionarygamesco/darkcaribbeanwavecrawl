@@ -139,6 +139,8 @@ interface Actor extends Document {
       }
       featureType?: string
     },
+    captain?: string,
+    crews?: string[]
     silver?: number
   }
   getTokenDocument(data?: object, options?: object): Promise<Token>

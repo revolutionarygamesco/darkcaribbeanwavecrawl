@@ -7,7 +7,9 @@ import advanceTime from './schedule/advance.ts'
 import loadCrawlState from './state/load.ts'
 import getEarliestCrawlState from './state/get-earliest-crawl-state.ts'
 import rewind from './state/rewind.ts'
+
 import handleAddSailingExperience from './xp/handle-add.ts'
+import handleShipUpdate from './state/crew/handle.ts'
 
 import displayDatePanel, { DatePanel } from './panels/date.ts'
 import CrewConfigPanel from './panels/crew-config.ts'
@@ -99,6 +101,10 @@ Hooks.on('updateWorldTime', async (worldTime, delta) => {
   if (datePanel && !resettingTimeToLimit) await datePanel.render(true)
   resettingTimeToLimit = false
   if (adventure && skipAdvanceFlag) await adventure.setFlag(MODULE_ID, SKIP_NEXT_ADVANCE, false)
+})
+
+Hooks.on('updateActor', async (document: Document) => {
+  await handleShipUpdate(document)
 })
 
 Hooks.on('createItem', async (document: Document) => {
