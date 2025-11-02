@@ -4,12 +4,10 @@ import Stopwatch from './time/stopwatch.ts'
 import ringBell from './time/ring-bell.ts'
 import advanceTime from './schedule/advance.ts'
 
-import saveCrawlState from './state/save.ts'
 import loadCrawlState from './state/load.ts'
 import getEarliestCrawlState from './state/get-earliest-crawl-state.ts'
 import rewind from './state/rewind.ts'
-import raiseXP from './xp/raise.ts'
-import removeLowerLevelFeatures from './xp/remove-lower.ts'
+import handleAddSailingExperience from './xp/handle-add.ts'
 
 import displayDatePanel, { DatePanel } from './panels/date.ts'
 import CrewConfigPanel from './panels/crew-config.ts'
@@ -104,8 +102,7 @@ Hooks.on('updateWorldTime', async (worldTime, delta) => {
 })
 
 Hooks.on('createItem', async (document: Document) => {
-  await removeLowerLevelFeatures(document)
-  await saveCrawlState(await raiseXP(document))
+  await handleAddSailingExperience(document)
 })
 
 Hooks.on('deleteItem', async (document: Document) => {

@@ -1,6 +1,8 @@
 import identifySailingXPFeature from './identify-feature.ts'
 import removeFeatures from './features/remove.ts'
 import ids from '../ids.ts'
+import saveCrawlState from '../state/save.ts'
+import raiseXP from './raise.ts'
 
 const removeLowerLevelFeatures = async (document: Document): Promise<void> => {
   if (!game.actors || document.type !== 'feature' || document.system?.featureType !== 'Sailing Experience') return
@@ -19,6 +21,7 @@ const removeLowerLevelFeatures = async (document: Document): Promise<void> => {
   if (index < 0) return
 
   await removeFeatures(actor, tiers.slice(0, index))
+  await saveCrawlState(await raiseXP(document))
 }
 
 export default removeLowerLevelFeatures
