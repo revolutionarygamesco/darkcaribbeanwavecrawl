@@ -9,7 +9,13 @@ export const extras = ['alice', 'bob', 'charlie', 'debbie', 'ed', 'frank', 'gary
 export const william = {
   id: 'william',
   name: 'William',
-  system: { attributes: { crew: { min: 3, max: 10, value: 0 } } },
+  type: 'vehicle',
+  system: {
+    attributes: {
+      crew: { min: 3, max: 10, value: 0 },
+      speed: { value: 5 }
+    },
+  },
   update: jest.fn().mockImplementation(async function(this: any, data: any) {
     if (data['system.attributes.crew.value'] !== undefined) {
       william.system!.attributes.crew!.value = data['system.attributes.crew.value']
