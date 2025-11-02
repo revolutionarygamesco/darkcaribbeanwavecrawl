@@ -246,7 +246,7 @@
       },
       "provisions": {
         "title": "Provisions",
-        "units": "{amount} person-days",
+        "units": "{amount} rations",
         "estimate": "Sufficient for {days} days",
         "types": {
           "food": {
@@ -269,16 +269,16 @@
             "title": "Adjust common stock"
           },
           "food": {
-            "title": "Adjust food stores",
-            "note": "Food stores are measured in person-days."
+            "title": "Adjust food rations",
+            "note": "1 ration can feed 1 person for 1 day."
           },
           "water": {
-            "title": "Adjust fresh water stores",
-            "note": "Water stores are measured in person-days."
+            "title": "Adjust fresh water rations",
+            "note": "1 ration is enough for 1 person for 1 day."
           },
           "rum": {
             "title": "Adjust rum stores",
-            "note": "Rum stores are measured in person-days."
+            "note": "1 ration is enough for 1 person’s daily grog."
           }
         },
         "actions": {
