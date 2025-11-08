@@ -12,22 +12,22 @@ describe('addGhost', () => {
 
   it('adds a new ghost to the state', async () => {
     const ghost = completeGhost()
-    const actual = await addGhost(ghost, state, false)
-    expect(actual.ghosts.haunting).toEqual([ghost])
+    const { ghosts } = await addGhost(ghost, state, false)
+    expect(ghosts.haunting).toEqual([ghost])
   })
 
   it('can add several new ghosts to the state', async () => {
     const g1 = completeGhost()
     const g2 = completeGhost()
-    const actual = await addGhost([g1, g2], state, false)
-    expect(actual.ghosts.haunting).toEqual([g1, g2])
+    const { ghosts } = await addGhost([g1, g2], state, false)
+    expect(ghosts.haunting).toEqual([g1, g2])
   })
 
   it('retains previous ghosts', async () => {
     const g1 = completeGhost()
     const g2 = completeGhost()
     state.ghosts.haunting = [g1]
-    const actual = await addGhost(g2, state, false)
-    expect(actual.ghosts.haunting).toEqual([g1, g2])
+    const { ghosts } = await addGhost(g2, state, false)
+    expect(ghosts.haunting).toEqual([g1, g2])
   })
 })
