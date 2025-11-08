@@ -1,7 +1,7 @@
 import completeGhost from './complete.ts'
 import getGhostID from './id.ts'
 
-describe('getGhostId', () => {
+describe('getGhostID', () => {
   it('returns ID from a ghost', () => {
     const ghost = completeGhost()
     expect(getGhostID(ghost)).toBe(ghost.id)
