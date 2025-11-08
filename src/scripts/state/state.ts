@@ -8,6 +8,12 @@ export interface Exploit {
   legend: string[]
 }
 
+export interface Ghost {
+  name: string
+  actor: string
+  notes: string
+}
+
 export interface CrawlTeam {
   officer: CrawlTeamOfficer
   helm?: string
@@ -76,7 +82,7 @@ interface CrawlState {
   timestamp: number
   chapter: number
   winds: number
-  haunt: number
+  ghosts: Ghost[]
 }
 
 export default CrawlState

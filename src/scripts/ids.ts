@@ -74,6 +74,7 @@ const ids = {
     }
   },
   tables: {
+    accidents: 'y9jjzW7vl3bblKNY',
     legend: 'g7FjVluAYhx9JGPi',
     jollyRogerReactions: 'yEIbWKrrjbG9rKaX',
     insultingAdjectives: '17kvrcktA2pqFE8H',

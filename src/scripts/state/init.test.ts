@@ -62,7 +62,7 @@ describe('initCrawlState', () => {
     expect(state.winds).toBe(2)
   })
 
-  it('starts haunting at level 1', () => {
-    expect(state.haunt).toBe(1)
+  it('starts without any ghosts', () => {
+    expect(state.ghosts).toEqual([])
   })
 })
