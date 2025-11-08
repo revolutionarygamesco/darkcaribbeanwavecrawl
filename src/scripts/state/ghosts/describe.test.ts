@@ -1,21 +1,17 @@
 import CrawlState, { Ghost } from '../state.ts'
 import setupCrew, { setupState, dinghy, william } from '../../utilities/testing/crew.ts'
+import completeGhost from './complete.ts'
 import describeHaunt from './describe.ts'
 
 const createGhosts = (num: number = 0): Ghost[] => {
   const ghosts: Ghost[] = []
-  for (let i = 0; i < num; i++) {
-    ghosts.push({
-      name: 'Casper',
-      actor: 'casper',
-      notes: 'He is a friendly ghost.'
-    })
-  }
+  for (let i = 0; i < num; i++) ghosts.push(completeGhost({}))
   return ghosts
 }
 
 describe('describeHaunt', () => {
   setupCrew()
+
   let state: CrawlState
   const cargo = william.system?.attributes.cargo?.max ?? 2
 

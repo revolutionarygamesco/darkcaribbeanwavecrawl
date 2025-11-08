@@ -9,9 +9,17 @@ export interface Exploit {
 }
 
 export interface Ghost {
-  name: string
-  actor: string
-  notes: string
+  id: string
+  names: {
+    haunted: string
+    human: string
+  }
+  actor?: string
+  notes: string,
+  status: {
+    seen: boolean,
+    named: boolean
+  }
 }
 
 export interface CrawlTeam {

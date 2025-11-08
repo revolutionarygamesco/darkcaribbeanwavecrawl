@@ -398,6 +398,13 @@
       "dusk": "dusk",
       "night": "night"
     },
+    "default-ghost": {
+      "names": {
+        "haunted": "Unknown Ghost",
+        "human": ""
+      },
+      "notes": "Nothing is yet known about this spirit."
+    },
     "notifications": {
       "ship-before-crew": "You need a ship before you can start assigning crew to it.",
       "below-min-crew": "{ship} requires a crew of at least {min}. You’ll need {more} more crew before you’ll be ready to set sail.",
