@@ -12,8 +12,27 @@ export const william = {
   type: 'vehicle',
   system: {
     attributes: {
+      cargo: { max: 2, value: 0 },
       crew: { min: 3, max: 10, value: 0 },
       speed: { value: 5 }
+    },
+  },
+  update: jest.fn().mockImplementation(async function(this: any, data: any) {
+    if (data['system.attributes.crew.value'] !== undefined) {
+      william.system!.attributes.crew!.value = data['system.attributes.crew.value']
+    }
+  })
+} as unknown as Actor
+
+export const dinghy = {
+  id: 'dinghy',
+  name: 'Dinghy',
+  type: 'vehicle',
+  system: {
+    attributes: {
+      cargo: { max: 0, value: 0 },
+      crew: { min: 1, max: 4, value: 0 },
+      speed: { value: 2 }
     },
   },
   update: jest.fn().mockImplementation(async function(this: any, data: any) {
@@ -53,6 +72,7 @@ const setupCrew = (includeExtras: boolean = false) => {
   beforeEach(() => {
     game.actors = new Map<string, Actor>()
     game.actors.set(william.id, william)
+    game.actors.set(dinghy.id, dinghy)
     setupActors(game.actors, jack, anne, mary)
     if (includeExtras) setupActors(game.actors, ...extras)
   })
