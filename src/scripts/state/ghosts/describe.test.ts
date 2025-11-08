@@ -28,7 +28,7 @@ describe('describeHaunt', () => {
   ] as [string, string, number][])('counts %s as %s on a ship that can carry 0 cargo',
     async (_desc, expected, num) => {
       state.ship.actor = dinghy.id
-      state.ghosts = createGhosts(num)
+      state.ghosts.haunting = createGhosts(num)
       expect(await describeHaunt(state)).toBe(expected)
     })
 
@@ -39,7 +39,7 @@ describe('describeHaunt', () => {
     [(cargo * 4) + 4, 'lost', cargo]
   ] as [number, string, number][])('counts %d ghosts as %s on a ship that can carry %d cargo',
     async (num, expected, _cargo) => {
-      state.ghosts = createGhosts(num)
+      state.ghosts.haunting = createGhosts(num)
       expect(await describeHaunt(state)).toBe(expected)
     })
 

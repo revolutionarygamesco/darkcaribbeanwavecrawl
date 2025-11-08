@@ -22,6 +22,11 @@ export interface Ghost {
   }
 }
 
+export interface Ghosts {
+  haunting: Ghost[]
+  potential: Ghost[]
+}
+
 export interface CrawlTeam {
   officer: CrawlTeamOfficer
   helm?: string
@@ -90,7 +95,7 @@ interface CrawlState {
   timestamp: number
   chapter: number
   winds: number
-  ghosts: Ghost[]
+  ghosts: Ghosts
 }
 
 export default CrawlState

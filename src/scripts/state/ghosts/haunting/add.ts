@@ -1,7 +1,7 @@
-import CrawlState, { Ghost } from '../state.ts'
-import getCopy from '../get-copy.ts'
-import completeGhost from './complete.ts'
-import setCrawlState from '../set.ts'
+import CrawlState, { Ghost } from '../../state.ts'
+import getCopy from '../../get-copy.ts'
+import completeGhost from '../complete.ts'
+import setCrawlState from '../../set.ts'
 
 const addGhost = async (
   ghosts: Partial<Ghost> | Array<Partial<Ghost>>,
@@ -10,7 +10,7 @@ const addGhost = async (
 ): Promise<CrawlState> => {
   const copy = await getCopy(state)
   const arr: Array<Partial<Ghost>> = Array.isArray(ghosts) ? ghosts : [ghosts]
-  copy.ghosts = [...copy.ghosts, ...arr.map(spirit => completeGhost(spirit))]
+  copy.ghosts.haunting = [...copy.ghosts.haunting, ...arr.map(spirit => completeGhost(spirit))]
   return save ? await setCrawlState(copy) : copy
 }
 

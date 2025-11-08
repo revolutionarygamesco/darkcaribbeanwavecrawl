@@ -47,7 +47,10 @@ const initCrawlState = (): CrawlState => ({
   timestamp: -8029350000000,
   chapter: 1,
   winds: 2,
-  ghosts: []
+  ghosts: {
+    haunting: [],
+    potential: []
+  }
 })
 
 export default initCrawlState

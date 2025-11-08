@@ -63,6 +63,10 @@ describe('initCrawlState', () => {
   })
 
   it('starts without any ghosts', () => {
-    expect(state.ghosts).toEqual([])
+    expect(state.ghosts.haunting).toEqual([])
+  })
+
+  it('starts without any potential ghosts', () => {
+    expect(state.ghosts.potential).toEqual([])
   })
 })

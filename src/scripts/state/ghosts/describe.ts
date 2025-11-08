@@ -9,7 +9,7 @@ const describeHaunt = async (state?: CrawlState): Promise<HauntLevel> => {
   const ship = await getShip(cs)
   const cargo = ship?.system?.attributes.cargo?.max ?? 0
   const slots = cargo + 1
-  const ghosts = cs.ghosts.length
+  const ghosts = cs.ghosts.haunting.length
   const descriptions: HauntLevel[] = ['normal', 'bloody', 'dark', 'lost']
   const min = clamp(cs.chapter - 4, 0, 2)
   const index = clamp(Math.ceil(ghosts / slots) - 1, min, 3)
