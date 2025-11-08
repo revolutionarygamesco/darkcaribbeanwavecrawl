@@ -8,7 +8,8 @@ const getGhosts = async (
 ): Promise<GhostReport> => {
   const cs = state ?? await getCrawlState()
   const haunt = await describeHaunt(cs)
-  return { haunt, ghosts: cs.ghosts.haunting }
+  const { haunting, potential } = cs.ghosts
+  return { haunt, haunting, potential }
 }
 
 export default getGhosts
