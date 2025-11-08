@@ -6,8 +6,7 @@ import completeGhost from './complete.ts'
 
 describe('completeGhost', () => {
   it('turns a partial into a full ghost', () => {
-    const input: Partial<Ghost> = {}
-    const { id, names, actor, notes, status } = completeGhost(input)
+    const { id, names, actor, notes, status } = completeGhost()
     console.log({ id, validation: uuid.validate(id) })
     expect(uuid.validate(id)).toBe(true)
     expect(names.haunted).toBe(localize(`${MODULE_ID}.default-ghost.names.haunted`))

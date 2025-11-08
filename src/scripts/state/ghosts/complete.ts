@@ -3,7 +3,7 @@ import { Ghost } from '../state.ts'
 import * as uuid from 'uuid'
 import localize from '../../utilities/localize.ts'
 
-const completeGhost = (input: Partial<Ghost>): Ghost => {
+const completeGhost = (input: Partial<Ghost> = {}): Ghost => {
   const path = [MODULE_ID, 'default-ghost']
   return {
     id: input.id ?? uuid.v4(),

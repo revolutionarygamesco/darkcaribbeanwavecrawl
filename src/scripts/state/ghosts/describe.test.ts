@@ -5,7 +5,7 @@ import describeHaunt from './describe.ts'
 
 const createGhosts = (num: number = 0): Ghost[] => {
   const ghosts: Ghost[] = []
-  for (let i = 0; i < num; i++) ghosts.push(completeGhost({}))
+  for (let i = 0; i < num; i++) ghosts.push(completeGhost())
   return ghosts
 }
 
