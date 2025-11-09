@@ -354,10 +354,22 @@
       },
       "potential": {
         "buttons": {
-          "add": "Add potential ghost",
-          "edit": "Edit",
-          "save": "Save",
-          "cancel": "Cancel"
+          "add": {
+            "label": "Add potential ghost",
+            "tooltip": "Add a new potential ghost to the list."
+          },
+          "edit": {
+            "label": "Edit",
+            "tooltip": "Enter editing mode."
+          },
+          "save": {
+            "label": "Save",
+            "tooltip": "Save your changes to this ghost."
+          },
+          "cancel": {
+            "label": "Cancel",
+            "tooltip": "Exit editing mode without saving your changes."
+          }
         },
         "nil": {
           "text": "You don’t have any potential ghosts yet.",

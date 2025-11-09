@@ -21,16 +21,24 @@
           {{/each}}
         </ul>
         <div class="actions">
-          <button type="button" class="add" data-action="add-potential">
+          <button
+            type="button"
+            class="add"
+            data-action="add-potential"
+            title="{{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.add.tooltip'}}">
             <i class="fa-solid fa-plus"></i>
-            {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.add'}}
+            {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.add.label'}}
           </button>
         </div>
       </nav>
       <div class="ghost-card">
         {{#unless editing}}
-          <button type="button" class="edit" data-action="edit">
-            {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.edit'}}
+          <button
+            type="button"
+            class="edit"
+            data-action="edit"
+            title="{{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.edit.tooltip'}}">
+            {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.edit.label'}}
           </button>
         {{/unless}}
         <label for="ghost-haunted-name">
@@ -93,11 +101,19 @@
 
         {{#if editing}}
           <div class="actions">
-            <button type="button" class="save" data-action="save">
-              {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.save'}}
+            <button
+              type="button"
+              class="save"
+              data-action="save"
+              title="{{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.save.tooltip'}}">
+              {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.save.label'}}
             </button>
-            <button type="button" class="cancel" data-action="cancel-editing">
-              {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.cancel'}}
+            <button
+              type="button"
+              class="cancel"
+              data-action="cancel-editing"
+              title="{{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.cancel.tooltip'}}">
+              {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.cancel.label'}}
             </button>
           </div>
         {{/if}}
