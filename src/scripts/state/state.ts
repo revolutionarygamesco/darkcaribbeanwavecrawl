@@ -8,18 +8,30 @@ export interface Exploit {
   legend: string[]
 }
 
+export interface GhostNames {
+  haunted: string
+  human: string
+}
+
+export interface GhostStatus {
+  seen: boolean
+  named: boolean
+}
+
 export interface Ghost {
   id: string
-  names: {
-    haunted: string
-    human: string
-  }
+  names: GhostNames
   actor?: string
   notes: string,
-  status: {
-    seen: boolean,
-    named: boolean
-  }
+  status: GhostStatus
+}
+
+export interface GhostPatch {
+  id?: string
+  names?: Partial<GhostNames>
+  actor?: string
+  notes?: string
+  status?: Partial<GhostStatus>
 }
 
 export interface Ghosts {
