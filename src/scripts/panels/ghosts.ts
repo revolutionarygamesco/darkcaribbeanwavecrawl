@@ -5,6 +5,7 @@ import { Ghost } from '../state/state.ts'
 import getPanelDimensions from '../utilities/get-dimensions.ts'
 import registerPartials from './register-partials.ts'
 import localize from '../utilities/localize.ts'
+import enrichActor from '../utilities/enrich-actor.ts'
 import getGhosts from '../state/ghosts/get.ts'
 import completeGhost from '../state/ghosts/complete.ts'
 import addGhost from '../state/ghosts/haunting/add.ts'
@@ -13,6 +14,7 @@ import updateGhost from '../state/ghosts/haunting/update.ts'
 import updatePotentialGhost from '../state/ghosts/potential/update.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
+const dropSelector = '.droppable'
 
 export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   static INITIAL_TAB = 'potential'
@@ -33,7 +35,8 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       resizable: true,
       title: localize([...GhostsPanel._path, 'window', 'title'].join('.'))
     },
-    position: getPanelDimensions(800, 2/3)
+    position: getPanelDimensions(800, 2/3),
+    dragDrop: [{ dropSelector }]
   }
 
   static PARTS = {
@@ -55,6 +58,27 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       tabs: [{ id: 'potential' }, { id: 'haunting' }],
       initial: GhostsPanel.INITIAL_TAB
     }
+  }
+
+  constructor (options = {}) {
+    super(options)
+    this.dragDrop = this.#createDragDropHandlers()
+  }
+
+  #createDragDropHandlers () {
+    return this.options.dragDrop.map((d: DragDrop) => {
+      d.permissions = {
+        dragstart: this._canDragStart.bind(this),
+        drop: this._canDragDrop.bind(this)
+      }
+      d.callbacks = {
+        dragstart: this._onDragStart.bind(this),
+        dragover: this._onDragOver.bind(this),
+        drop: this._onDrop.bind(this),
+      }
+
+      return new foundry.applications.ux.DragDrop(d)
+    })
   }
 
   _addListingClasses (ghost: Ghost) {
@@ -87,35 +111,42 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   }
 
-  async _preparePotentialTab (context: any) {
-    const list = context.potential as Ghost[]
+  async _prepareGhostTab (context: any, list: Ghost[]) {
     const firstId = list.length > 0 ? list[0].id : null
     this._currentGhost = this._currentGhost ?? firstId
     const ghosts = list.map(ghost => this._addListingClasses(ghost))
     const ghost = list.find(ghost => ghost.id === this._currentGhost)
+
+    const a = game.actors && ghost && ghost.actor ? game.actors.get(ghost.actor) : undefined
+    const actor = a ? await enrichActor(a) : undefined
     const notes = ghost && foundry.applications.ux.TextEditor
       ? await foundry.applications.ux.TextEditor.enrichHTML(ghost.notes)
       : ''
 
     return {
       ...context,
-      isEmpty: context.potential.length < 1,
+      isEmpty: list.length < 1,
       ghosts,
       ghost,
+      actor,
       notes,
       editing: this._isEditing
     }
   }
 
+  async _preparePotentialTab (context: any) {
+    return this._prepareGhostTab(context, context.potential as Ghost[])
+  }
+
   async _prepareHauntingTab (context: any) {
-    return {
-      ...context,
-      isEmpty: context.haunting.length < 1
-    }
+    return this._prepareGhostTab(context, context.haunting as Ghost[])
   }
 
   async _onRender (context: any, options: any) {
     await super._onRender(context, options)
+
+    if (!this.dragDrop) return
+    this.dragDrop.forEach((d) => d.bind(this.element))
 
     const tabs = new foundry.applications.ux.Tabs({
       navSelector: '.tabs',
@@ -203,6 +234,44 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
 
     this._isEditing = false
     await this.render({ force: true })
+  }
+
+  _canDragDrop() { return true }
+  _canDragStart() { return true }
+  _onDragOver() {}
+
+  _onDragStart(event: DragEvent) {
+    const id = (event.target as HTMLElement).dataset.entryId
+    if (!id || !event.dataTransfer) return
+    if ('setData' in event.dataTransfer) event.dataTransfer.setData('text/plain', id)
+  }
+
+  async _onDrop (event: DragEvent): Promise<void> {
+    const target = event.target as HTMLElement
+    const el = target.closest(dropSelector) as HTMLElement
+    if (!el) return
+
+    if (el.classList.contains('actor')) return this._onActorDrop(event)
+  }
+
+  async _onActorDrop (event: DragEvent) {
+    if (!this._currentGhost) return
+
+    const actor = this._droppedActor(event)
+    if (!actor) return
+
+    const fn = this._currentTab === 'potential' ? updatePotentialGhost : updateGhost
+    await fn(this._currentGhost, { actor: actor.id })
+    await this.render({ force: true })
+  }
+
+  _droppedActor (event: DragEvent): Actor | null {
+    const data = foundry.applications.ux.TextEditor.getDragEventData(event)
+    if (data.type !== 'Actor') return null
+
+    const id = data.uuid.split('.').pop()
+    const actor = game.actors.get(id)
+    return actor ?? null
   }
 }
 

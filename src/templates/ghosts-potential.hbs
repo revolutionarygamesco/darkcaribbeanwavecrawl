@@ -59,6 +59,23 @@
           <input type="text" name="ghost-human-name" id="ghost-human-name" value="{{ghost.names.human}}" />
         {{/if}}
 
+        <div class="droppable actor">
+          <label>
+            {{localize 'revolutionary-darkcaribbean.ghosts-panel.fields.actor.label'}}
+          </label>
+          <p class="hint">
+            {{localize 'revolutionary-darkcaribbean.ghosts-panel.fields.actor.hint'}}
+          </p>
+          {{#if actor}}
+            <p class="ghost-field" id="ghost-actor">{{{actor}}}</p>
+          {{/if}}
+          {{#unless actor}}
+            <p class="nil">
+              {{localize 'revolutionary-darkcaribbean.ghosts-panel.fields.actor.nil'}}
+            </p>
+          {{/unless}}
+        </div>
+
         <label for="ghost-notes">
           {{localize 'revolutionary-darkcaribbean.ghosts-panel.fields.notes.label'}}
         </label>

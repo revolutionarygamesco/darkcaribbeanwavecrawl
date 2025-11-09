@@ -382,6 +382,11 @@
             "hint": "The name this ghost bore in life, or its true name."
           }
         },
+        "actor": {
+          "label": "Actor",
+          "hint": "The actor used for this ghost.",
+          "nil": "Drag an actor here to connect it to this ghost."
+        },
         "notes": {
           "label": "Notes",
           "hint": "A place to record everything you know about this ghost, its personality, its agenda, its trauma, and what it has done."

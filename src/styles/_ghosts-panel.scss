@@ -97,8 +97,14 @@
         line-height: var(--input-height);
       }
 
-      input[type="text"] {
-        margin: 0.5rem 0;
+      .droppable .nil {
+        display: block;
+        border: 1px solid var(--color-form-hint);
+        color: var(--color-form-hint);
+        height: auto;
+        padding: 1em;
+        text-align: center;
+        width: 100%;
       }
 
       prose-mirror {
