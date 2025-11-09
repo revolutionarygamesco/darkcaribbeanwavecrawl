@@ -9,6 +9,8 @@ import getGhosts from '../state/ghosts/get.ts'
 import completeGhost from '../state/ghosts/complete.ts'
 import addGhost from '../state/ghosts/haunting/add.ts'
 import addPotentialGhost from '../state/ghosts/potential/add.ts'
+import updateGhost from '../state/ghosts/haunting/update.ts'
+import updatePotentialGhost from '../state/ghosts/potential/update.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 
@@ -91,12 +93,16 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     this._currentGhost = this._currentGhost ?? firstId
     const ghosts = list.map(ghost => this._addListingClasses(ghost))
     const ghost = list.find(ghost => ghost.id === this._currentGhost)
+    const notes = ghost && foundry.applications.ux.TextEditor
+      ? await foundry.applications.ux.TextEditor.enrichHTML(ghost.notes)
+      : ''
 
     return {
       ...context,
       isEmpty: context.potential.length < 1,
       ghosts,
       ghost,
+      notes,
       editing: this._isEditing
     }
   }
@@ -146,6 +152,9 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     switch (button.dataset.action) {
       case 'add-haunting': return await this._addGhost()
       case 'add-potential': return await this._addGhost(false)
+      case 'edit': return await this._activateEditing()
+      case 'cancel-editing': return await this._deactivateEditing()
+      case 'save': return await this._saveGhost()
     }
   }
 
@@ -158,9 +167,41 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     await this.render({ force: true })
   }
 
-  async _addGhost(haunting: boolean = true) {
+  async _addGhost (haunting: boolean = true) {
     const fn = haunting ? addGhost : addPotentialGhost
     await fn(completeGhost())
+    await this.render({ force: true })
+  }
+
+  async _activateEditing (){
+    this._isEditing = true
+    await this.render({ force: true })
+  }
+
+  async _deactivateEditing (){
+    this._isEditing = false
+    await this.render({ force: true })
+  }
+
+  async _saveGhost () {
+    if (!this._currentGhost) return this._deactivateEditing()
+
+    const fields = {
+      haunted: this.element.querySelector('input[name="ghost-haunted-name"]') as HTMLInputElement | null,
+      human: this.element.querySelector('input[name="ghost-human-name"]') as HTMLInputElement | null,
+      notes: this.element.querySelector('prose-mirror[name="notes"]') as any
+    }
+
+    const fn = this._currentTab === 'potential' ? updatePotentialGhost : updateGhost
+    await fn(this._currentGhost, {
+      names: {
+        haunted: fields.haunted?.value,
+        human: fields.human?.value
+      },
+      notes: fields.notes?.value
+    })
+
+    this._isEditing = false
     await this.render({ force: true })
   }
 }

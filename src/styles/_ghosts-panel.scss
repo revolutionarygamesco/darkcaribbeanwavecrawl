@@ -64,26 +64,45 @@
           }
         }
       }
+    }
 
-      .actions {
-        display: grid;
-        height: 100%;
-        place-items: center;
-        width: 100%;
+    .actions {
+      padding: 0.5em;
+      text-align: center;
 
-        button {
-          margin: 0 auto;
-        }
+      button {
+        display: inline-block;
+        margin: 0.5em;
       }
     }
 
     .ghost-card {
+      overflow: auto;
+
+      .edit {
+        float: right;
+        margin: 0 0 2em 2em;
+      }
+
       label {
         font-weight: bold;
       }
 
       .hint {
         color: var(--color-form-hint);
+      }
+
+      .ghost-field {
+        height: var(--input-height);
+        line-height: var(--input-height);
+      }
+
+      input[type="text"] {
+        margin: 0.5rem 0;
+      }
+
+      prose-mirror {
+        height: 20em;
       }
     }
   }

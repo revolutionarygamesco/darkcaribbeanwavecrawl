@@ -23,11 +23,16 @@
         <div class="actions">
           <button type="button" class="add" data-action="add-potential">
             <i class="fa-solid fa-plus"></i>
-            {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.add'}}
+            {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.add'}}
           </button>
         </div>
       </nav>
       <div class="ghost-card">
+        {{#unless editing}}
+          <button type="button" class="edit" data-action="edit">
+            {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.edit'}}
+          </button>
+        {{/unless}}
         <label for="ghost-haunted-name">
           {{localize 'revolutionary-darkcaribbean.ghosts-panel.fields.names.haunted.label'}}
         </label>
@@ -61,12 +66,23 @@
           {{localize 'revolutionary-darkcaribbean.ghosts-panel.fields.notes.hint'}}
         </p>
         {{#unless editing}}
-          {{{ghost.notes}}}
+          {{{notes}}}
         {{/unless}}
         {{#if editing}}
-          <textarea name="ghost-notes" id="ghost-notes">
-            {{ghost.notes}}
-          </textarea>
+          <prose-mirror name="notes" editable="true" value="{{ghost.notes}}">
+            {{{ghost.notes}}}
+          </prose-mirror>
+        {{/if}}
+
+        {{#if editing}}
+          <div class="actions">
+            <button type="button" class="save" data-action="save">
+              {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.save'}}
+            </button>
+            <button type="button" class="cancel" data-action="cancel-editing">
+              {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.cancel'}}
+            </button>
+          </div>
         {{/if}}
       </div>
     </div>

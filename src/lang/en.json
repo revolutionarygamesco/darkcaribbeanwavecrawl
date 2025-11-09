@@ -353,7 +353,12 @@
         "haunting": "Haunting"
       },
       "potential": {
-        "add": "Add potential ghost",
+        "buttons": {
+          "add": "Add potential ghost",
+          "edit": "Edit",
+          "save": "Save",
+          "cancel": "Cancel"
+        },
         "nil": {
           "text": "You don’t have any potential ghosts yet.",
           "button": "Add potential ghost"
