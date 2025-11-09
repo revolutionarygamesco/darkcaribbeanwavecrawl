@@ -99,24 +99,31 @@
           </prose-mirror>
         {{/if}}
 
-        {{#if editing}}
-          <div class="actions">
-            <button
-              type="button"
-              class="save"
-              data-action="save"
-              title="{{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.save.tooltip'}}">
-              {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.save.label'}}
-            </button>
-            <button
-              type="button"
-              class="cancel"
-              data-action="cancel-editing"
-              title="{{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.cancel.tooltip'}}">
-              {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.cancel.label'}}
-            </button>
-          </div>
-        {{/if}}
+        <div class="actions">
+          {{#if editing}}
+          <button
+            type="button"
+            class="save"
+            data-action="save"
+            title="{{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.save.tooltip'}}">
+            {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.save.label'}}
+          </button>
+          <button
+            type="button"
+            class="cancel"
+            data-action="cancel-editing"
+            title="{{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.cancel.tooltip'}}">
+            {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.cancel.label'}}
+          </button>
+          {{/if}}
+          <button
+            type="button"
+            class="haunt"
+            data-action="haunt"
+            title="{{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.haunt.tooltip'}}">
+            {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.buttons.haunt.label'}}
+          </button>
+        </div>
       </div>
     </div>
   {{/if}}

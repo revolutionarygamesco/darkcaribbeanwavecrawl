@@ -369,6 +369,10 @@
           "cancel": {
             "label": "Cancel",
             "tooltip": "Exit editing mode without saving your changes."
+          },
+          "haunt": {
+            "label": "Haunt",
+            "tooltip": "Move this ghost from your list of potential ghosts and send it to actually haunt the ship."
           }
         },
         "nil": {
@@ -377,7 +381,24 @@
         }
       },
       "haunting": {
-        "add": "Add ghost",
+        "buttons": {
+          "add": {
+            "label": "Add ghost",
+            "tooltip": "Add a new ghost haunting the ship."
+          },
+          "edit": {
+            "label": "Edit",
+            "tooltip": "Enter editing mode."
+          },
+          "save": {
+            "label": "Save",
+            "tooltip": "Save your changes to this ghost."
+          },
+          "cancel": {
+            "label": "Cancel",
+            "tooltip": "Exit editing mode without saving your changes."
+          }
+        },
         "nil": {
           "text": "The ship is not haunted.",
           "button": "Add ghost"

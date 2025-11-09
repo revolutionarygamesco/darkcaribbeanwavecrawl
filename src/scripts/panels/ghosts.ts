@@ -1,6 +1,7 @@
 import { MODULE_ID } from '../settings.ts'
 
 import { Ghost } from '../state/state.ts'
+import type GhostReport from '../state/ghosts/report.ts'
 
 import getPanelDimensions from '../utilities/get-dimensions.ts'
 import registerPartials from './register-partials.ts'
@@ -12,6 +13,7 @@ import addGhost from '../state/ghosts/haunting/add.ts'
 import addPotentialGhost from '../state/ghosts/potential/add.ts'
 import updateGhost from '../state/ghosts/haunting/update.ts'
 import updatePotentialGhost from '../state/ghosts/potential/update.ts'
+import realizePotentialGhost from '../state/ghosts/potential/realize.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 const dropSelector = '.droppable'
@@ -24,7 +26,8 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   private _buttonHandler: ((event: Event) => Promise<void>) | null = null
   private _listingHandler: ((event: Event) => Promise<void>) | null = null
   private _currentTab: string = GhostsPanel.INITIAL_TAB
-  private _currentGhost: string | null = null
+  private _currentPotential: string | null = null
+  private _currentHaunting: string | null = null
   private _isEditing: boolean = false
 
   static DEFAULT_OPTIONS = {
@@ -81,23 +84,54 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     })
   }
 
+  _getCurrentGhostId (): string | null {
+    const isPotential = this._currentTab === 'potential'
+    return isPotential ? this._currentPotential : this._currentHaunting
+  }
+
   _addListingClasses (ghost: Ghost) {
     const classes = [GhostsPanel.GHOST_LISTING_CLASS]
-    if (this._currentGhost === ghost.id) classes.push('active')
+    if (this._getCurrentGhostId() === ghost.id) classes.push('active')
     return {
       ...ghost,
       classes: classes.join(' ')
     }
   }
 
+  async _getCurrentGhost (report?: GhostReport): Promise<Ghost | null> {
+    const { potential, haunting } = report ?? await getGhosts()
+
+    const inPotential = this._currentPotential && potential.map(ghost => ghost.id).includes(this._currentPotential)
+    if (!inPotential && potential.length > 0) this._currentPotential = potential[0].id
+
+    const inHaunt = this._currentHaunting && haunting.map(ghost => ghost.id).includes(this._currentHaunting)
+    if (!inHaunt && haunting.length > 0) this._currentHaunting = haunting[0].id
+
+    const isPotential = this._currentTab === 'potential'
+    const list = isPotential ? potential : haunting
+    return list.find(ghost => ghost.id === this._getCurrentGhostId()) ?? null
+  }
+
   async _prepareContext () {
     const { haunt, haunting, potential } = await getGhosts()
+    const ghost = await this._getCurrentGhost()
+    const a = game.actors && ghost && ghost.actor ? game.actors.get(ghost.actor) : undefined
+    const actor = a ? await enrichActor(a) : undefined
+    const notes = ghost && foundry.applications.ux.TextEditor
+      ? await foundry.applications.ux.TextEditor.enrichHTML(ghost.notes)
+      : ''
+
+    console.log(ghost)
 
     return {
       tabs: this._prepareTabs('primary'),
       haunt,
       haunting,
-      potential
+      potential,
+      ghost,
+      actor,
+      notes,
+      editing: this._isEditing
     }
   }
 
@@ -112,25 +146,11 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   async _prepareGhostTab (context: any, list: Ghost[]) {
-    const firstId = list.length > 0 ? list[0].id : null
-    this._currentGhost = this._currentGhost ?? firstId
     const ghosts = list.map(ghost => this._addListingClasses(ghost))
-    const ghost = list.find(ghost => ghost.id === this._currentGhost)
-
-    const a = game.actors && ghost && ghost.actor ? game.actors.get(ghost.actor) : undefined
-    const actor = a ? await enrichActor(a) : undefined
-    const notes = ghost && foundry.applications.ux.TextEditor
-      ? await foundry.applications.ux.TextEditor.enrichHTML(ghost.notes)
-      : ''
-
     return {
       ...context,
       isEmpty: list.length < 1,
-      ghosts,
-      ghost,
-      actor,
-      notes,
-      editing: this._isEditing
+      ghosts
     }
   }
 
@@ -151,15 +171,19 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     const tabs = new foundry.applications.ux.Tabs({
       navSelector: '.tabs',
       contentSelector: 'section',
-      initial: GhostsPanel.INITIAL_TAB,
+      initial: this._currentTab,
       group: 'ghosts-tabs'
     })
 
-    tabs._onClickNav = (event: PointerEvent) => {
+    tabs._onClickNav = async (event: PointerEvent) => {
       const btn = event?.target as HTMLElement | undefined
       if (!btn) return
-      this._currentTab = btn.closest('button')?.dataset.tab ?? this._currentTab
-      tabs.activate(this._currentTab)
+
+      const newTab = btn.closest('button')?.dataset.tab
+      if (newTab && newTab !== this._currentTab) {
+        this._currentTab = newTab
+        await this.render({ force: true })
+      }
     }
 
     tabs.bind(this.element)
@@ -186,6 +210,7 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       case 'edit': return await this._activateEditing()
       case 'cancel-editing': return await this._deactivateEditing()
       case 'save': return await this._saveGhost()
+      case 'haunt': return await this._sendGhost()
     }
   }
 
@@ -194,7 +219,13 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     const listing = target.closest(`.${GhostsPanel.GHOST_LISTING_CLASS}`) as HTMLElement
     if (!listing) return
 
-    this._currentGhost = listing.dataset.setGhost as string
+    const update = listing.dataset.setGhost as string
+    if (this._currentTab === 'potential') {
+      this._currentPotential = update
+    } else {
+      this._currentHaunting = update
+    }
+
     await this.render({ force: true })
   }
 
@@ -215,7 +246,8 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   async _saveGhost () {
-    if (!this._currentGhost) return this._deactivateEditing()
+    const ghost = await this._getCurrentGhost()
+    if (!ghost) return this._deactivateEditing()
 
     const fields = {
       haunted: this.element.querySelector('input[name="ghost-haunted-name"]') as HTMLInputElement | null,
@@ -224,7 +256,7 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     }
 
     const fn = this._currentTab === 'potential' ? updatePotentialGhost : updateGhost
-    await fn(this._currentGhost, {
+    await fn(ghost.id, {
       names: {
         haunted: fields.haunted?.value,
         human: fields.human?.value
@@ -233,6 +265,17 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     })
 
     this._isEditing = false
+    await this.render({ force: true })
+  }
+
+  async _sendGhost () {
+    const ghost = await this._getCurrentGhost()
+    if (!ghost) return
+
+    await realizePotentialGhost(ghost)
+    this._currentTab = 'haunting'
+    this._currentPotential = null
+    this._currentHaunting = ghost.id
     await this.render({ force: true })
   }
 
@@ -255,13 +298,14 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   async _onActorDrop (event: DragEvent) {
-    if (!this._currentGhost) return
+    const ghost = await this._getCurrentGhost()
+    if (!ghost) return
 
     const actor = this._droppedActor(event)
     if (!actor) return
 
     const fn = this._currentTab === 'potential' ? updatePotentialGhost : updateGhost
-    await fn(this._currentGhost, { actor: actor.id })
+    await fn(ghost.id, { actor: actor.id })
     await this.render({ force: true })
   }
 
