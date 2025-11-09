@@ -4,6 +4,9 @@ import getPanelDimensions from '../utilities/get-dimensions.ts'
 import registerPartials from './register-partials.ts'
 import localize from '../utilities/localize.ts'
 import getGhosts from '../state/ghosts/get.ts'
+import completeGhost from '../state/ghosts/complete.ts'
+import addGhost from '../state/ghosts/haunting/add.ts'
+import addPotentialGhost from '../state/ghosts/potential/add.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 
@@ -107,7 +110,20 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   async _handleButtonClick (event: Event) {
-    console.log(event)
+    const target = event.target as HTMLElement
+    const button = target.closest('button') as HTMLElement
+    if (!button) return
+
+    switch (button.dataset.action) {
+      case 'add-haunting': return await this._addGhost()
+      case 'add-potential': return await this._addGhost(false)
+    }
+  }
+
+  async _addGhost(haunting: boolean = true) {
+    const fn = haunting ? addGhost : addPotentialGhost
+    await fn(completeGhost())
+    await this.render({ force: true })
   }
 }
 
