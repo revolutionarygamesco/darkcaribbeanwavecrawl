@@ -16,6 +16,7 @@ import CrewConfigPanel from './panels/crew-config.ts'
 import displayCrewPanel from './panels/crew.ts'
 import displayLedgerPanel from './panels/ledger.ts'
 import displayExploitsPanel from './panels/exploits.ts'
+import displayGhostsPanel from './panels/ghosts.ts'
 import checkJettisonedProvisions from './provisions/cargo/jettison.ts'
 import raiseJollyRoger from './jolly-roger.ts'
 
@@ -61,6 +62,7 @@ Hooks.once('init', async () => {
     displayCrewPanel,
     displayLedgerPanel,
     displayExploitsPanel,
+    displayGhostsPanel,
     raiseJollyRoger,
     callVote
   }

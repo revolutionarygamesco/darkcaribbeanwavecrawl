@@ -344,6 +344,27 @@
         }
       }
     },
+    "ghosts-panel": {
+      "window": {
+        "title": "Ghosts"
+      },
+      "tabs": {
+        "potential": "Potential",
+        "haunting": "Haunting"
+      },
+      "potential": {
+        "nil": {
+          "text": "You don’t have any potential ghosts yet.",
+          "button": "Add potential ghost"
+        }
+      },
+      "haunting": {
+        "nil": {
+          "text": "The ship is not haunted.",
+          "button": "Add ghost"
+        }
+      }
+    },
     "jolly-roger": {
       "speaker": "Jolly Roger",
       "unrecognized": "The ship recognizes the black flag of a pirate ship, but nothing of your reputation.",

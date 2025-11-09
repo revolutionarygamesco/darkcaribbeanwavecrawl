@@ -1,0 +1,38 @@
+#revolutionary-darkcaribbean-ghosts {
+  nav.tabs {
+    border-top: 0;
+    border-bottom: 0;
+
+    button {
+      border-radius: 0;
+      border: 0;
+      border-bottom: 1px solid transparent;
+
+      &.active {
+        border-bottom-color: var(--color-shadow-primary);
+        box-shadow: none;
+        outline: none;
+      }
+    }
+  }
+
+  .tab {
+    flex-grow: 1;
+    padding: 2em;
+  }
+
+  .nil {
+    display: grid;
+    height: 100%;
+    place-items: center;
+    width: 100%;
+
+    .nil-content {
+      text-align: center;
+
+      button {
+        margin: 1em auto;
+      }
+    }
+  }
+}

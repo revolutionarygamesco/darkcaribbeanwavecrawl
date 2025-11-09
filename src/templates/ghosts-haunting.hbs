@@ -1,0 +1,16 @@
+<section class="tab ghosts-haunting" data-tab="haunting" data-group="ghosts-tabs">
+  {{#if isEmpty}}
+    <div class="nil">
+      <div class="nil-content">
+        <p>{{localize 'revolutionary-darkcaribbean.ghosts-panel.haunting.nil.text'}}</p>
+        <button type="button" class="add" data-action="add-haunting">
+          <i class="fa-solid fa-plus"></i>
+          {{localize 'revolutionary-darkcaribbean.ghosts-panel.haunting.nil.button'}}
+        </button>
+      </div>
+    </div>
+  {{/if}}
+  {{#unless isEmpty}}
+    <p>Yes ghosts.</p>
+  {{/unless}}
+</section>
