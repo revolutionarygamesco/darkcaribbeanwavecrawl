@@ -1,5 +1,7 @@
 import { MODULE_ID } from '../settings.ts'
 
+import { Ghost } from '../state/state.ts'
+
 import getPanelDimensions from '../utilities/get-dimensions.ts'
 import registerPartials from './register-partials.ts'
 import localize from '../utilities/localize.ts'
@@ -12,10 +14,14 @@ const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 
 export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   static INITIAL_TAB = 'potential'
+  static GHOST_LISTING_CLASS = 'ghost-listing'
 
   static _path = [MODULE_ID, 'ghosts-panel']
   private _buttonHandler: ((event: Event) => Promise<void>) | null = null
+  private _listingHandler: ((event: Event) => Promise<void>) | null = null
   private _currentTab: string = GhostsPanel.INITIAL_TAB
+  private _currentGhost: string | null = null
+  private _isEditing: boolean = false
 
   static DEFAULT_OPTIONS = {
     id: `${MODULE_ID}-ghosts`,
@@ -49,6 +55,15 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   }
 
+  _addListingClasses (ghost: Ghost) {
+    const classes = [GhostsPanel.GHOST_LISTING_CLASS]
+    if (this._currentGhost === ghost.id) classes.push('active')
+    return {
+      ...ghost,
+      classes: classes.join(' ')
+    }
+  }
+
   async _prepareContext () {
     const { haunt, haunting, potential } = await getGhosts()
 
@@ -71,12 +86,18 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   async _preparePotentialTab (context: any) {
+    const list = context.potential as Ghost[]
+    const firstId = list.length > 0 ? list[0].id : null
+    this._currentGhost = this._currentGhost ?? firstId
+    const ghosts = list.map(ghost => this._addListingClasses(ghost))
+    const ghost = list.find(ghost => ghost.id === this._currentGhost)
+
     return {
       ...context,
       isEmpty: context.potential.length < 1,
-      ghosts: context.potential,
-      ghost: context.potential[0],
-      editing: false
+      ghosts,
+      ghost,
+      editing: this._isEditing
     }
   }
 
@@ -110,6 +131,11 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       this._buttonHandler = this._handleButtonClick.bind(this)
       this.element.addEventListener('click', this._buttonHandler)
     }
+
+    if (!this._listingHandler) {
+      this._listingHandler = this._handleListingClick.bind(this)
+      this.element.addEventListener('click', this._listingHandler)
+    }
   }
 
   async _handleButtonClick (event: Event) {
@@ -121,6 +147,15 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       case 'add-haunting': return await this._addGhost()
       case 'add-potential': return await this._addGhost(false)
     }
+  }
+
+  async _handleListingClick (event: Event) {
+    const target = event.target as HTMLElement
+    const listing = target.closest(`.${GhostsPanel.GHOST_LISTING_CLASS}`) as HTMLElement
+    if (!listing) return
+
+    this._currentGhost = listing.dataset.setGhost as string
+    await this.render({ force: true })
   }
 
   async _addGhost(haunting: boolean = true) {

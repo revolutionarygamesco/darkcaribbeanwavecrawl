@@ -19,6 +19,7 @@
   .tab {
     flex-grow: 1;
     padding: 2em;
+    height: calc(100% - 2em);
   }
 
   .nil {
@@ -39,13 +40,14 @@
   .ghosts-listing {
     display: grid;
     grid-template-columns: 15em 1fr;
-    grid-gap: 1em;
+    grid-gap: 3em;
     height: 100%;
 
     nav {
       display: grid;
       grid-template-columns: 1fr;
       grid-template-rows: 1fr auto;
+      min-height: 0;
 
       ul {
         list-style-type: none;
@@ -56,10 +58,19 @@
         li {
           cursor: pointer;
           padding: 0.5em;
+
+          &.active {
+            background: #333;
+          }
         }
       }
 
       .actions {
+        display: grid;
+        height: 100%;
+        place-items: center;
+        width: 100%;
+
         button {
           margin: 0 auto;
         }
