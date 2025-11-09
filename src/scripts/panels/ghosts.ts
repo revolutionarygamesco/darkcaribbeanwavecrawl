@@ -73,7 +73,10 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   async _preparePotentialTab (context: any) {
     return {
       ...context,
-      isEmpty: context.potential.length < 1
+      isEmpty: context.potential.length < 1,
+      ghosts: context.potential,
+      ghost: context.potential[0],
+      editing: false
     }
   }
 

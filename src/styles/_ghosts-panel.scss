@@ -35,4 +35,45 @@
       }
     }
   }
+
+  .ghosts-listing {
+    display: grid;
+    grid-template-columns: 15em 1fr;
+    grid-gap: 1em;
+    height: 100%;
+
+    nav {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr auto;
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        overflow: auto;
+        padding: 0;
+
+        li {
+          cursor: pointer;
+          padding: 0.5em;
+        }
+      }
+
+      .actions {
+        button {
+          margin: 0 auto;
+        }
+      }
+    }
+
+    .ghost-card {
+      label {
+        font-weight: bold;
+      }
+
+      .hint {
+        color: var(--color-form-hint);
+      }
+    }
+  }
 }

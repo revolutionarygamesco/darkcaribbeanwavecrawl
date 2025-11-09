@@ -10,7 +10,65 @@
       </div>
     </div>
   {{/if}}
-  {{#unless isEmpty}}
-    <p>Yes potential ghosts.</p>
-  {{/unless}}
+  {{#if ghost}}
+    <div class="ghosts-listing">
+      <nav>
+        <ul>
+          {{#each ghosts}}
+            <li>
+              {{this.names.haunted}}
+            </li>
+          {{/each}}
+        </ul>
+        <div class="actions">
+          <button type="button" class="add" data-action="add-potential">
+            <i class="fa-solid fa-plus"></i>
+            {{localize 'revolutionary-darkcaribbean.ghosts-panel.potential.add'}}
+          </button>
+        </div>
+      </nav>
+      <div class="ghost-card">
+        <label for="ghost-haunted-name">
+          {{localize 'revolutionary-darkcaribbean.ghosts-panel.fields.names.haunted.label'}}
+        </label>
+        <p class="hint">
+          {{localize 'revolutionary-darkcaribbean.ghosts-panel.fields.names.haunted.hint'}}
+        </p>
+        {{#unless editing}}
+          <p class="ghost-field" id="ghost-haunted-name">{{ghost.names.haunted}}</p>
+        {{/unless}}
+        {{#if editing}}
+          <input type="text" name="ghost-haunted-name" id="ghost-haunted-name" value="{{ghost.names.haunted}}" />
+        {{/if}}
+
+        <label for="ghost-human-name">
+          {{localize 'revolutionary-darkcaribbean.ghosts-panel.fields.names.human.label'}}
+        </label>
+        <p class="hint">
+          {{localize 'revolutionary-darkcaribbean.ghosts-panel.fields.names.human.hint'}}
+        </p>
+        {{#unless editing}}
+          <p class="ghost-field" id="ghost-human-name">{{ghost.names.human}}</p>
+        {{/unless}}
+        {{#if editing}}
+          <input type="text" name="ghost-human-name" id="ghost-human-name" value="{{ghost.names.human}}" />
+        {{/if}}
+
+        <label for="ghost-notes">
+          {{localize 'revolutionary-darkcaribbean.ghosts-panel.fields.notes.label'}}
+        </label>
+        <p class="hint">
+          {{localize 'revolutionary-darkcaribbean.ghosts-panel.fields.notes.hint'}}
+        </p>
+        {{#unless editing}}
+          {{{ghost.notes}}}
+        {{/unless}}
+        {{#if editing}}
+          <textarea name="ghost-notes" id="ghost-notes">
+            {{ghost.notes}}
+          </textarea>
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
 </section>

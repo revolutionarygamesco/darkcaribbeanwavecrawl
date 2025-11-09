@@ -353,15 +353,33 @@
         "haunting": "Haunting"
       },
       "potential": {
+        "add": "Add potential ghost",
         "nil": {
           "text": "You don’t have any potential ghosts yet.",
           "button": "Add potential ghost"
         }
       },
       "haunting": {
+        "add": "Add ghost",
         "nil": {
           "text": "The ship is not haunted.",
           "button": "Add ghost"
+        }
+      },
+      "fields": {
+        "names": {
+          "haunted": {
+            "label": "Haunted Name",
+            "hint": "An ominous name describing the ghost, like the Bent-Neck Lady or Old Hige."
+          },
+          "human": {
+            "label": "True Name",
+            "hint": "The name this ghost bore in life, or its true name."
+          }
+        },
+        "notes": {
+          "label": "Notes",
+          "hint": "A place to record everything you know about this ghost, its personality, its agenda, its trauma, and what it has done."
         }
       }
     },
