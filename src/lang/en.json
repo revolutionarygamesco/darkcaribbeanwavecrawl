@@ -446,6 +446,11 @@
             "named": "They have learned its true name."
           }
         }
+      },
+      "lost": {
+        "speaker": "The Damned",
+        "title": "The Ship is Lost",
+        "message": "<p>The living may not know it yet, but that does not make them special among the ghosts they are now trapped amongst. This is a ghost ship now. The story of this crew has come to a terrible end.</p><p><em>&hellip;or has it?</em></p>"
       }
     },
     "jolly-roger": {

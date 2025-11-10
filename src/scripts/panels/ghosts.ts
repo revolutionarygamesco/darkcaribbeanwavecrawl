@@ -376,6 +376,13 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     if (this._hauntLevel === level) return
     this._hauntLevel = level
     await this._showHaunt(level)
+    if (level !== 'lost' || !foundry.documents.ChatMessage) return
+
+    const gms = game.users.filter(user => user.isGM).map(gm => gm.id)
+    const speaker = { alias: localize([...GhostsPanel._path, 'lost', 'speaker'].join('.')) }
+    const flavor = localize([...GhostsPanel._path, 'lost', 'title'].join('.'))
+    const content = localize([...GhostsPanel._path, 'lost', 'message'].join('.'))
+    await foundry.documents.ChatMessage.create({ speaker, flavor, content, whisper: gms })
   }
 
   async _showHaunt (level: HauntLevel) {
@@ -385,14 +392,15 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     const scene = game.scenes.get(map)
     if (!scene) return
 
+    const darkLevels = ['dark', 'lost']
     await scene.updateEmbeddedDocuments('Tile', [
       { _id: normal, alpha: level === 'normal' ? 1 : 0 },
       { _id: bloody, alpha: level === 'bloody' ? 1 : 0 },
-      { _id: dark, alpha: level === 'dark' ? 1 : 0 }
+      { _id: dark, alpha: darkLevels.includes(level) ? 1 : 0 }
     ])
 
     await scene.updateEmbeddedDocuments('AmbientLight', [
-      { _id: light, hidden: level !== 'dark' }
+      { _id: light, hidden: !darkLevels.includes(level) }
     ])
   }
 }
