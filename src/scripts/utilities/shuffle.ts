@@ -1,5 +1,5 @@
 const toShuffledArray = <T>(array: T[]): T[] => {
-  const arr = JSON.parse(JSON.stringify(array))
+  const arr = [...array]
   let curr = arr.length
   let rnd: number
 
@@ -7,7 +7,9 @@ const toShuffledArray = <T>(array: T[]): T[] => {
     rnd = Math.floor(Math.random() * curr)
     curr--
 
-    [arr[curr], arr[rnd]] = [arr[rnd], arr[curr]]
+    const tmp = arr[curr]
+    arr[curr] = arr[rnd]
+    arr[rnd] = tmp
   }
 
   return arr
