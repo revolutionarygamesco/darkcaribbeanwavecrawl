@@ -8,9 +8,10 @@ const organizeVote = async (proposition: string): Promise<void> => {
   const voters = await getRosterActors()
   const size = findSize(voters.length)
   const scene = game.scenes.get(ids.voting[size].scene)
+  if (!scene) return
 
   const prop = scene.drawings.get(ids.voting[size].prop)
-  await prop.update({ text: proposition })
+  if (prop) await prop.update({ text: proposition })
   await marshalVoters('undecided', voters, scene.id)
 
   await scene.activate()

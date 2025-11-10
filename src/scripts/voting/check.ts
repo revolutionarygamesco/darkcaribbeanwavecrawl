@@ -13,6 +13,7 @@ const checkVote = async (document: Document, movement: TokenMovementData): Promi
   if (!pid || !votingScenes.includes(pid)) return
 
   const scene = game.scenes.get(pid)
+  if (!scene) return
   if (tokenMovementDataRegionsChanged(scene, movement)) await countVotes(pid)
 }
 

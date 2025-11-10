@@ -1,3 +1,14 @@
+interface Collection<K, V> extends Map<K, V> {
+  find(predicate: (value: V, key: K, collection: this) => boolean): V | undefined
+  filter(predicate: (value: V, key: K, collection: this) => boolean): V[]
+  map<T>(callback: (value: V, key: K, collection: this) => T): T[]
+  some(predicate: (value: V, key: K, collection: this) => boolean): boolean
+  every(predicate: (value: V, key: K, collection: this) => boolean): boolean
+  reduce<T>(callback: (accumulator: T, value: V, key: K, collection: this) => T, initial: T): T
+  getName(name: string): V | undefined
+  contents: V[]
+}
+
 declare class ApplicationV2 {
   render: (options: boolean) => Promise<ApplicationV2>
   close: (options?: any) => Promise<ApplicationV2>
@@ -121,7 +132,7 @@ interface Document {
 interface Actor extends Document {
   _id: string
   collections: {
-    items: Map<string, Document>
+    items: Collection<string, Document>
   },
   system?: {
     attributes: {
@@ -169,9 +180,9 @@ interface Region extends Document {
 
 interface Scene extends Document {
   active: Scene,
-  drawings: Map<string, Drawing>,
-  regions: Map<string, Region>,
-  tokens: Map<string, Token>,
+  drawings: Collection<string, Drawing>,
+  regions: Collection<string, Region>,
+  tokens: Collection<string, Token>,
   updateEmbeddedDocuments: (type: string, docs: Array<Record<string, any>>) => Promise<void>
   activate(): Promise<Scene>
   view(): Promise<Scene>
@@ -197,12 +208,12 @@ declare const game: {
     format: (key: string, data?: Record<string, any>) => string
     localize: (key: string) => string
   },
-  actors: Map<string, Actor>
-  modules: Map<string, Module>
-  packs: Map<string, any>
+  actors: Collection<string, Actor>
+  modules: Collection<string, Module>
+  packs: Collection<string, any>
   paused: boolean,
-  scenes: Map<string, any>,
-  tables: Map<string, RollTable>,
+  scenes: Collection<string, Scene>,
+  tables: Collection<string, RollTable>,
   settings: {
     register: (namespace: string, name: string, settings: GameSettings) => void,
     registerMenu: (namespace: string, name: string, data: any) => void,
@@ -218,7 +229,7 @@ declare const game: {
     id: string
     isGM: boolean
   },
-  users: Map<string, any>
+  users: Collection<string, any>
 }
 
 declare const foundry: {

@@ -1,36 +1,25 @@
-import initCrawlState from '../../../init.ts'
+import type CrawlState from '../../../state.ts'
+import setupCrew, { setupState, anne } from '../../../../utilities/testing/crew.ts'
 import getLookout from './get.ts'
 
 describe('getLookout', () => {
-  let originalActors: Map<string, Actor>
-  const anne = 'anne-bonny'
-
-  beforeAll(() => {
-    originalActors = game.actors
-  })
+  setupCrew()
+  let state: CrawlState
 
   beforeEach(() => {
-    game.actors = new Map<string, Actor>()
-    game.actors.set(anne, { id: anne } as Actor)
-  })
-
-  afterEach(() => {
-    game.actors = originalActors
+    state = setupState()
   })
 
   it('returns null if the team has no lookout defined', async () => {
-    const state = initCrawlState()
     expect(await getLookout('starboard', state)).toBeNull()
   })
 
   it('returns null if there is no such actor', async () => {
-    const state = initCrawlState()
     state.crew.teams.starboard = { officer: 'quartermaster', members: [anne], lookout: 'pew', onDuty: true }
     expect(await getLookout('starboard', state)).toBeNull()
   })
 
   it('returns the team’s designated lookout', async () => {
-    const state = initCrawlState()
     state.crew.teams.starboard = { officer: 'quartermaster', members: [anne], lookout: anne, onDuty: true }
     expect((await getLookout('starboard', state))?.id).toBe(anne)
   })

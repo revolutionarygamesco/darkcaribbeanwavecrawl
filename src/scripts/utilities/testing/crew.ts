@@ -1,5 +1,6 @@
 import type CrawlState from '../../state/state.ts'
 import initCrawlState from '../../state/init.ts'
+import Collection from './collection.ts'
 
 export const jack = 'calico-jack'
 export const anne = 'anne-bonny'
@@ -16,6 +17,9 @@ export const william = {
       crew: { min: 3, max: 10, value: 0 },
       speed: { value: 5 }
     },
+  },
+  collections: {
+    items: new Collection<string, Document>()
   },
   update: jest.fn().mockImplementation(async function(this: any, data: any) {
     if (data['system.attributes.crew.value'] !== undefined) {
@@ -63,14 +67,14 @@ export const setupState = (): CrawlState => {
 }
 
 const setupCrew = (includeExtras: boolean = false) => {
-  let originalActors: Map<string, Actor>
+  let originalActors: Collection<string, Actor>
 
   beforeAll(() => {
     originalActors = game.actors
   })
 
   beforeEach(() => {
-    game.actors = new Map<string, Actor>()
+    game.actors = new Collection<string, Actor>()
     game.actors.set(william.id, william)
     game.actors.set(dinghy.id, dinghy)
     setupActors(game.actors, jack, anne, mary)

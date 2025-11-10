@@ -1,11 +1,8 @@
-import { william } from '../../utilities/testing/crew.ts'
+import setupCrew, { william } from '../../utilities/testing/crew.ts'
 import checkCargoSpace from './check.ts'
 
 describe('calculateCargoSpaceNeeded', () => {
-  beforeEach(() => {
-    william.system!.attributes.cargo = { value: 0, max: 2 }
-    william.collections = { items: new Map<string, Document>() }
-  })
+  setupCrew()
 
   it('returns true when you’re only using free space', async () => {
     const provisions = { food: 10, water: 10, rum: 10 }
