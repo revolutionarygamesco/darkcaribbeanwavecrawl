@@ -1,7 +1,7 @@
 import { MODULE_ID } from '../settings.ts'
 
 import { Ghost } from '../state/state.ts'
-import type GhostReport from '../state/ghosts/report.ts'
+import GhostReport, { HauntLevel } from '../state/ghosts/report.ts'
 
 import getPanelDimensions from '../utilities/get-dimensions.ts'
 import registerPartials from './register-partials.ts'
@@ -16,6 +16,8 @@ import updatePotentialGhost from '../state/ghosts/potential/update.ts'
 import realizePotentialGhost from '../state/ghosts/potential/realize.ts'
 import removePotentialGhost from '../state/ghosts/potential/remove.ts'
 import removeGhost from '../state/ghosts/haunting/remove.ts'
+
+import ids from '../ids.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 const dropSelector = '.droppable'
@@ -32,6 +34,7 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   private _currentPotential: string | null = null
   private _currentHaunting: string | null = null
   private _isEditing: boolean = false
+  private _hauntLevel: HauntLevel = 'normal'
 
   static DEFAULT_OPTIONS = {
     id: `${MODULE_ID}-ghosts`,
@@ -101,6 +104,15 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   }
 
+  _droppedActor (event: DragEvent): Actor | null {
+    const data = foundry.applications.ux.TextEditor.getDragEventData(event)
+    if (data.type !== 'Actor') return null
+
+    const id = data.uuid.split('.').pop()
+    const actor = game.actors.get(id)
+    return actor ?? null
+  }
+
   async _getCurrentGhost (report?: GhostReport): Promise<Ghost | null> {
     const { potential, haunting } = report ?? await getGhosts()
 
@@ -117,6 +129,8 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
 
   async _prepareContext () {
     const { haunt, haunting, potential } = await getGhosts()
+    await this._checkHaunt(haunt)
+
     const ghost = await this._getCurrentGhost()
     const a = game.actors && ghost && ghost.actor ? game.actors.get(ghost.actor) : undefined
     const actor = a ? await enrichActor(a) : undefined
@@ -358,13 +372,28 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     await this.render({ force: true })
   }
 
-  _droppedActor (event: DragEvent): Actor | null {
-    const data = foundry.applications.ux.TextEditor.getDragEventData(event)
-    if (data.type !== 'Actor') return null
+  async _checkHaunt (level: HauntLevel) {
+    if (this._hauntLevel === level) return
+    this._hauntLevel = level
+    await this._showHaunt(level)
+  }
 
-    const id = data.uuid.split('.').pop()
-    const actor = game.actors.get(id)
-    return actor ?? null
+  async _showHaunt (level: HauntLevel) {
+    const { map, haunt } = ids
+    const { normal, bloody, dark, light } = haunt
+
+    const scene = game.scenes.get(map)
+    if (!scene) return
+
+    await scene.updateEmbeddedDocuments('Tile', [
+      { _id: normal, alpha: level === 'normal' ? 1 : 0 },
+      { _id: bloody, alpha: level === 'bloody' ? 1 : 0 },
+      { _id: dark, alpha: level === 'dark' ? 1 : 0 }
+    ])
+
+    await scene.updateEmbeddedDocuments('AmbientLight', [
+      { _id: light, hidden: level !== 'dark' }
+    ])
   }
 }
 
