@@ -24,6 +24,7 @@ import callVote from './voting/call.ts'
 import checkVote from './voting/check.ts'
 
 import selectRandomCrew from './randomizers/crew.ts'
+import selectRandomOfficer from './randomizers/officer.ts'
 import selectRandomOnDuty from './randomizers/on-duty.ts'
 import selectRandomOffDuty from './randomizers/off-duty.ts'
 import selectRandomGhost from './randomizers/ghost.ts'
@@ -71,6 +72,7 @@ Hooks.once('init', async () => {
     raiseJollyRoger,
     callVote,
     selectRandomCrew,
+    selectRandomOfficer,
     selectRandomOnDuty,
     selectRandomOffDuty,
     selectRandomGhost
