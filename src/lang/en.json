@@ -345,6 +345,7 @@
       }
     },
     "ghosts-panel": {
+      "unseen": "Not Yet Seen",
       "window": {
         "title": "Ghosts"
       },
@@ -421,6 +422,10 @@
           "human": {
             "label": "True Name",
             "hint": "The name this ghost bore in life, or its true name."
+          },
+          "revealed": {
+            "label": "Revealed Name",
+            "hint": "The name by which the crew might know this ghost."
           }
         },
         "actor": {

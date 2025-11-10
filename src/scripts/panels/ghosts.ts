@@ -123,6 +123,17 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       ? await foundry.applications.ux.TextEditor.enrichHTML(ghost.notes)
       : ''
 
+    let revelation = 'unseen'
+    if (ghost) {
+      const names: Record<string, string> = {
+        named: ghost.names.human,
+        seen: ghost.names.haunted,
+        unseen: localize(`${MODULE_ID}.ghosts-panel.unseen`)
+      }
+      revelation = ghost.status.named ? 'named' : ghost.status.seen ? 'seen' : 'unseen';
+      (ghost.names as any).revealed = names[revelation]
+    }
+
     return {
       tabs: this._prepareTabs('primary'),
       haunt,
