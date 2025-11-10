@@ -26,6 +26,7 @@ import checkVote from './voting/check.ts'
 import selectRandomCrew from './randomizers/crew.ts'
 import selectRandomOnDuty from './randomizers/on-duty.ts'
 import selectRandomOffDuty from './randomizers/off-duty.ts'
+import selectRandomGhost from './randomizers/ghost.ts'
 
 import generateInsult from './insult.ts'
 import getAdventure from './state/get-adventure.ts'
@@ -71,7 +72,8 @@ Hooks.once('init', async () => {
     callVote,
     selectRandomCrew,
     selectRandomOnDuty,
-    selectRandomOffDuty
+    selectRandomOffDuty,
+    selectRandomGhost
   }
 })
 
