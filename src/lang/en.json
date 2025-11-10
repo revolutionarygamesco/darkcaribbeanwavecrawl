@@ -373,6 +373,10 @@
           "haunt": {
             "label": "Haunt",
             "tooltip": "Move this ghost from your list of potential ghosts and send it to actually haunt the ship."
+          },
+          "delete": {
+            "label": "Delete",
+            "tooltip": "Delete this ghost."
           }
         },
         "nil": {
@@ -397,6 +401,10 @@
           "cancel": {
             "label": "Cancel",
             "tooltip": "Exit editing mode without saving your changes."
+          },
+          "delete": {
+            "label": "Delete",
+            "tooltip": "Delete this ghost."
           }
         },
         "nil": {

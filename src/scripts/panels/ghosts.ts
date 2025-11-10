@@ -14,6 +14,8 @@ import addPotentialGhost from '../state/ghosts/potential/add.ts'
 import updateGhost from '../state/ghosts/haunting/update.ts'
 import updatePotentialGhost from '../state/ghosts/potential/update.ts'
 import realizePotentialGhost from '../state/ghosts/potential/realize.ts'
+import removePotentialGhost from '../state/ghosts/potential/remove.ts'
+import removeGhost from '../state/ghosts/haunting/remove.ts'
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 const dropSelector = '.droppable'
@@ -121,8 +123,6 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       ? await foundry.applications.ux.TextEditor.enrichHTML(ghost.notes)
       : ''
 
-    console.log(ghost)
-
     return {
       tabs: this._prepareTabs('primary'),
       haunt,
@@ -211,6 +211,7 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       case 'cancel-editing': return await this._deactivateEditing()
       case 'save': return await this._saveGhost()
       case 'haunt': return await this._sendGhost()
+      case 'delete': return await this._deleteGhost()
     }
   }
 
@@ -276,6 +277,15 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     this._currentTab = 'haunting'
     this._currentPotential = null
     this._currentHaunting = ghost.id
+    await this.render({ force: true })
+  }
+
+  async _deleteGhost () {
+    const ghost = await this._getCurrentGhost()
+    if (!ghost) return this._deactivateEditing()
+
+    const fn = this._currentTab === 'potential' ? removePotentialGhost : removeGhost
+    await fn(ghost)
     await this.render({ force: true })
   }
 
