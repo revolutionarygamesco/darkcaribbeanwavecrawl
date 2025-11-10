@@ -23,6 +23,8 @@ import raiseJollyRoger from './jolly-roger.ts'
 import callVote from './voting/call.ts'
 import checkVote from './voting/check.ts'
 
+import selectRandomCrew from './randomizers/crew.ts'
+
 import generateInsult from './insult.ts'
 import getAdventure from './state/get-adventure.ts'
 
@@ -64,7 +66,8 @@ Hooks.once('init', async () => {
     displayExploitsPanel,
     displayGhostsPanel,
     raiseJollyRoger,
-    callVote
+    callVote,
+    selectRandomCrew
   }
 })
 
