@@ -27,6 +27,7 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   static _path = [MODULE_ID, 'ghosts-panel']
   private _buttonHandler: ((event: Event) => Promise<void>) | null = null
   private _listingHandler: ((event: Event) => Promise<void>) | null = null
+  private _revHandler: ((event: Event) => Promise<void>) | null = null
   private _currentTab: string = GhostsPanel.INITIAL_TAB
   private _currentPotential: string | null = null
   private _currentHaunting: string | null = null
@@ -123,15 +124,21 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       ? await foundry.applications.ux.TextEditor.enrichHTML(ghost.notes)
       : ''
 
-    let revelation = 'unseen'
+    let revelationOptions
     if (ghost) {
       const names: Record<string, string> = {
         named: ghost.names.human,
         seen: ghost.names.haunted,
-        unseen: localize(`${MODULE_ID}.ghosts-panel.unseen`)
+        unseen: localize([...GhostsPanel._path, 'unseen'].join('.'))
       }
-      revelation = ghost.status.named ? 'named' : ghost.status.seen ? 'seen' : 'unseen';
+
+      const revelation = ghost.status.named ? 'named' : ghost.status.seen ? 'seen' : 'unseen';
       (ghost.names as any).revealed = names[revelation]
+
+      const path = [...GhostsPanel._path, 'fields', 'revelation', 'options']
+      revelationOptions = ['unseen', 'seen', 'named'].map(status => {
+        return { status, text: localize([...path, status].join('.')), selected: revelation === status }
+      })
     }
 
     return {
@@ -142,6 +149,7 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       ghost,
       actor,
       notes,
+      revelationOptions,
       editing: this._isEditing
     }
   }
@@ -208,6 +216,11 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       this._listingHandler = this._handleListingClick.bind(this)
       this.element.addEventListener('click', this._listingHandler)
     }
+
+    if (!this._revHandler) {
+      this._revHandler = this._handleRevelationChange.bind(this)
+      this.element.addEventListener('change', this._revHandler)
+    }
   }
 
   async _handleButtonClick (event: Event) {
@@ -238,6 +251,21 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       this._currentHaunting = update
     }
 
+    await this.render({ force: true })
+  }
+
+  async _handleRevelationChange (event: Event) {
+    const target = event.target as HTMLElement
+    const input = target.closest('input[name="ghost-revelation"]') as HTMLInputElement
+    if (!input) return
+
+    const id = this._getCurrentGhostId()
+    if (!id) return
+
+    const val = input.value
+    const seen = val !== 'unseen'
+    const named = val === 'named'
+    await updateGhost(id, { status: { seen, named }})
     await this.render({ force: true })
   }
 

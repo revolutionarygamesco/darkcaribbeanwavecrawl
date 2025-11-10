@@ -436,6 +436,15 @@
         "notes": {
           "label": "Notes",
           "hint": "A place to record everything you know about this ghost, its personality, its agenda, its trauma, and what it has done."
+        },
+        "revelation": {
+          "label": "Revelation",
+          "hint": "How much have the crew learned about this ghost?",
+          "options": {
+            "unseen": "They have not yet seen it.",
+            "seen": "They have seen it, but they have not yet learned its name.",
+            "named": "They have learned its true name."
+          }
         }
       }
     },

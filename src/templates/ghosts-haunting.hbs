@@ -107,6 +107,31 @@
           </prose-mirror>
         {{/if}}
 
+        {{#if revelationOptions}}
+          <label for="ghost-revelation">
+            {{localize 'revolutionary-darkcaribbean.ghosts-panel.fields.revelation.label'}}
+          </label>
+          <p class="hint">
+            {{localize 'revolutionary-darkcaribbean.ghosts-panel.fields.revelation.hint'}}
+          </p>
+          <ul class="radio">
+            {{#each revelationOptions}}
+              <li>
+                <input
+                  type="radio"
+                  value="{{this.status}}"
+                  name="ghost-revelation"
+                  id="ghost-revelation-{{this.status}}"
+                  {{#if this.selected}}checked{{/if}}
+                />
+                <label for="ghost-revelation-{{this.status}}">
+                  {{this.text}}
+                </label>
+              </li>
+            {{/each}}
+          </ul>
+        {{/if}}
+
         <div class="actions">
           {{#if editing}}
             <button
