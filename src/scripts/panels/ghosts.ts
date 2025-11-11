@@ -74,6 +74,18 @@ export class GhostsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     this.dragDrop = this.#createDragDropHandlers()
   }
 
+  async loadGhost (id: string) {
+    this._currentTab = 'haunting'
+    this._currentHaunting = id
+    await this.render({ force: true })
+  }
+
+  async loadPotentialGhost (id: string) {
+    this._currentTab = 'potential'
+    this._currentPotential = id
+    await this.render({ force: true })
+  }
+
   #createDragDropHandlers () {
     return this.options.dragDrop.map((d: DragDrop) => {
       d.permissions = {
@@ -412,4 +424,33 @@ const displayGhostsPanel = async (): Promise<GhostsPanel> => {
   return panel
 }
 
+const displayGhost = async (id: string): Promise<GhostsPanel> => {
+  await registerPartials()
+  const panel = new GhostsPanel()
+  await panel.loadGhost(id)
+  return panel
+}
+
+const displayPotentialGhost = async (id: string): Promise<GhostsPanel> => {
+  await registerPartials()
+  const panel = new GhostsPanel()
+  await panel.loadPotentialGhost(id)
+  return panel
+}
+
+const initGhostLinks = () => {
+  document.addEventListener('click', async (event: MouseEvent) => {
+    const target = event.target as HTMLElement
+    const link = target.closest('.ghost-link') as HTMLElement
+    if (!link) return
+
+    const id = link.dataset.id
+    if (!id) return
+
+    event.preventDefault()
+    await displayGhost(id)
+  })
+}
+
 export default displayGhostsPanel
+export { displayGhost, displayPotentialGhost, initGhostLinks }

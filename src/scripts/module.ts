@@ -16,7 +16,7 @@ import CrewConfigPanel from './panels/crew-config.ts'
 import displayCrewPanel from './panels/crew.ts'
 import displayLedgerPanel from './panels/ledger.ts'
 import displayExploitsPanel from './panels/exploits.ts'
-import displayGhostsPanel from './panels/ghosts.ts'
+import displayGhostsPanel, { displayGhost, displayPotentialGhost, initGhostLinks } from './panels/ghosts.ts'
 import checkJettisonedProvisions from './provisions/cargo/jettison.ts'
 import raiseJollyRoger from './jolly-roger.ts'
 
@@ -69,6 +69,8 @@ Hooks.once('init', async () => {
     displayLedgerPanel,
     displayExploitsPanel,
     displayGhostsPanel,
+    displayGhost,
+    displayPotentialGhost,
     raiseJollyRoger,
     callVote,
     selectRandomCrew,
@@ -83,6 +85,7 @@ Hooks.once('ready', async () => {
   await watch.start()
   watch.handlePause(game.paused)
   datePanel = await displayDatePanel()
+  initGhostLinks()
 })
 
 Hooks.on('pauseGame', (paused: boolean) => {
