@@ -5,11 +5,20 @@ import toShuffledArray from '../utilities/shuffle.ts'
 
 const selectRandomOnDuty = async (
   n: number = 1,
+  exclusions?: { officer?: boolean, lookout?: boolean, helm?: boolean },
   state?: CrawlState
 ): Promise<Actor | Actor[]> => {
   const cs = state ?? await getCrawlState()
   const { starboard, larboard } = cs.crew.teams
-  const ids = starboard.onDuty ? starboard.members : larboard.members
+  const team = starboard.onDuty ? starboard : larboard
+
+  const excludeIds = [
+    exclusions?.lookout ?? false ? team.lookout : undefined,
+    exclusions?.helm ?? false ? team.helm : undefined,
+  ].filter((exclusion: string | undefined): exclusion is string => exclusion !== undefined)
+  if (exclusions?.officer === true) excludeIds.push(...cs.crew.positions[team.officer])
+
+  const ids = team.members.filter(id => !excludeIds.includes(id))
   const actors = mapIdsToActors(ids)
   const shuffled = toShuffledArray(actors)
 
