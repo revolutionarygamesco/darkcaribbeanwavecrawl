@@ -19,6 +19,7 @@ import displayExploitsPanel from './panels/exploits.ts'
 import displayGhostsPanel, { displayGhost, displayPotentialGhost, initGhostLinks } from './panels/ghosts.ts'
 import checkJettisonedProvisions from './provisions/cargo/jettison.ts'
 import raiseJollyRoger from './jolly-roger.ts'
+import setForage from './state/provisions/forage/set.ts'
 
 import callVote from './voting/call.ts'
 import checkVote from './voting/check.ts'
@@ -72,6 +73,7 @@ Hooks.once('init', async () => {
     displayGhost,
     displayPotentialGhost,
     raiseJollyRoger,
+    setForage,
     callVote,
     selectRandomCrew,
     selectRandomOfficer,
