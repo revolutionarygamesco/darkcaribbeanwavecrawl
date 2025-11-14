@@ -1,7 +1,7 @@
 import assign from './positions/assign.ts'
 import removeFromCrew from './remove.ts'
 import getCopy from '../get-copy.ts'
-import getRosterActors from './roster/actors.ts'
+import getRosterIds from './roster/ids.ts'
 import setCrawlState from '../set.ts'
 import saveCrawlState from '../save.ts'
 
@@ -17,20 +17,19 @@ const handleShipUpdate = async (document: Document): Promise<void> => {
     save = true
   }
 
-  const roster = await getRosterActors(state)
-  const rosterIds = roster.map(actor => actor.id)
+  const roster = await getRosterIds(state)
   const shipCrewIds: string[] = document.system?.crews ?? []
 
   // Anyone listed by the ship should be added as crew to the state
   for (const id of shipCrewIds) {
-    if (!rosterIds.includes(id)) {
+    if (!roster.includes(id)) {
       state = await assign('crew', id, state, false) ?? state
       save = true
     }
   }
 
   // Anyone who isn't listed by the ship should be removed as crew from the state
-  for (const id of rosterIds) {
+  for (const id of roster) {
     if (!shipCrewIds.includes(id)) {
       state = await removeFromCrew(id, state, false) ?? state
       save = true

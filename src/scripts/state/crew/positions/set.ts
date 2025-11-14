@@ -22,8 +22,9 @@ const setAssigned = async (
     if (!(await check(candidate))) return null
   }
 
+  const newState = save ? await setCrawlState(candidate) : candidate
   if (candidate) await updateShipCrew(candidate)
-  return save ? await setCrawlState(candidate) : candidate
+  return newState
 }
 
 export default setAssigned
